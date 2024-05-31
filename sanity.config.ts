@@ -8,6 +8,7 @@ import { visionTool } from '@sanity/vision';
 import { presentationTool } from 'sanity/presentation';
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
+import { locate } from './sanity/presentation/locate';
 
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import { apiVersion, dataset, projectId } from './sanity/lib/api';
@@ -25,10 +26,10 @@ export default defineConfig({
     // https://www.sanity.io/docs/the-vision-plugin
     visionTool({ defaultApiVersion: apiVersion }),
     presentationTool({
+      locate,
       previewUrl: {
-        draftMode: {
+        previewMode: {
           enable: '/api/draft',
-          disable: 'api/disable-draft'
         },
       },
     }),
