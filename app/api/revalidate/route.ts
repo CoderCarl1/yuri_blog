@@ -22,37 +22,30 @@
  * 16. Redeploy with `npx vercel --prod` to apply the new environment variable
  */
 
-// import { revalidateTag } from 'next/cache';
+import { revalidateTag } from 'next/cache';
 import { type NextRequest, NextResponse } from 'next/server';
 import { parseBody } from 'next-sanity/webhook';
-
-// import { revalidateSecret } from '@/sanity/lib/api';
+import { revalidateSecret } from '@/sanity/lib/api';
 
 export async function POST(req: NextRequest) {
   try {
-    // const { body, isValidSignature } = await parseBody<{
-    //   _type: string;
-    //   slug?: string | undefined;
-    // }>(req, revalidateSecret);
-    // if (!isValidSignature) {
-    //   const message = 'Invalid signature';
-    //   return new Response(message, { status: 401 });
-    // }
+    const { body, isValidSignature } = await parseBody<{
+      _type: string;
+      slug?: string | undefined;
+    }>(req, revalidateSecret);
+    if (!isValidSignature) {
+      const message = 'Invalid signature';
+      return new Response(message, { status: 401 });
+    }
 
-    // if (!body?._type) {
-    //   return new Response('Bad Request', { status: 400 });
-    // }
+    if (!body?._type) {
+      return new Response('Bad Request', { status: 400 });
+    }
 
-    // revalidateTag(body._type);
-    // if (body.slug) {
-    //   revalidateTag(`${body._type}:${body.slug}`);
-    // }
-
-    // TODO: remove this once site is deployed
-    const { body } = await parseBody<{
-        _type: string;
-        slug?: string | undefined;
-      }>(req);
+    revalidateTag(body._type);
+    if (body.slug) {
+      revalidateTag(`${body._type}:${body.slug}`);
+    }
 
     return NextResponse.json({
       status: 200,
