@@ -6,21 +6,40 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "format": "npx prettier --write . --ignore-path .gitignore",
+    "lint": "next lint",
+    "lint:fix": "npm run format && npm run lint -- --fix",
+    "type-check": "tsc --noEmit"
+  },
+  "prettier": {
+    "semi": true,
+    "singleQuote": true
   },
   "dependencies": {
+    "@sanity/image-url": "^1.0.2",
+    "@sanity/preview-url-secret": "^1.6.15",
+    "@sanity/react-loader": "^1.10.0",
+    "@sanity/vision": "^3.43.0",
+    "next": "14.2.3",
+    "next-sanity": "^9.3.5",
     "react": "^18",
     "react-dom": "^18",
-    "next": "14.2.3"
+    "sanity": "^3.43.0",
+    "styled-components": "^6.1.11"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@tailwindcss/typography": "^0.5.13",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "postcss": "^8",
-    "tailwindcss": "^3.4.1",
     "eslint": "^8",
-    "eslint-config-next": "14.2.3"
+    "eslint-config-next": "14.2.3",
+    "eslint-plugin-simple-import-sort": "^12.1.0",
+    "postcss": "^8",
+    "prettier": "^3.2.5",
+    "prettier-plugin-packagejson": "^2.5.0",
+    "prettier-plugin-tailwindcss": "^0.5.14",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
   }
 }
