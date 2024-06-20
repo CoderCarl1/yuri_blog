@@ -43,7 +43,7 @@ export default function Main({
       */}
       {imageUrl && (
         <Image
-          className="absolute h-full w-full object-center not-prose"
+          className="absolute h-full w-full object-left not-prose"
           alt={alt}
           width={width}
           height={height}

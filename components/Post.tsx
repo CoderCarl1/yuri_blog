@@ -12,7 +12,7 @@ export default function Post({ post, encodeDataAttribute }: TPost) {
   const { title, mainImage, mainImageMetaData, body } = post;
 
   return (
-    <main className="container mx-auto prose prose-lg p-4">
+    <main className="container mx-auto p-4">
       {mainImage ? (
         <Image
           metaData={mainImageMetaData}
@@ -22,9 +22,11 @@ export default function Post({ post, encodeDataAttribute }: TPost) {
           classNames="mb-4"     
         />
       ) : null}
-      {title ? <h1>{title}</h1> : null}
+      {/* {title ? <h1 className='font-serif text-4xl'>{title}</h1> : null} */}
       {body ? 
-        <PortableText value={body} />
+        <div className='prose prose-lg'>
+          <PortableText value={body} />
+        </div>
       : null}
     </main>
   );

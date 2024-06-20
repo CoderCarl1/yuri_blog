@@ -1,10 +1,25 @@
 import { type SchemaTypeDefinition } from 'sanity';
 
-import blockContent from './schemaTypes/blockContent';
-import category from './schemaTypes/category';
-import post from './schemaTypes/post';
-import author from './schemaTypes/author';
+import category from './schemas/documents/category';
+import post from './schemas/documents/post';
+import author from './schemas/documents/author';
+
+import siteSettings from './schemas/singletons/siteSettings'
+import navigation from './schemas/singletons/navigation'
+import colors from './schemas/singletons/colors'
+
+import blockContent from './schemas/blockContent';
+
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [post, author, category, blockContent],
+  types: [
+    //documents
+    post, author, category,
+
+    //singletons,
+    siteSettings, navigation, colors,
+
+    //misc
+    blockContent
+  ],
 };
