@@ -1,6 +1,7 @@
+'use server';
+
 import createImageUrlBuilder from '@sanity/image-url';
 import type { Image } from 'sanity';
-
 import { dataset, projectId } from './api';
 
 const imageBuilder = createImageUrlBuilder({
@@ -8,23 +9,17 @@ const imageBuilder = createImageUrlBuilder({
   dataset: dataset || '',
 });
 
-export const urlForImage = (source: Image | undefined) => {
-  // Ensure that source image contains a valid reference
-  if (!source?.asset?._ref) {
-    return undefined;
+export async function  urlForImage(source: Image):
+  (Promise<(height: number, width: number) => string>) {
+  return (height: number =  1200, width: number = 800) => {
+    return imageBuilder.image(source).auto('format').height(height).width(width).fit('fill').url();
   }
-
-  return imageBuilder?.image(source).auto('format').fit('max');
 };
 
-// export function urlForOpenGraphImage(image: Image | undefined) {
-//   return urlForImage(image)?.width(1200).height(627).fit('crop').url()
-// }
-
-export function resolveHref(
+export async function resolveHref(
   documentType?: string,
   slug?: string,
-): string | undefined {
+): Promise<string | undefined> {
   switch (documentType) {
     case 'home':
       return '/';

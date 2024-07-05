@@ -80,7 +80,7 @@ function Posts_ByCategories(S: StructureBuilder){
  * GENERAL
  */
 
-const documentsToExclude = [ 'post', 'siteSettings', 'colors', 'navigation', /** 'translation.metadata',*/ 'homepage' ];
+const documentsToExclude = [ 'post', 'siteSettings', 'colors', 'navigation', /** 'translation.metadata',*/ 'media.tag',  'homepage' ];
 
 
 function otherCategories(S: StructureBuilder) {

@@ -7,6 +7,7 @@ import author from './schemas/documents/author';
 import siteSettings from './schemas/singletons/siteSettings'
 import navigation from './schemas/singletons/navigation'
 import colors from './schemas/singletons/colors'
+import home from './schemas/singletons/home'
 
 import blockContent from './schemas/blockContent';
 
@@ -17,7 +18,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     post, author, category,
 
     //singletons,
-    siteSettings, navigation, colors,
+    siteSettings, navigation, colors, home,
 
     //misc
     blockContent

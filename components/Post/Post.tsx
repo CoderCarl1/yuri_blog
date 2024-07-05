@@ -1,7 +1,7 @@
 import type { EncodeDataAttributeCallback } from '@sanity/react-loader';
 import { SanityDocument } from 'next-sanity';
-import Image from './Image';
-import PortableText from './portableText/index';
+import Image from '../Image';
+import PortableText from '../portableText/index';
 
 type TPost = {
   post: SanityDocument;
@@ -9,14 +9,17 @@ type TPost = {
 };
 
 export default function Post({ post, encodeDataAttribute }: TPost) {
-  const { title, mainImage, mainImageMetaData, body } = post;
+
+    // TODO: post not found if body not present. Add email to owner about this.
+
+  const { title = "", mainImage, mainImageMetaData, body } = post;
 
   return (
     <main className="container mx-auto p-4">
       {mainImage ? (
         <Image
           metaData={mainImageMetaData}
-          data-sanity={encodeDataAttribute?.('coverImage')}
+          dataSanity={encodeDataAttribute?.('coverImage')}
           image={mainImage}
           alt={mainImage?.alt}     
           classNames="mb-4"     

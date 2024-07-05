@@ -4,6 +4,7 @@ import { visionTool } from '@sanity/vision';
 import { presentationTool } from 'sanity/presentation';
 import { defineConfig } from 'sanity';
 import { structureTool } from 'sanity/structure';
+import { media } from 'sanity-plugin-media';
 
 import { apiVersion, dataset, projectId } from './sanity/lib/api';
 import { schema } from './sanity/schema';
@@ -21,13 +22,13 @@ export default defineConfig({
   document: {
     newDocumentOptions: (prev, { creationContext }) => {
       if (creationContext.type === 'global') {
-        return prev.filter((templateItem) => !['siteSettings', 'colors', 'homepage','navigation'].includes(templateItem.templateId))
+        return prev.filter((templateItem) => !['siteSettings', 'colors', 'homepage', 'navigation'].includes(templateItem.templateId))
       }
       return prev
     },
     actions: (prev, { schemaType }) => {
-      if (['siteSettings', 'colors', 'homepage','navigation'].includes(schemaType)) {
-        return prev.filter(({ action }) => !['unpublish', 'delete','duplicate'].includes(action || ''))
+      if (['siteSettings', 'colors', 'homepage', 'navigation'].includes(schemaType)) {
+        return prev.filter(({ action }) => !['unpublish', 'delete', 'duplicate'].includes(action || ''))
       }
       return prev
     },
@@ -38,6 +39,7 @@ export default defineConfig({
       structure: Structure,
       defaultDocumentNode: DefaultDocumentStructure,
     }),
+    media(),
     // TODO: turn off visionTool before deployment
     visionTool({ defaultApiVersion: apiVersion }),
     presentationTool({
@@ -50,4 +52,9 @@ export default defineConfig({
       },
     }),
   ],
+  // form: {
+  //   image: {
+  //     assetSources: () => [media],
+  //   }
+  // }
 });

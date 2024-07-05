@@ -1,6 +1,6 @@
 import { SanityDocument } from 'next-sanity';
 
-import Posts from '@/components/Posts';
+import { PostList } from '@/components/Post';
 import { sanityFetch } from '@/sanity/lib/fetch';
 import { POSTS_QUERY } from '@/sanity/lib/queries';
 
@@ -9,5 +9,5 @@ export default async function Page() {
     query: POSTS_QUERY,
   });
 
-  return <Posts posts={posts} />;
+  return <PostList posts={posts} />;
 }

@@ -1,23 +1,21 @@
-// import { CogIcon } from '@sanity/icons'
+import { PiHouseBold } from "react-icons/pi";
 import { defineArrayMember, defineField, defineType } from 'sanity'
 
+/**
+ * 
+ * featured posts
+ *  - this is going to be 
+ * 
+ */
+
 export default defineType({
-    name: 'siteSettings',
-    title: 'Site Settings',
+    name: 'homepage',
+    title: 'Home Page',
     type: 'document',
-    //   icon: CogIcon,
+    icon: PiHouseBold,
     // Uncomment below to have edits publish automatically as you type
     // liveEdit: true,
     fields: [
-        defineField({
-            name: 'ogImage',
-            title: 'Open Graph Image',
-            type: 'image',
-            description: 'Displayed on social cards and search engine results.',
-            options: {
-                hotspot: true,
-            },
-        }),
         defineField({
             name: 'title',
             description: 'This field is the title of your personal website.',
@@ -66,6 +64,19 @@ export default defineType({
                 }),
             ],
             validation: (rule) => rule.max(155).required(),
+        }),
+        defineField({
+            name: 'featuredPosts',
+            title: 'Featured Posts',
+            type: 'array',
+            description:
+                'These are the projects that will appear first on your landing page.',
+            of: [
+                defineArrayMember({
+                    type: 'reference',
+                    to: [{ type: 'post' }],
+                }),
+            ]
         }),
     ],
     preview: {

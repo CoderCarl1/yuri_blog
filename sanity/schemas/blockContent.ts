@@ -1,4 +1,13 @@
 import { defineType, defineArrayMember } from 'sanity';
+import {
+  PiFileImageLight,
+  PiLinkSimple,
+  PiTextAaBold,
+  PiTextItalic,
+  PiTextAUnderlineLight
+} from "react-icons/pi";
+import { HiOutlineExternalLink } from "react-icons/hi";
+
 
 /**
  * This is the schema type for block content used in the post document type
@@ -37,21 +46,41 @@ export default defineType({
         // Decorators usually describe a single property – e.g. a typographic
         // preference or highlighting
         decorators: [
-          { title: 'Strong', value: 'strong' },
-          { title: 'Emphasis', value: 'em' },
+          { title: 'Strong', value: 'strong', icon: PiTextAaBold },
+          { title: 'Italic', value: 'em', icon: PiTextItalic },
+          { title: 'Underline', value: 'underline', icon: PiTextAUnderlineLight },
         ],
         // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [
           {
-            title: 'URL',
+            title: 'Internal Link',
             name: 'link',
             type: 'object',
+            icon: HiOutlineExternalLink,
+            description: 'the page is not from this blog',
+            fields: [
+              {
+                title: 'Page/Post',
+                name: 'link',
+                type: 'reference',
+                to: [{type: 'post'}],
+                icon: PiLinkSimple
+              }
+            ],
+          },
+          {
+            title: 'External URL',
+            name: 'external',
+            type: 'object',
+            icon: HiOutlineExternalLink,
+            description: 'the page is not from this blog',
             fields: [
               {
                 title: 'URL',
                 name: 'href',
                 type: 'url',
-              },
+                icon: PiLinkSimple
+              }
             ],
           },
         ],
@@ -62,16 +91,18 @@ export default defineType({
     // as a block type.
     defineArrayMember({
       type: 'image',
-      options: { 
-        hotspot: true
-       },
-      fields: [
-        {
-          name: 'alt',
-          type: 'string',
-          title: 'Alternative Text',
-        },
-      ],
+      // options: { 
+      //   hotspot: true
+      //  },
+      // fields: [
+      //   {
+      //     name: 'alt',
+      //     type: 'string',
+      //     title: 'Alternative Text',
+      //     description: ''
+      //   },
+      // ],
+      icon: PiFileImageLight
     }),
   ],
 });
