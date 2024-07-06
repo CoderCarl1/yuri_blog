@@ -1,7 +1,7 @@
 import { DefaultDocumentNodeContext, StructureBuilder} from "sanity/structure";
 // import BlogPreview from "./sanity/components/blog/blog.Preview";
 // import { SanityDocument } from "sanity";
-import Post from '../../components/Post';
+import {Post} from '../../components/Post';
 import { type componentParamsType } from "./sanity.types";
 
 

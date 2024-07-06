@@ -11,7 +11,7 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
                 <h1>LOGO</h1>
             </InternalLink>
             {children}
-            <SearchBar input={"word"} />
+            {/* <SearchBar input={"word"} /> */}
         </div>
     )
 }
