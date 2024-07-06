@@ -46,6 +46,16 @@ export default async function Main({
     props = {};
   }
 
+  /**
+   TODO: make variants
+    - banner
+    - thumbnail
+    - large
+    - med
+    - small
+    || banner, large, normal, thumbnail
+  */ 
+
   const finalAlt = value?.alt || alt || "";
   const finalWidth = width || /** getImageDimensions(finalImage).width || */ DEFAULT_WIDTH;
   const finalHeight = height || /** getImageDimensions(finalImage).height || */ DEFAULT_HEIGHT;
