@@ -9,12 +9,19 @@ const imageBuilder = createImageUrlBuilder({
   dataset: dataset || '',
 });
 
-export async function  urlForImage(source: Image):
-  (Promise<(height: number, width: number) => string>) {
-  return (height: number =  1200, width: number = 800) => {
-    return imageBuilder.image(source).auto('format').height(height).width(width).fit('fill').url();
-  }
-};
+export async function urlForImage(
+  source: Image,
+): Promise<(height: number, width: number) => string> {
+  return (height: number = 1200, width: number = 800) => {
+    return imageBuilder
+      .image(source)
+      .auto('format')
+      .height(height)
+      .width(width)
+      .fit('fill')
+      .url();
+  };
+}
 
 export async function resolveHref(
   documentType?: string,

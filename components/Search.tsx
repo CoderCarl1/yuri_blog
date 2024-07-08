@@ -1,54 +1,78 @@
 'use client';
-import { useEffect, useState } from "react";
-import { SanityDocument } from 'next-sanity';
-import { PostList } from "./Post";
-import router, { useRouter } from "next/router";
+import { useEffect, useState } from 'react';
+import { Post_SanityDocument } from './Post';
 
 
-type Props = {
-    input?: string}
+export const getRequestWithNativeFetch = async (
+  url: string,
+  signal: AbortSignal | null | undefined = null,
+) => {
+  const response = await fetch(url, { signal });
 
-export default function SearchBar({input}: Props){
-    const [searchString, setSearchString] = useState('SEARCH STRING EXAMPLE');
-    const [searchResults, setSearchResults] = useState<SanityDocument[]>([]);
-    const [hasCompleted, setHasCompleted] = useState(false);
+  if (!response.ok) {
+    throw new Error(`HTTP error: Status ${response.status}`);
+  }
 
-    async function getPosts(){
+  return response.json() as Promise<Post_SanityDocument[]>;
+};
+
+export default function SearchBar() {
+  const [searchString, setSearchString] = useState<string>('');
+  const [searchResults, setSearchResults] = useState<Post_SanityDocument[]>([]);
+  const [hasCompleted, setHasCompleted] = useState(false);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function getPosts(str: string): Promise<void> {
+      try {
         setHasCompleted(false);
-        const postsData = await fetch(`/api/search?query=${searchString}`);
-        console.log("POSTS", postsData);
+        const postsData = await getRequestWithNativeFetch(
+          `/api/search?query=${str}`,
+          controller.signal,
+        );
+        console.log('POSTS', postsData);
         if (postsData) {
-            const data = await postsData.json() as SanityDocument[];
-        console.log("POSTS data", data);
-
-        setSearchResults(data);
-        setHasCompleted(true);
+          setSearchResults(postsData);
         }
+      } catch (err) {
+        console.log('ERRRRR', err);
+      } finally {
+        setHasCompleted(true);
+      }
     }
-    return (
-    <div>
-        <button onClick={getPosts}>GET POSTS</button>
-        {' '} Posts: <b>{searchResults.length}</b> {' '}
-        {searchResults.length > 0 && (
-            <div>
-                {<PostsOutput posts={searchResults} />}
-            </div>
-        )}
-        </div>
 
-    )
+    void getPosts(searchString);
+  }, [searchString]);
+
+  return (
+    <div>
+      <input
+        type="text"
+        value={searchString}
+        name="searchString"
+        id="searchString"
+        onChange={(e) => setSearchString(e.currentTarget.value)}
+      />{' '}
+      Posts: <b>{searchResults.length}</b>{' '}
+      {searchResults.length > 0 && (
+        <div>{<PostsOutput posts={searchResults} />}</div>
+      )}
+    </div>
+  );
 }
 
-function PostsOutput({ posts = [] }: { posts: SanityDocument[] }) {
-    const [data, setData] = useState<SanityDocument[]>([])
+function PostsOutput({ posts = [] }: { posts: Post_SanityDocument[] }) {
+  const [data, setData] = useState<Post_SanityDocument[]>([]);
 
-    useEffect(() => {
-        console.log("weeeee", data)
-        setData(posts)
-    }, [])
-      return (
-        <main className="container mx-auto grid grid-cols-1 gap-y-2 divide-y divide-blue-100">
-          {data.length > 0 && data.map((post, idx) => <h2>{idx}</h2>)}
-        </main>
-      );
+  useEffect(() => {
+    console.log('weeeee', data);
+    setData(posts);
+  }, []);
+  return (
+    <main className="container mx-auto grid grid-cols-1 gap-y-2 divide-y divide-blue-100">
+      {data.length > 0 &&
+        data.map((post, idx) => <h2 key={post._id}>{idx}</h2>)}
+    </main>
+  );
 }

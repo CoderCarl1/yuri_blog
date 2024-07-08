@@ -4,10 +4,9 @@ import {
   PiLinkSimple,
   PiTextAaBold,
   PiTextItalic,
-  PiTextAUnderlineLight
-} from "react-icons/pi";
-import { HiOutlineExternalLink } from "react-icons/hi";
-
+  PiTextAUnderlineLight,
+} from 'react-icons/pi';
+import { HiOutlineExternalLink } from 'react-icons/hi';
 
 /**
  * This is the schema type for block content used in the post document type
@@ -48,7 +47,11 @@ export default defineType({
         decorators: [
           { title: 'Strong', value: 'strong', icon: PiTextAaBold },
           { title: 'Italic', value: 'em', icon: PiTextItalic },
-          { title: 'Underline', value: 'underline', icon: PiTextAUnderlineLight },
+          {
+            title: 'Underline',
+            value: 'underline',
+            icon: PiTextAUnderlineLight,
+          },
         ],
         // Annotations can be any object structure – e.g. a link or a footnote.
         annotations: [
@@ -63,9 +66,9 @@ export default defineType({
                 title: 'Page/Post',
                 name: 'link',
                 type: 'reference',
-                to: [{type: 'post'}],
-                icon: PiLinkSimple
-              }
+                to: [{ type: 'post' }],
+                icon: PiLinkSimple,
+              },
             ],
           },
           {
@@ -79,8 +82,8 @@ export default defineType({
                 title: 'URL',
                 name: 'href',
                 type: 'url',
-                icon: PiLinkSimple
-              }
+                icon: PiLinkSimple,
+              },
             ],
           },
         ],
@@ -91,7 +94,7 @@ export default defineType({
     // as a block type.
     defineArrayMember({
       type: 'image',
-      // options: { 
+      // options: {
       //   hotspot: true
       //  },
       // fields: [
@@ -102,7 +105,7 @@ export default defineType({
       //     description: ''
       //   },
       // ],
-      icon: PiFileImageLight
+      icon: PiFileImageLight,
     }),
   ],
 });

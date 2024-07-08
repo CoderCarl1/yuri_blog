@@ -4,8 +4,7 @@ import '../globals.css';
 import { VisualEditing } from 'next-sanity';
 import NavBar from '../../components/Navbar';
 import { draftMode } from 'next/headers';
-import {ButtonLink} from '../../components/Link';
-
+import { ButtonLink } from '../../components/Link';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,15 +22,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <NavBar>
-        {draftMode().isEnabled && (
-        //   <div className='w-fit py-2.5 px-1'>
-            <ButtonLink
-              href="/api/disable-draft"
-            >
+          {draftMode().isEnabled && (
+            //   <div className='w-fit py-2.5 px-1'>
+            <ButtonLink href="/api/disable-draft">
               Disable preview mode
             </ButtonLink>
-        //   </div>
-        )}
+            //   </div>
+          )}
         </NavBar>
         <main>{children}</main>
         {draftMode().isEnabled && <VisualEditing />}

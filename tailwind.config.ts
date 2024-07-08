@@ -9,18 +9,18 @@ const config: Config = {
   theme: {
     colors: {
       primary: {
-        400: 'hsl(var(--color-primary) / <alpha-value>)'
+        400: 'hsl(var(--color-primary) / <alpha-value>)',
       },
       secondary: {
-        400: 'hsl(var(--color-secondary) / <alpha-value>)'
+        400: 'hsl(var(--color-secondary) / <alpha-value>)',
       },
       accent: {
-        400: 'hsl(var(--color-accent) / <alpha-value>)'
+        400: 'hsl(var(--color-accent) / <alpha-value>)',
       },
       grayscale: {
-        'primary': 'hsl(var(--grayscale-primary) / <alpha-value>)',
-        'secondary': 'hsl(var(--grayscale-secondary) / <alpha-value>)'
-      }
+        primary: 'hsl(var(--grayscale-primary) / <alpha-value>)',
+        secondary: 'hsl(var(--grayscale-secondary) / <alpha-value>)',
+      },
     },
     // extend: {
     //   backgroundImage: {

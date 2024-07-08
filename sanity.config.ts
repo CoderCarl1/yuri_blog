@@ -14,7 +14,7 @@ import DefaultDocumentStructure from './sanity/adminStructure/sanity.documentStr
 
 export default defineConfig({
   name: 'yuris_blog',
-  title: 'Yuri\'s Blog',
+  title: "Yuri's Blog",
   basePath: '/studio',
   projectId,
   dataset,
@@ -22,15 +22,27 @@ export default defineConfig({
   document: {
     newDocumentOptions: (prev, { creationContext }) => {
       if (creationContext.type === 'global') {
-        return prev.filter((templateItem) => !['siteSettings', 'colors', 'homepage', 'navigation'].includes(templateItem.templateId))
+        return prev.filter(
+          (templateItem) =>
+            !['siteSettings', 'colors', 'homepage', 'navigation'].includes(
+              templateItem.templateId,
+            ),
+        );
       }
-      return prev
+      return prev;
     },
     actions: (prev, { schemaType }) => {
-      if (['siteSettings', 'colors', 'homepage', 'navigation'].includes(schemaType)) {
-        return prev.filter(({ action }) => !['unpublish', 'delete', 'duplicate'].includes(action || ''))
+      if (
+        ['siteSettings', 'colors', 'homepage', 'navigation'].includes(
+          schemaType,
+        )
+      ) {
+        return prev.filter(
+          ({ action }) =>
+            !['unpublish', 'delete', 'duplicate'].includes(action || ''),
+        );
       }
-      return prev
+      return prev;
     },
   },
   plugins: [

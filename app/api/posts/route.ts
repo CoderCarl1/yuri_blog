@@ -13,9 +13,9 @@ import { sanityFetch } from '@/sanity/lib/fetch';
 import { POSTS_QUERY } from '@/sanity/lib/queries';
 
 export async function GET() {
-    const posts = await sanityFetch<SanityDocument[]>({
-        query: POSTS_QUERY,
-      });
+  const posts = await sanityFetch<SanityDocument[]>({
+    query: POSTS_QUERY,
+  });
 
-  return Response.json({data: posts})
+  return Response.json({ data: posts });
 }
