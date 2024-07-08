@@ -1,5 +1,5 @@
 'use client';
-import SearchBar from './Search';
+// import SearchBar from './Search';
 import { InternalLink } from './Link';
 // import { draftMode } from 'next/headers';
 
@@ -10,7 +10,7 @@ export default function NavBar({ children }: { children: React.ReactNode }) {
         <h1>LOGO</h1>
       </InternalLink>
       {children}
-      <SearchBar />
+      {/* <SearchBar /> */}
     </div>
   );
 }
