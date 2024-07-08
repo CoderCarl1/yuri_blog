@@ -7,13 +7,28 @@ const config: Config = {
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+    colors: {
+      primary: {
+        400: 'hsl(var(--color-primary) / <alpha-value>)'
       },
+      secondary: {
+        400: 'hsl(var(--color-secondary) / <alpha-value>)'
+      },
+      accent: {
+        400: 'hsl(var(--color-accent) / <alpha-value>)'
+      },
+      grayscale: {
+        'primary': 'hsl(var(--grayscale-primary) / <alpha-value>)',
+        'secondary': 'hsl(var(--grayscale-secondary) / <alpha-value>)'
+      }
     },
+    // extend: {
+    //   backgroundImage: {
+    //     'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+    //     'gradient-conic':
+    //       'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+    //   },
+    // },
   },
   plugins: [require('@tailwindcss/typography')],
 };
