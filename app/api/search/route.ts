@@ -1,4 +1,4 @@
-import { SanityDocument } from 'next-sanity';
+import { Post_SanityDocument } from '@/components/Post';
 import { sanityFetch } from '@/sanity/lib/fetch';
 import { SEARCH_QUERY } from '@/sanity/lib/queries';
 import { NextRequest /**, NextResponse */ } from 'next/server';
@@ -9,7 +9,7 @@ export async function GET(req: NextRequest /**, res: NextResponse*/) {
   const params = new URLSearchParams(url.search);
   const searchString = params.get('query');
 
-  const data = await sanityFetch<SanityDocument[]>({
+  const data = await sanityFetch<Post_SanityDocument[]>({
     query: SEARCH_QUERY,
     params: { queryString: searchString },
   });

@@ -17,7 +17,7 @@ export const getRequestWithNativeFetch = async (
 };
 
 export default function SearchBar() {
-  const [searchString, setSearchString] = useState<string>('');
+  const [searchString, setSearchString] = useState<string>("");
   const [searchResults, setSearchResults] = useState<Post_SanityDocument[]>([]);
   const [hasCompleted, setHasCompleted] = useState(false);
 
@@ -41,8 +41,9 @@ export default function SearchBar() {
         setHasCompleted(true);
       }
     }
-
-    void getPosts(searchString);
+    if (searchString !== "") {
+      void getPosts(searchString);
+    }
   }, [searchString]);
 
   return (

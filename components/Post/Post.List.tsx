@@ -1,7 +1,7 @@
-import { SanityDocument } from 'next-sanity';
+import { Post_SanityDocument } from './types';
 import PostCard from './Post.Card';
 
-export default function PostList({ posts }: { posts: SanityDocument[] }) {
+export default function PostList({ posts }: { posts: Post_SanityDocument[] }) {
   if (!posts || !posts.length) {
     return null;
   }
