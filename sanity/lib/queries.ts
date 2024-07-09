@@ -18,8 +18,8 @@ export const SEARCH_QUERY = groq`*[_type in ['post', 'author', 'category'] &&
     (
         body[].children[].text match $queryString + '*' ||
         title match $queryString + '*' || 
-        name match $queryString + '*' || 
-    ) && ~(_id in path('drafts.**'))] | order(publishedAt desc) [0..5]{
+        name match $queryString + '*') && 
+        !(_id in path('drafts.**'))] | order(publishedAt desc) [0..5]{
         _id,
         body,
         title,
