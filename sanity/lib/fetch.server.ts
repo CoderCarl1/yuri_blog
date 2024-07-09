@@ -1,6 +1,5 @@
 import type { ClientPerspective, QueryParams } from 'next-sanity';
 import { draftMode } from 'next/headers';
-
 import { client } from './client';
 import { token } from './token';
 
