@@ -15,7 +15,6 @@ export default function Post({ post, encodeDataAttribute }: TPost) {
   if (!isPostSanityDocument(post)) {
     return notFound();
   }
-  console.log('its a post', typeof post);
 
   const { title = '', mainImage, mainImageMetaData, body } = post;
 

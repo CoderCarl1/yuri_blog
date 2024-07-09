@@ -1,5 +1,5 @@
 import { Post_SanityDocument } from '@/components/Post';
-import { sanityFetch } from '@/sanity/lib/fetch';
+import { sanityFetch } from '@/sanity/lib/fetch.server';
 import { SEARCH_QUERY } from '@/sanity/lib/queries';
 import { NextRequest /**, NextResponse */ } from 'next/server';
 

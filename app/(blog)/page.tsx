@@ -1,4 +1,4 @@
-import { sanityFetch } from '@/sanity/lib/fetch';
+import { sanityFetch } from '@/sanity/lib/fetch.server';
 import { POSTS_QUERY } from '@/sanity/lib/queries';
 import { PostList, Post_SanityDocument } from '@/components/Post';
 

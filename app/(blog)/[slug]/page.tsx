@@ -5,7 +5,7 @@ import { POSTS_QUERY, POST_QUERY } from '@/sanity/lib/queries';
 import { Post } from '@/components/Post';
 import type { Post_SanityDocument } from '@/components/Post';
 
-import { sanityFetch } from '@/sanity/lib/fetch';
+import { sanityFetch } from '@/sanity/lib/fetch.server';
 import Main from '@/components/Main';
 
 export async function generateStaticParams() {
@@ -16,7 +16,6 @@ export async function generateStaticParams() {
       stega: false,
     },
   );
-  console.log('POSTS', posts);
 
   return posts.map((post: Post_SanityDocument) => ({
     slug: post.slug,
