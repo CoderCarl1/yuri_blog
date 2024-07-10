@@ -6,14 +6,28 @@ export default defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
-      type: 'string',
+      name: 'primaryColor',
+      title: 'Primary Color',
+      type: 'color',
+      options: {
+        disableAlpha: true
+      }
     }),
     defineField({
-      name: 'description',
-      title: 'Description',
-      type: 'text',
+      name: 'secondaryColor',
+      title: 'Secondary Color',
+      type: 'color',
+      options: {
+        disableAlpha: true
+      }
+    }),
+    defineField({
+      name: 'accentColor',
+      title: 'Accent Color',
+      type: 'color',
+      options: {
+        disableAlpha: true
+      }
     }),
   ],
 });
