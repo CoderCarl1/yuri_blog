@@ -1,9 +1,9 @@
 import type { EncodeDataAttributeCallback } from '@sanity/react-loader';
 import Image from '../Image';
 import PortableText from '../portableText/index';
-import { isPostSanityDocument } from '@/types/guard';
 import { notFound } from 'next/navigation';
-import type { Post_SanityDocument } from './';
+import { isPost } from '@/types/guard';
+import type { Post_SanityDocument } from '@/types';
 
 type TPost = {
   post: Post_SanityDocument;
@@ -12,20 +12,21 @@ type TPost = {
 
 export default function Post({ post, encodeDataAttribute }: TPost) {
   // TODO: post not found if body not present. Add email to owner about this.
-  if (!isPostSanityDocument(post)) {
+  if (!isPost(post)) {
     return notFound();
   }
 
-  const { title = '', mainImage, mainImageMetaData, body } = post;
+  const { title, postImage: {image, metaData}, body } = post;
+
 
   return (
     <>
-      {mainImage ? (
+      {image ? (
         <Image
-          metaData={mainImageMetaData}
+          metaData={metaData}
           dataSanity={encodeDataAttribute?.('coverImage')}
-          image={mainImage}
-          alt={mainImage?.alt}
+          image={image}
+          alt={image?.alt}
           classNames="mb-4"
         />
       ) : null}

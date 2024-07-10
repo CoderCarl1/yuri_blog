@@ -1,9 +1,8 @@
 'use server';
 import { urlForImage } from '@/sanity/lib/utils';
-// import { getImageDimensions } from '@sanity/asset-utils';
-
 import Image from 'next/image';
 import cx from 'classnames';
+import { isImage } from '@/types/guard';
 
 interface ImageProps {
   image?: SanityImage;
@@ -37,7 +36,7 @@ export default async function Main({
 }: ImageProps) {
   // Check if value is provided and extract the image data from it
   const finalImage = value || image;
-  if (!finalImage?.asset?._ref) {
+  if (!isImage(finalImage)) {
     return null;
   }
 
@@ -73,7 +72,7 @@ export default async function Main({
         'relative w-full overflow-hidden rounded-[3px] bg-gray-50',
         classNames,
       )}
-      style={{ height: finalHeight, width: finalWidth }}
+      style={{ height: `min(100%, ${finalHeight})`, width: `min(100%, ${finalWidth})` }}
       data-sanity={dataSanity}
     >
       {/* If we want to add text over the image we can use 
@@ -82,7 +81,7 @@ export default async function Main({
         color: metadata.palette.dominant.foreground
       */}
       <Image
-        className="absolute h-full w-full object-left not-prose"
+        className="absolute not-prose block min-h-[140px]"
         alt={finalAlt}
         width={finalWidth}
         height={finalHeight}

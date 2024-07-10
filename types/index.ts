@@ -1,13 +1,7 @@
-import type { PortableTextBlock } from 'next-sanity';
-import type { Image } from 'sanity';
+import type { Author, Author_SanityDocument } from './author';
+import type { Category } from './category';
+import type { Post, Post_SanityDocument } from './post';
+import type {SearchResults_SanityDocument} from './search';
+import type {Settings} from './siteSettings';
 
-export interface ProjectPayload {
-  client?: string;
-  coverImage?: Image;
-  description?: PortableTextBlock[];
-  overview?: PortableTextBlock[];
-  site?: string;
-  slug: string;
-  tags?: string[];
-  title?: string;
-}
+export type {Post, Post_SanityDocument, Author, Author_SanityDocument,Category, SearchResults_SanityDocument, Settings}

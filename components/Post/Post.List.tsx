@@ -1,4 +1,4 @@
-import { Post_SanityDocument } from './types';
+import type { Post_SanityDocument } from '@/types';
 import PostCard from './Post.Card';
 
 export default function PostList({ posts }: { posts: Post_SanityDocument[] }) {

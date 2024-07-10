@@ -1,30 +1,29 @@
 import { InternalLink } from '../Link';
 import Image from '../Image';
-import { Post_SanityDocument } from './types';
-import { isPostSanityDocument } from '@/types/guard';
+import type { Post_SanityDocument } from '@/types';
+import { isPost } from '@/types/guard';
 
 export default function PostCard({ post }: { post: Post_SanityDocument }) {
-  if (!isPostSanityDocument) {
+  if (!isPost) {
     return null;
   }
-  const { _id, slug, title, mainImage, mainImageMetaData } = post;
+  console.log("post", post)
+  const { slug, title, postImage: {image, metaData} } = post;
 
   return (
     <InternalLink
-      key={_id}
       href={slug}
-      classNames="p-4 hover:bg-blue-50 flex justify-between align-center grow"
+      classNames="p-4"
     >
       {/* <h2 className="p-4 hover:bg-blue-50">{title}</h2> */}
-      <h2>{title}</h2>
-      {mainImage && (
+      {image && (
         <Image
-          metaData={mainImageMetaData}
-          image={mainImage}
-          alt={mainImage?.alt}
-          classNames="mb-4"
-          width={150}
-          height={150}
+          metaData={metaData}
+          image={image}
+          alt={image?.alt}
+          classNames="mb-4 w-full h-full object-fill"
+          width={800}
+          // caption={title}
         />
       )}
     </InternalLink>

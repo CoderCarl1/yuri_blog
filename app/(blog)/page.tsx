@@ -1,6 +1,8 @@
 import { sanityFetch } from '@/sanity/lib/fetch.server';
 import { POSTS_QUERY } from '@/sanity/lib/queries';
-import { PostList, Post_SanityDocument } from '@/components/Post';
+import { PostList } from '@/components/Post';
+import type { Post_SanityDocument } from '@/types';
+
 
 export default async function Page() {
   const posts = await sanityFetch<Post_SanityDocument[]>({

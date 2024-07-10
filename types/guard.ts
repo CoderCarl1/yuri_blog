@@ -1,4 +1,5 @@
-import { Post_SanityDocument } from '@/components/Post/types';
+import type { Post } from './post';
+import type {Author} from './author';
 import type { Image, ImageMetadata } from 'sanity';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -32,17 +33,30 @@ export function isAssetMetadataType(meta: any): meta is ImageMetadata {
   );
 }
 
-export function isPostSanityDocument(
+export function isPost(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   doc: any,
-): doc is Post_SanityDocument {
+): doc is Post {
   return (
     isObject(doc) &&
-    typeof doc.title === 'string' &&
-    isImage(doc.mainImage) &&
-    isAssetMetadataType(doc.mainImageMetaData) &&
-    typeof doc.slug === 'string' &&
-    typeof doc._id === 'string' &&
+    (typeof doc.title === 'string' && doc.title) &&
+    isObject(doc.postImage) && isImage(doc.postImage.image) &&
+    isAssetMetadataType(doc.postImage.metaData) &&
+    (typeof doc.slug === 'string' && doc.slug) &&
+    (typeof doc._id === 'string' && doc._id) &&
     Array.isArray(doc.body)
   );
+}
+
+export function isAuthor(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  doc: any
+): doc is Author {
+  return (
+    isObject(doc) &&
+    (typeof doc.name === 'string' && doc.name )&&
+    isObject(doc.authorImage) && isImage(doc.authorImage.image) &&
+    isAssetMetadataType(doc.authorImage.metaData) &&
+    Array.isArray(doc.bio)
+  )
 }

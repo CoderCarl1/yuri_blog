@@ -1,4 +1,4 @@
-import { Post_SanityDocument } from '@/components/Post';
+import type { Post_SanityDocument } from '@/types';
 
 export async function searchAPI(
     str: string,
@@ -10,7 +10,6 @@ export async function searchAPI(
 
     try {
         results = await apiFetch<Post_SanityDocument[]>(url, signal);
-
     } catch (err) {
         console.log(err);
     } finally {
