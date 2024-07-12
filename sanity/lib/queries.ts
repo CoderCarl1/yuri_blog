@@ -13,6 +13,7 @@ export const POSTS_QUERY = groq`*[_type == "post" && defined(slug)]{
     "type": _type
 }`;
 
+// Add metadata for site here? or generate it through function?
 export const POST_QUERY = groq`*[_type == "post" && slug.current == $slug][0]{
     _id,
     body,
@@ -57,4 +58,6 @@ export const SEARCH_QUERY = groq`*[_type in ['post', 'author'] &&
           ),
      }[0...5]`;
 
-export const SETTINGS_QUERY = groq`*[_type == "siteSettings"]`;
+export const SETTINGS_QUERY = groq`*[_type in ["siteSettings", "colors", "navigation"]]{
+    ...
+}`;

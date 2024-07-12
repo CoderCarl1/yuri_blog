@@ -4,10 +4,32 @@
 
 @layer base {
   :root {
-    --color-primary: 188 86% 53%;
-    --color-secondary: 188 86% 53%;
-    --color-accent: 188 86% 53%;
-    --grayscale-primary: 60 9% 98%;
-    --grayscale-secondary: 24 10% 10%;
+    --color-primary: 212 100% 48%;
+    --color-primary-text: 212 100% 28%;
+    --color-primary-hover: 212 100% 58%;
+    --color-primary-active: 212 100% 38%;
+    --color-secondary: 274 71% 43%;
+    --color-secondary-text: 274 71% 23%;
+    --color-secondary-hover: 274 71% 53%;
+    --color-secondary-active: 274 71% 33%;
+    --color-accent: 17 94% 58%;
+    --color-accent-text: 17 94% 38%;
+    --color-accent-hover: 17 94% 68%;
+    --color-accent-active: 17 94% 48%;
+    --grayscale-light: 60 9% 98%;
+    --grayscale-dark: 24 10% 10%;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply border border-transparent rounded-md p-4;
+  }
+  .btn-primary {
+    @apply bg-primary text-primary-text hover:bg-primary-hover hover:border-primary-active hover:text-primary-text focus:bg-primary-active focus:text-primary-text focus:outline-1 focus:outline-offset-4 focus:outline-primary-active active:bg-primary-active active:text-primary-text active:scale-[0.99];
+  }
+
+  .link {
+    @apply underline underline-offset-2 text-primary-text hover:text-primary-hover active:text-primary-active focus:text-primary-active;
   }
 }

@@ -1,5 +1,5 @@
-import type { Post } from './post';
-import type {Author} from './author';
+import type { Post } from './post.type';
+import type {Author} from './author.type';
 import type { Image, ImageMetadata } from 'sanity';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

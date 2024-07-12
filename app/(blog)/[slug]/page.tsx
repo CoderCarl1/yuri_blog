@@ -10,8 +10,17 @@ import type { Post_SanityDocument } from '@/types';
 import { sanityFetch } from '@/sanity/lib/fetch.server';
 import Main from '@/components/Main';
 
-export async function generateMetaData() {
+// export async function generateMetadata({
+//   params: { slug }
+//  }: {
+//   params: { slug: string };
+//  }): Promise<Metadata> {
+//   const metadata = await createMetadata('page', slug);
+//   return metadata;
+//  }
 
+export const metadata: Metadata = {
+  title: "slugged"
 }
 
 export async function generateStaticParams() {

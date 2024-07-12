@@ -10,6 +10,20 @@ export default defineType({
   // liveEdit: true,
   fields: [
     defineField({
+      name: 'title',
+      description: 'This field is the title of your personal website.',
+      title: 'Title',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'description',
+      description: 'what the website is about.',
+      title: 'description',
+      type: 'string',
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: 'ogImage',
       title: 'Open Graph Image',
       type: 'image',
@@ -17,13 +31,6 @@ export default defineType({
       options: {
         hotspot: true,
       },
-    }),
-    defineField({
-      name: 'title',
-      description: 'This field is the title of your personal website.',
-      title: 'Title',
-      type: 'string',
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'overview',

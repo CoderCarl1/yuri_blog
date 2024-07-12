@@ -1,7 +1,7 @@
-import type { Author, Author_SanityDocument } from './author';
-import type { Category } from './category';
-import type { Post, Post_SanityDocument } from './post';
-import type {SearchResults_SanityDocument} from './search';
-import type {Settings} from './siteSettings';
+import type { Author, Author_SanityDocument } from './author.type';
+import type { Category } from './category.type';
+import type { Post, Post_SanityDocument } from './post.type';
+import type {SearchResults_SanityDocument} from './search.type';
+import type {Settings} from './siteSettings.type';
 
 export type {Post, Post_SanityDocument, Author, Author_SanityDocument,Category, SearchResults_SanityDocument, Settings}

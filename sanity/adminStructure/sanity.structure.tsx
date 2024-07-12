@@ -5,7 +5,7 @@ import { StructureBuilder } from 'sanity/structure';
  */
 
 const settingsChildren = [
-  { title: 'Metadata', id: 'siteSettings' },
+  { title: 'General', id: 'siteSettings' },
   { title: 'Site Colors', id: 'colors' },
   { title: 'Main Navigation', id: 'navigation' },
 ];
@@ -17,10 +17,13 @@ function SiteSettings(S: StructureBuilder) {
       S.list()
         .title('Settings Documents')
         .items(
-          settingsChildren.map(({ id, title }) =>
-            S.listItem()
-              .title(title)
-              .child(S.document().schemaType(id).documentId(id)),
+          settingsChildren.map(({ id, title }) => {
+            console.log("id", id)
+            console.log("title", title)
+            return S.listItem()
+            .title(title)
+            .child(S.document().schemaType(id).documentId(id))
+          } 
           ),
         ),
     );

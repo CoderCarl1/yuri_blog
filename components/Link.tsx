@@ -65,6 +65,7 @@ type LinkProps = {
   classNames?: string;
 } & React.HTMLProps<HTMLAnchorElement>;
 
+
 export const InternalLink = ({
   href,
   children,
@@ -72,7 +73,7 @@ export const InternalLink = ({
   ...props
 }: LinkProps) => (
   <Link
-    className={cx('underline transition hover:opacity-50', classNames)}
+    className={cx('link', classNames)}
     href={href}
     prefetch={true}
     {...props}
@@ -88,7 +89,7 @@ export const ExternalLink = ({
   ...props
 }: LinkProps) => (
   <Link
-    className={cx('underline transition hover:opacity-50', classNames)}
+    className={cx('link', classNames)}
     href={href}
     prefetch={false}
     rel={'noopener nofollow noreferrer'}
@@ -105,10 +106,7 @@ export const ButtonLink = ({
   ...props
 }: LinkProps) => (
   <Link
-    className={cx(
-      'rounded-md p-4 bg-blue-400 text-white block border border-transparent hover:bg-indigo-200 hover:border-indigo-500 hover:text-black focus:bg-indigo-200 focus:border-indigo-500 focus:text-black active:bg-indigo-200 active:border-indigo-600 active:text-black',
-      classNames,
-    )}
+    className={cx('btn btn-primary',classNames)}
     href={href}
     prefetch={true}
     {...props}

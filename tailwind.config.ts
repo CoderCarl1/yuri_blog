@@ -9,26 +9,32 @@ const config: Config = {
   theme: {
     colors: {
       primary: {
-        400: 'hsl(var(--color-primary) / <alpha-value>)',
+        DEFAULT: 'hsl(var(--color-primary) / <alpha-value>)',
+        text: 'hsl(var(--color-primary-text) / <alpha-value>)',
+        hover: 'hsl(var(--color-primary-hover) / <alpha-value>)',
+        active: 'hsl(var(--color-primary-active) / <alpha-value>)',
       },
       secondary: {
-        400: 'hsl(var(--color-secondary) / <alpha-value>)',
+        DEFAULT: 'hsl(var(--color-secondary) / <alpha-value>)',
+        text: 'hsl(var(--color-secondary-text) / <alpha-value>)',
+        hover: 'hsl(var(--color-secondary-hover) / <alpha-value>)',
+        active: 'hsl(var(--color-secondary-active) / <alpha-value>)',
       },
       accent: {
-        400: 'hsl(var(--color-accent) / <alpha-value>)',
+        DEFAULT: 'hsl(var(--color-accent) / <alpha-value>)',
+        text: 'hsl(var(--color-accent-text) / <alpha-value>)',
+        hover: 'hsl(var(--color-accent-hover) / <alpha-value>)',
+        active: 'hsl(var(--color-accent-active) / <alpha-value>)',
       },
       grayscale: {
-        primary: 'hsl(var(--grayscale-primary) / <alpha-value>)',
-        secondary: 'hsl(var(--grayscale-secondary) / <alpha-value>)',
+        light: 'hsl(var(--color-grayscale-light) / <alpha-value>)',
+        DEFAULT: 'hsl(0 0% 15%)',
+        dark: 'hsl(var(--color-grayscale-dark) / <alpha-value>)',
       },
+      transparent: {
+        DEFAULT:  'hsl(0 0% 100% / 0)',
+      }
     },
-    // extend: {
-    //   backgroundImage: {
-    //     'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-    //     'gradient-conic':
-    //       'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
-    //   },
-    // },
   },
   plugins: [require('@tailwindcss/typography')],
 };

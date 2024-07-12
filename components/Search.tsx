@@ -38,7 +38,7 @@ export default function SearchBar() {
   }, [debouncedSearchString]);
 
   return (
-    <div className='relative text-grayscale-secondary bg-grayscale-primary '>
+    <div className='relative text-grayscale-light-text bg-grayscale-light '>
       <input
         type="text"
         value={searchString}
@@ -51,7 +51,7 @@ export default function SearchBar() {
       <div className="
     [ overflow-y-scroll overscroll-contain absolute left-0 z-10 rounded-b-md ]
     [ max-h-40 w-full ]
-    [ bg-grayscale-primary shadow-lg ]">
+    [ shadow-lg ]">
         {loading && <div>loading...</div>}
         {!loading && searchResults.length > 0 && <SearchOutput results={searchResults} />}
       </div>
@@ -64,7 +64,7 @@ function SearchOutput({ results = [] }: { results: SearchResults_SanityDocument[
 
   return (
     <>
-      <span className='text-xs font-bold px-2 border-y-grayscale-secondary/60'>Results</span>
+      <span className='text-xs font-bold px-2 border-y-grayscale-dark/60'>Results</span>
       {
         data.length > 0 &&
         data.map((doc) => {

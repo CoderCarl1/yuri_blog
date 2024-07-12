@@ -7,7 +7,6 @@ export default function PostCard({ post }: { post: Post_SanityDocument }) {
   if (!isPost) {
     return null;
   }
-  console.log("post", post)
   const { slug, title, postImage: {image, metaData} } = post;
 
   return (
