@@ -1,4 +1,6 @@
 import type { Post_SanityDocument } from '@/types';
+import {client} from './client';
+import { SanityDocument } from 'sanity';
 
 export async function searchAPI(
     str: string,
@@ -31,3 +33,20 @@ export async function apiFetch<QueryResponse>(
   
     return response.json() as Promise<QueryResponse>;
   };
+
+  export async function documentFetch(
+    id: string = ""
+  ): Promise<SanityDocument | undefined>
+  {
+    let results;
+
+    try {
+        results = await client.getDocument(id)
+        console.log("document", results)
+    } catch (err) {
+        console.log(err);
+
+    } finally {
+        return results;
+    }
+  }

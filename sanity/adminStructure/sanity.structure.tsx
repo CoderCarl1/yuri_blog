@@ -1,4 +1,5 @@
-import { StructureBuilder } from 'sanity/structure';
+import { StructureBuilder, component } from 'sanity/structure';
+import PageBox from '../components/PageBox';
 
 /**
  * Site Settings and its children
@@ -12,21 +13,12 @@ const settingsChildren = [
 
 function SiteSettings(S: StructureBuilder) {
   return S.listItem()
-    .title('Site Settings')
+    .title('Site Settings')    
     .child(
-      S.list()
-        .title('Settings Documents')
-        .items(
-          settingsChildren.map(({ id, title }) => {
-            console.log("id", id)
-            console.log("title", title)
-            return S.listItem()
-            .title(title)
-            .child(S.document().schemaType(id).documentId(id))
-          } 
-          ),
-        ),
-    );
+      S.component()
+      .component(() => <PageBox structure={S} childrenPages={settingsChildren}/>)
+      .title("Site Settings")
+    )
 }
 
 // Pages
@@ -96,8 +88,6 @@ function otherCategories(S: StructureBuilder) {
   );
 }
 
-// const documentsToInclude = ['post', 'language']
-
 export default function main(S: StructureBuilder) {
   const a = S.list()
     .title('Blog')
@@ -115,9 +105,3 @@ export default function main(S: StructureBuilder) {
 
   return a;
 }
-
-// const Structures = {
-//   main
-// }
-
-// export default Structures;

@@ -34,7 +34,8 @@ export default defineType({
       title: 'Secondary Text Color',
       type: 'color',
       options: {
-        disableAlpha: true
+        disableAlpha: true,
+        
       }
     }),
     defineField({

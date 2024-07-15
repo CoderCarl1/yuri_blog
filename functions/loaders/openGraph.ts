@@ -1,5 +1,5 @@
 
-type OGParams = {
+type createOpenGraphDataParams = {
     title: string;
     description: string;
     type: string;
@@ -9,24 +9,19 @@ type OGParams = {
 }
 
 
-export function createOpenGraphData(){
+export function createOpenGraphData({}: ){
 
 }
 
-type OGImageParams = {
+type createOpenGraphImageParams = {
     title: string;
     subtitle: string;
     bgColor: string;
     domain: string;
 }
 
-export function createOpenGraphImage({title, subtitle, bgColor, domain}: OGImageParams){
+export function createOpenGraphImage({title, subtitle, bgColor, domain}: createOpenGraphImageParams){
     return {
-        title: ,
-        description: ,
-        type: ,
-        locale:
-        url: 
-        siteName:
+      
     }
 }
