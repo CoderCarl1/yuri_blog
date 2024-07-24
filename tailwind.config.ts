@@ -32,8 +32,8 @@ const config: Config = {
         dark: 'hsl(var(--color-grayscale-dark) / <alpha-value>)',
       },
       transparent: {
-        DEFAULT:  'hsl(0 0% 100% / 0)',
-      }
+        DEFAULT: 'hsl(0 0% 100% / 0)',
+      },
     },
   },
   plugins: [require('@tailwindcss/typography')],

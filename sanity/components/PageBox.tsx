@@ -17,7 +17,10 @@ const Main: React.FC<MainProps> = ({ childrenPages, structure }) => {
   const [selectedItem, setSelectedItem] = useState<TchildPage | null>(null);
 
   const handleSelect = (event: React.SyntheticEvent<HTMLButtonElement>) => {
-    const { textContent, dataset: { id } } = event.currentTarget;
+    const {
+      textContent,
+      dataset: { id },
+    } = event.currentTarget;
 
     if (textContent && id) {
       setSelectedItem({ title: textContent, id });

@@ -16,8 +16,11 @@ export default function Post({ post, encodeDataAttribute }: TPost) {
     return notFound();
   }
 
-  const { title, postImage: {image, metaData}, body } = post;
-
+  const {
+    title,
+    postImage: { image, metaData },
+    body,
+  } = post;
 
   return (
     <>

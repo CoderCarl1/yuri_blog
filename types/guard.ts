@@ -1,5 +1,5 @@
 import type { Post } from './post.type';
-import type {Author} from './author.type';
+import type { Author } from './author.type';
 import type { Image, ImageMetadata } from 'sanity';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -39,24 +39,30 @@ export function isPost(
 ): doc is Post {
   return (
     isObject(doc) &&
-    (typeof doc.title === 'string' && doc.title) &&
-    isObject(doc.postImage) && isImage(doc.postImage.image) &&
+    typeof doc.title === 'string' &&
+    doc.title &&
+    isObject(doc.postImage) &&
+    isImage(doc.postImage.image) &&
     isAssetMetadataType(doc.postImage.metaData) &&
-    (typeof doc.slug === 'string' && doc.slug) &&
-    (typeof doc._id === 'string' && doc._id) &&
+    typeof doc.slug === 'string' &&
+    doc.slug &&
+    typeof doc._id === 'string' &&
+    doc._id &&
     Array.isArray(doc.body)
   );
 }
 
 export function isAuthor(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  doc: any
+  doc: any,
 ): doc is Author {
   return (
     isObject(doc) &&
-    (typeof doc.name === 'string' && doc.name )&&
-    isObject(doc.authorImage) && isImage(doc.authorImage.image) &&
+    typeof doc.name === 'string' &&
+    doc.name &&
+    isObject(doc.authorImage) &&
+    isImage(doc.authorImage.image) &&
     isAssetMetadataType(doc.authorImage.metaData) &&
     Array.isArray(doc.bio)
-  )
+  );
 }

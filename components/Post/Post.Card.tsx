@@ -7,13 +7,14 @@ export default function PostCard({ post }: { post: Post_SanityDocument }) {
   if (!isPost) {
     return null;
   }
-  const { slug, title, postImage: {image, metaData} } = post;
+  const {
+    slug,
+    title,
+    postImage: { image, metaData },
+  } = post;
 
   return (
-    <InternalLink
-      href={slug}
-      classNames="p-4"
-    >
+    <InternalLink href={slug} classNames="p-4">
       {/* <h2 className="p-4 hover:bg-blue-50">{title}</h2> */}
       {image && (
         <Image

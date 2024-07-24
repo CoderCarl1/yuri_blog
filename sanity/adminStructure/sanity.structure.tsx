@@ -13,12 +13,14 @@ const settingsChildren = [
 
 function SiteSettings(S: StructureBuilder) {
   return S.listItem()
-    .title('Site Settings')    
+    .title('Site Settings')
     .child(
       S.component()
-      .component(() => <PageBox structure={S} childrenPages={settingsChildren}/>)
-      .title("Site Settings")
-    )
+        .component(() => (
+          <PageBox structure={S} childrenPages={settingsChildren} />
+        ))
+        .title('Site Settings'),
+    );
 }
 
 // Pages

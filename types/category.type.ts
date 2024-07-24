@@ -1,7 +1,7 @@
-import type { SanityDocument } from "sanity";
+import type { SanityDocument } from 'sanity';
 
 export type Category = {
-    title: string;
-    description: string;
-  }
-  export type Category_SanityDocument = SanityDocument & Category;
+  title: string;
+  description: string;
+};
+export type Category_SanityDocument = SanityDocument & Category;

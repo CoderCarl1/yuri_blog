@@ -7,7 +7,7 @@ import { structureTool } from 'sanity/structure';
 import { presentationTool } from 'sanity/presentation';
 import { visionTool } from '@sanity/vision';
 import { media } from 'sanity-plugin-media';
-import {colorInput} from '@sanity/color-input';
+import { colorInput } from '@sanity/color-input';
 
 import { apiVersion, dataset, projectId } from './sanity/lib/api';
 import { schema } from './sanity/schema';

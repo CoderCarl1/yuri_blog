@@ -1,52 +1,48 @@
 import type { Post_SanityDocument } from '@/types';
-import {client} from './client';
+import { client } from './client';
 import { SanityDocument } from 'sanity';
 
 export async function searchAPI(
-    str: string,
-    signal: AbortSignal | null | undefined = null,
-): Promise<Post_SanityDocument[]>{
+  str: string,
+  signal: AbortSignal | null | undefined = null,
+): Promise<Post_SanityDocument[]> {
+  const url = `/api/search?query=${str}`;
+  let results;
 
-    const url = `/api/search?query=${str}`;
-    let results;
-
-    try {
-        results = await apiFetch<Post_SanityDocument[]>(url, signal);
-    } catch (err) {
-        console.log(err);
-    } finally {
-        return results || [];
-    }
-
+  try {
+    results = await apiFetch<Post_SanityDocument[]>(url, signal);
+  } catch (err) {
+    console.log(err);
+  } finally {
+    return results || [];
+  }
 }
 
 export async function apiFetch<QueryResponse>(
-    url: string,
-    signal: AbortSignal | null | undefined = null,
-  ){
-    console.log("fetch request made")
-    const response = await fetch(url, { signal });
-  
-    if (!response.ok) {
-      throw new Error(`HTTP error: Status ${response.status}`);
-    }
-  
-    return response.json() as Promise<QueryResponse>;
-  };
+  url: string,
+  signal: AbortSignal | null | undefined = null,
+) {
+  console.log('fetch request made');
+  const response = await fetch(url, { signal });
 
-  export async function documentFetch(
-    id: string = ""
-  ): Promise<SanityDocument | undefined>
-  {
-    let results;
-
-    try {
-        results = await client.getDocument(id)
-        console.log("document", results)
-    } catch (err) {
-        console.log(err);
-
-    } finally {
-        return results;
-    }
+  if (!response.ok) {
+    throw new Error(`HTTP error: Status ${response.status}`);
   }
+
+  return response.json() as Promise<QueryResponse>;
+}
+
+export async function documentFetch(
+  id: string = '',
+): Promise<SanityDocument | undefined> {
+  let results;
+
+  try {
+    results = await client.getDocument(id);
+    console.log('document', results);
+  } catch (err) {
+    console.log(err);
+  } finally {
+    return results;
+  }
+}

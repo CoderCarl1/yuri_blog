@@ -6,7 +6,6 @@ import { POSTS_QUERY, POST_QUERY } from '@/sanity/lib/queries';
 import { Post } from '@/components/Post';
 import type { Post_SanityDocument } from '@/types';
 
-
 import { sanityFetch } from '@/sanity/lib/fetch.server';
 import Main from '@/components/Main';
 
@@ -20,8 +19,8 @@ import Main from '@/components/Main';
 //  }
 
 export const metadata: Metadata = {
-  title: "slugged"
-}
+  title: 'slugged',
+};
 
 export async function generateStaticParams() {
   const posts: Post_SanityDocument[] = await sanityFetch<Post_SanityDocument[]>(

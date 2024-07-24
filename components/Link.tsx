@@ -65,7 +65,6 @@ type LinkProps = {
   classNames?: string;
 } & React.HTMLProps<HTMLAnchorElement>;
 
-
 export const InternalLink = ({
   href,
   children,
@@ -106,7 +105,7 @@ export const ButtonLink = ({
   ...props
 }: LinkProps) => (
   <Link
-    className={cx('btn btn-primary',classNames)}
+    className={cx('btn btn-primary', classNames)}
     href={href}
     prefetch={true}
     {...props}

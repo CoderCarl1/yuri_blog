@@ -3,7 +3,5 @@ export default function Button({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  <button className="btn btn-primary">
-    {children}
-  </button>;
+  <button className="btn btn-primary">{children}</button>;
 }

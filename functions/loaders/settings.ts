@@ -3,20 +3,19 @@ import { Settings } from '@/types';
 import { SETTINGS_QUERY } from '@/sanity/lib/queries';
 import { SiteColors, SettingsMap, colorType } from '@/types/siteSettings.type';
 
-
 export const getSettings = async () => {
-    const result = await sanityFetch<Settings>({
-        query: SETTINGS_QUERY,
-        perspective: 'published',
-        stega: false,
-      });
+  const result = await sanityFetch<Settings>({
+    query: SETTINGS_QUERY,
+    perspective: 'published',
+    stega: false,
+  });
 
-      const sortedResults = result.reduce((acc: SettingsMap, item) => {
-        acc[item._id] = item;
-        return acc;
-      }, {})
-      return sortedResults;
-}
+  const sortedResults = result.reduce((acc: SettingsMap, item) => {
+    acc[item._id] = item;
+    return acc;
+  }, {});
+  return sortedResults;
+};
 
 // export const setUserPreferences = (settings: SettingsMap) => {
 //   const retval: Record<[k: string]: string > = {};
@@ -28,7 +27,7 @@ export const getSettings = async () => {
 // }
 
 export const generateStyles = (colors: SiteColors) => {
-  const styleLines = Object.keys(colors).map(key => {
+  const styleLines = Object.keys(colors).map((key) => {
     const color = colors[key as keyof SiteColors] as colorType;
     if (color && color.hsl) {
       const { h, s, l } = color.hsl;
@@ -37,7 +36,7 @@ export const generateStyles = (colors: SiteColors) => {
       const hoverValue = generateStateColor(color.hsl, 'hover');
       const textValue = generateStateColor(color.hsl, 'text');
 
-      key = key.replace('_','-');
+      key = key.replace('_', '-');
       return `
         --color-${key}: ${hslValue};
         --color-${key}-active: ${activeValue};
@@ -51,14 +50,17 @@ export const generateStyles = (colors: SiteColors) => {
   return styleLines.join(' ');
 };
 
-function generateStateColor({ h, s, l }: { h: number; s: number; l: number }, state: string) {
+function generateStateColor(
+  { h, s, l }: { h: number; s: number; l: number },
+  state: string,
+) {
   switch (state) {
     case 'active':
-      return `${h} ${s * 100}% ${(l * 100) - 10}%`;
+      return `${h} ${s * 100}% ${l * 100 - 10}%`;
     case 'hover':
-      return `${h} ${s * 100}% ${(l * 100) + 10}%`;
+      return `${h} ${s * 100}% ${l * 100 + 10}%`;
     case 'text':
-      return `${h} ${s * 100}% ${(l * 100) - 20}%`;
+      return `${h} ${s * 100}% ${l * 100 - 20}%`;
     default:
       return `${h} ${s * 100}% ${l * 100}%`;
   }
