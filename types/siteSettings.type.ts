@@ -15,15 +15,29 @@ export type SiteColors = SanityDocument & {
 export type SiteSettings = SanityDocument & {
   title?: string;
   description?: PortableTextBlock[];
-  ogImage?: SanityImage;
+  favicon?: SanityImage;
 };
 
+export type SiteSEO = SanityDocument & {
+  overview?:  PortableTextBlock[];
+  ogImage?: SanityImage;
+}
+
+export type SiteSocials = SanityDocument & {
+  facebook?: string;
+  twitter?: string;
+  instagram?: string;
+}
+
 export type SettingsMap = {
-  [key: string]: SiteSettings | SiteColors | undefined; // Add index signature
-  siteSettings?: SiteSettings;
-  colors?: SiteColors;
+  // Required index signature
+  [key: string]: SiteSettings | SiteColors | SiteSEO | undefined;
+  siteSettings: SiteSettings;
+  colors: SiteColors;
+  SiteSEO: SiteSEO;
+  social_media: SiteSocials
 };
-export type Settings = [SiteSettings, SiteColors];
+export type Settings = [SiteColors, SiteSEO, SiteSettings, SiteSocials];
 
 // export interface ProjectPayload {
 //     client?: string;

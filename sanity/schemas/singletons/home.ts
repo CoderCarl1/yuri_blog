@@ -1,13 +1,6 @@
 import { PiHouseBold } from 'react-icons/pi';
 import { defineArrayMember, defineField, defineType } from 'sanity';
 
-/**
- *
- * featured posts
- *  - this is going to be
- *
- */
-
 export default defineType({
   name: 'homepage',
   title: 'Home Page',
@@ -17,60 +10,11 @@ export default defineType({
   // liveEdit: true,
   fields: [
     defineField({
-      name: 'title',
-      description: 'This field is the title of your personal website.',
-      title: 'Title',
-      type: 'string',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'overview',
-      description:
-        'Used both for the <meta> description tag for SEO, and the personal website subheader.',
-      title: 'Description',
-      type: 'array',
-      of: [
-        // Paragraphs
-        defineArrayMember({
-          lists: [],
-          marks: {
-            annotations: [
-              {
-                name: 'link',
-                type: 'object',
-                title: 'Link',
-                fields: [
-                  {
-                    name: 'href',
-                    type: 'url',
-                    title: 'Url',
-                  },
-                ],
-              },
-            ],
-            decorators: [
-              {
-                title: 'Italic',
-                value: 'em',
-              },
-              {
-                title: 'Strong',
-                value: 'strong',
-              },
-            ],
-          },
-          styles: [],
-          type: 'block',
-        }),
-      ],
-      validation: (rule) => rule.max(155).required(),
-    }),
-    defineField({
       name: 'featuredPosts',
       title: 'Featured Posts',
       type: 'array',
       description:
-        'These are the projects that will appear first on your landing page.',
+        'These are the posts that will appear first on your landing page.',
       of: [
         defineArrayMember({
           type: 'reference',
@@ -78,6 +22,7 @@ export default defineType({
         }),
       ],
     }),
+    // TODO: add different layout options
   ],
   preview: {
     select: {

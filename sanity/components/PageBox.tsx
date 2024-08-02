@@ -14,6 +14,8 @@ type MainProps = {
 };
 
 const Main: React.FC<MainProps> = ({ childrenPages, structure }) => {
+  console.log("childrenPages", childrenPages)
+  console.log("structure", structure)
   const [selectedItem, setSelectedItem] = useState<TchildPage | null>(null);
 
   const handleSelect = (event: React.SyntheticEvent<HTMLButtonElement>) => {
@@ -21,7 +23,6 @@ const Main: React.FC<MainProps> = ({ childrenPages, structure }) => {
       textContent,
       dataset: { id },
     } = event.currentTarget;
-
     if (textContent && id) {
       setSelectedItem({ title: textContent, id });
     }
@@ -33,11 +34,12 @@ const Main: React.FC<MainProps> = ({ childrenPages, structure }) => {
 
   return (
     <div>
-      {selectedItem ? (
+      <h1>Site Settings</h1>
+      {/* {selectedItem ? (
         <Box selectedChild={selectedItem} clickHandler={handleBack} />
       ) : (
         <BoxMap arr={childrenPages} clickHandler={handleSelect} />
-      )}
+      )} */}
     </div>
   );
 };
@@ -87,6 +89,7 @@ const BoxComponent: React.FC<BoxComponentProps> = ({ documentId }) => {
       setLoading(true);
       try {
         const doc = await documentFetch(documentId);
+        console.log("doc", doc)
         setData(doc || null);
       } catch (err) {
         setError('Failed to fetch document');
@@ -115,7 +118,7 @@ type RenderDocumentProps = {
 
 const RenderDocument: React.FC<RenderDocumentProps> = ({ document }) => {
   if (!document) return null;
-
+// TODO: add a button to update one of the colors and send to sanity api
   return (
     <div>
       {/* Render each field of the document */}

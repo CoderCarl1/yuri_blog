@@ -64,39 +64,54 @@ export default async function Main({
     (await urlForImage(finalImage).then((func) =>
       func(finalHeight, finalWidth),
     ));
-    console.log("image ", imageUrl)
   if (!imageUrl) return null;
 
-  return (
-    <div
-      className={cx(
-        'relative w-full overflow-hidden rounded-[3px] bg-gray-50',
-        classNames,
-      )}
-      style={{
-        height: `min(100%, ${finalHeight}px)`,
-        width: `min(100%, ${finalWidth}px)`,
-      }}
-      data-sanity={dataSanity}
-    >
-      {/* If we want to add text over the image we can use 
-        background: metadata.palette.dominant.background 
-        &
-        color: metadata.palette.dominant.foreground
-      */}
+    return (
       <Image
-        className="absolute not-prose block min-h-[140px]"
-        alt={finalAlt}
-        width={finalWidth}
-        height={finalHeight}
-        sizes={size}
-        src={imageUrl}
-        placeholder={metaData?.lqip ? 'blur' : 'empty'}
-        blurDataURL={metaData?.lqip}
-        priority={priority}
-        loading={priority ? 'eager' : 'lazy'}
-        {...props}
-      />
-    </div>
-  );
+      className="not-prose block min-h-[140px]"
+      alt={finalAlt}
+      width={finalWidth}
+      height={finalHeight}
+      sizes={size}
+      src={imageUrl}
+      placeholder={metaData?.lqip ? 'blur' : 'empty'}
+      blurDataURL={metaData?.lqip}
+      priority={priority}
+      loading={priority ? 'eager' : 'lazy'}
+      {...props}
+    />
+    )
+
+  // return (
+  //   <div
+  //     className={cx(
+  //       'relative w-full overflow-hidden rounded-[3px] bg-gray-50',
+  //       classNames,
+  //     )}
+  //     style={{
+  //       height: `min(100%, ${finalHeight}px)`,
+  //       width: `min(100%, ${finalWidth}px)`,
+  //     }}
+  //     data-sanity={dataSanity}
+  //   >
+  //     {/* If we want to add text over the image we can use 
+  //       background: metadata.palette.dominant.background 
+  //       &
+  //       color: metadata.palette.dominant.foreground
+  //     */}
+  //     <Image
+  //       className="absolute not-prose block min-h-[140px]"
+  //       alt={finalAlt}
+  //       width={finalWidth}
+  //       height={finalHeight}
+  //       sizes={size}
+  //       src={imageUrl}
+  //       placeholder={metaData?.lqip ? 'blur' : 'empty'}
+  //       blurDataURL={metaData?.lqip}
+  //       priority={priority}
+  //       loading={priority ? 'eager' : 'lazy'}
+  //       {...props}
+  //     />
+  //   </div>
+  // );
 }

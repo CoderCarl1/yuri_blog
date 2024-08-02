@@ -5,11 +5,11 @@ import post from './schemas/documents/post';
 import author from './schemas/documents/author';
 
 import siteSettings from './schemas/singletons/siteSettings';
-import navigation from './schemas/singletons/navigation';
-import colors from './schemas/singletons/colors';
 import home from './schemas/singletons/home';
 
+//Referenced schemas
 import blockContent from './schemas/blockContent';
+import socials from './schemas/singletons/socials';
 
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [
@@ -20,11 +20,10 @@ export const schema: { types: SchemaTypeDefinition[] } = {
 
     //singletons,
     siteSettings,
-    navigation,
-    colors,
     home,
-
+    
     //misc
+    socials,
     blockContent,
   ],
 };

@@ -2,8 +2,8 @@ import { draftMode } from 'next/headers';
 // import filterDataToSingleItem from '@utils/FilterDataToSingleItem';
 // import { loadSeo } from '@loader/loadQuery';
 import { createOpenGraphImage } from './openGraph';
-// import { sanityFetch } from '@/sanity/lib/fetch.server';
-// import { Settings } from '@/types';
+import { sanityFetch } from '@/sanity/lib/fetch.server';
+import { Settings } from '@/types';
 // import { SETTINGS_QUERY } from '@/sanity/lib/queries';
 
 const createMetadata = async (docType: string, slug?: string) => {

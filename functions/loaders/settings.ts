@@ -10,11 +10,11 @@ export const getSettings = async () => {
     stega: false,
   });
 
-  const sortedResults = result.reduce((acc: SettingsMap, item) => {
-    acc[item._id] = item;
-    return acc;
-  }, {});
-  return sortedResults;
+  // const sortedResults = result.reduce((acc: SettingsMap, item) => {
+  //   acc[item._id] = item;
+  //   return acc;
+  // }, {});
+  return result;
 };
 
 // export const setUserPreferences = (settings: SettingsMap) => {

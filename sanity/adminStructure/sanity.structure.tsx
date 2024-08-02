@@ -7,19 +7,19 @@ import PageBox from '../components/PageBox';
 
 const settingsChildren = [
   { title: 'General', id: 'siteSettings' },
-  { title: 'Site Colors', id: 'colors' },
-  { title: 'Main Navigation', id: 'navigation' },
 ];
 
 function SiteSettings(S: StructureBuilder) {
+  console.log("S inside site settings", S)
   return S.listItem()
     .title('Site Settings')
     .child(
-      S.component()
-        .component(() => (
-          <PageBox structure={S} childrenPages={settingsChildren} />
-        ))
-        .title('Site Settings'),
+      S.editor().id('siteSettings').schemaType('siteSettings').documentId('siteSettings'),
+    //   S.component()
+    //     .component(() => (
+    //       <PageBox structure={S} childrenPages={settingsChildren} />
+    //     ))
+    //     .title('Site Settings'),
     );
 }
 
@@ -78,10 +78,9 @@ function Posts_ByCategories(S: StructureBuilder) {
 const documentsToExclude = [
   'post',
   'siteSettings',
-  'colors',
-  'navigation',
   /** 'translation.metadata',*/ 'media.tag',
   'homepage',
+  'social_media_schema'
 ];
 
 function otherCategories(S: StructureBuilder) {

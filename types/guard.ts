@@ -1,6 +1,6 @@
 import type { Post } from './post.type';
 import type { Author } from './author.type';
-import type { Image, ImageMetadata } from 'sanity';
+import type { Image, ImageMetadata, SanityDocument } from 'sanity';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isObject(obj: any): obj is Object {
@@ -64,5 +64,19 @@ export function isAuthor(
     isImage(doc.authorImage.image) &&
     isAssetMetadataType(doc.authorImage.metaData) &&
     Array.isArray(doc.bio)
+  );
+}
+
+
+export function isSanityDocument(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  doc: any): doc is SanityDocument {
+  return (
+    isObject(doc) &&
+    typeof doc._id === 'string' &&
+    typeof doc._type === 'string' &&
+    typeof doc._createdAt === 'string' &&
+    typeof doc._updatedAt === 'string' &&
+    typeof doc._rev === 'string'
   );
 }
