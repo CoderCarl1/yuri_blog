@@ -1,6 +1,7 @@
 import type { Post } from './post.type';
 import type { Author } from './author.type';
 import type { Image, ImageMetadata, SanityDocument } from 'sanity';
+import { SiteColors } from './siteSettings.type';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isObject(obj: any): obj is Object {
@@ -79,4 +80,42 @@ export function isSanityDocument(
     typeof doc._updatedAt === 'string' &&
     typeof doc._rev === 'string'
   );
+}
+
+export function isSiteColors(data: any): data is Partial<SiteColors> {
+  // Define the allowed keys
+  const allowedKeys: (keyof SiteColors)[] = [
+    'colors.color_primary',
+    'colors.color_primary_text',
+    'colors.color_secondary',
+    'colors.color_secondary_text',
+    'colors.color_accent',
+    'colors.color_accent_text',
+    'colors.color_grayscale_dark',
+    'colors.color_grayscale_light',
+  ];
+
+  return (
+    typeof data === 'object' &&
+    data !== null &&
+    Object.keys(data).every(
+      (key) => allowedKeys.includes(key as keyof SiteColors)
+        && typeof data[key] === 'string'
+        && isColor(data[key])
+    )
+  );
+}
+function isColor(value: string): boolean {
+  if (typeof value !== 'string') return false;
+
+  // Regular expression for HEX colors
+  const hexPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
+
+  // Regular expression for RGB/RGBA colors
+  const rgbPattern = /^rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})(?:\s*,\s*(0|0?\.\d+|1))?\s*\)$/;
+
+  // Regular expression for HSL/HSLA colors
+  const hslPattern = /^hsla?\(\s*(\d{1,3})\s*,\s*(\d{1,3}%)\s*,\s*(\d{1,3}%)\s*(?:,\s*(0|0?\.\d+|1))?\s*\)$/;
+
+  return hexPattern.test(value) || rgbPattern.test(value) || hslPattern.test(value);
 }

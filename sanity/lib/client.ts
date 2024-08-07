@@ -1,6 +1,6 @@
 import { createClient } from 'next-sanity';
 
-import { apiVersion, dataset, projectId /** revalidateSecret */ } from './api';
+import { apiVersion, dataset, projectId, studioUrl /** , revalidateSecret */ } from './api';
 
 export const client = createClient({
   apiVersion,
@@ -13,6 +13,6 @@ export const client = createClient({
   perspective: 'published',
   stega: {
     enabled: false,
-    studioUrl: '/studio',
+    studioUrl,
   },
 });

@@ -2,13 +2,10 @@ import { sanityFetch } from '@/sanity/lib/fetch.server';
 import { Settings } from '@/types';
 import { SETTINGS_QUERY } from '@/sanity/lib/queries';
 import { SiteColors, SettingsMap, colorType } from '@/types/siteSettings.type';
+import { queryFetch, sanityDocumentFetch } from '@/sanity/lib/fetch.client';
 
 export const getSettings = async () => {
-  const result = await sanityFetch<Settings>({
-    query: SETTINGS_QUERY,
-    perspective: 'published',
-    stega: false,
-  });
+  const result = await sanityDocumentFetch('siteSettings');
 
   // const sortedResults = result.reduce((acc: SettingsMap, item) => {
   //   acc[item._id] = item;

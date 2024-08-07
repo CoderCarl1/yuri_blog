@@ -1,17 +1,20 @@
 import type { PortableTextBlock } from '@portabletext/types';
-import { ColorValue } from '@sanity/color-input';
 import { SanityDocument } from 'sanity';
 
-export type colorType = ColorValue & {
-  alpha: number;
-};
+// TODO: make the colorType more robust;
+export type colorType = string;
+
 export type SiteColors = SanityDocument & {
-  primary: colorType;
-  secondary: colorType;
-  accent: colorType;
-  ['grayscale-dark']: colorType;
-  ['grayscale-light']: colorType;
+  color_primary: colorType;
+  color_primary_text: colorType;
+  color_secondary: colorType;
+  color_secondary_text: colorType;
+  color_accent: colorType;
+  color_accent_text: colorType;
+  color_grayscale_dark: colorType;
+  color_grayscale_light: colorType;
 };
+
 export type SiteSettings = SanityDocument & {
   title?: string;
   description?: PortableTextBlock[];

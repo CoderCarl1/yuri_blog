@@ -7,7 +7,7 @@ import { structureTool } from 'sanity/structure';
 import { presentationTool } from 'sanity/presentation';
 import { visionTool } from '@sanity/vision';
 import { media } from 'sanity-plugin-media';
-import { colorInput } from '@sanity/color-input';
+// import { colorInput } from '@sanity/color-input';
 
 import { apiVersion, dataset, projectId } from './sanity/lib/api';
 import { schema } from './sanity/schema';
@@ -55,7 +55,7 @@ export default defineConfig({
       defaultDocumentNode: DefaultDocumentStructure,
     }),
     media(),
-    colorInput(),
+    // colorInput(),
     // TODO: turn off visionTool before deployment
     visionTool({ defaultApiVersion: apiVersion }),
     presentationTool({

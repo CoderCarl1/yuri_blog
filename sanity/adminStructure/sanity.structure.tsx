@@ -1,25 +1,21 @@
-import { StructureBuilder, component } from 'sanity/structure';
+import { StructureBuilder, StructureResolverContext } from 'sanity/structure';
 import PageBox from '../components/PageBox';
 
 /**
  * Site Settings and its children
  */
 
-const settingsChildren = [
-  { title: 'General', id: 'siteSettings' },
-];
-
 function SiteSettings(S: StructureBuilder) {
-  console.log("S inside site settings", S)
+  const siteSettingsStructure = S.context.schema._registry.siteSettings.get().fields;
+
   return S.listItem()
     .title('Site Settings')
     .child(
-      S.editor().id('siteSettings').schemaType('siteSettings').documentId('siteSettings'),
-    //   S.component()
-    //     .component(() => (
-    //       <PageBox structure={S} childrenPages={settingsChildren} />
-    //     ))
-    //     .title('Site Settings'),
+      S.component()
+        .component(() => (
+          <PageBox sanityStructure={siteSettingsStructure}/>
+        ))
+        .title('Site Settings'),
     );
 }
 
@@ -89,7 +85,8 @@ function otherCategories(S: StructureBuilder) {
   );
 }
 
-export default function main(S: StructureBuilder) {
+export default function main(S: StructureBuilder, context: StructureResolverContext) {
+  console.log("context", context.schema._registry.siteSettings.get())
   const a = S.list()
     .title('Blog')
     .items([
@@ -102,7 +99,7 @@ export default function main(S: StructureBuilder) {
       S.divider(),
       SiteSettings(S),
     ]);
-  console.log('S', a);
+  console.log('S in main', a);
 
   return a;
 }

@@ -18,6 +18,7 @@ export async function searchAPI(
   }
 }
 
+// add token or something to ensure its legit
 export async function apiFetch<QueryResponse>(
   url: string,
   signal: AbortSignal | null | undefined = null,
@@ -32,14 +33,24 @@ export async function apiFetch<QueryResponse>(
   return response.json() as Promise<QueryResponse>;
 }
 
-export async function documentFetch(
+export async function sanityDocumentFetch(
   id: string = '',
+): Promise<SanityDocument | undefined> {
+  try {
+   return await client.getDocument(id);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export async function queryFetch(
+  query: string = '',
 ): Promise<SanityDocument | undefined> {
   let results;
 
   try {
-    results = await client.getDocument(id);
-    console.log('document', results);
+    results = await client.fetch(query);
+    console.log('queryFetch', results);
   } catch (err) {
     console.log(err);
   } finally {

@@ -131,70 +131,46 @@ export default defineType({
       type: "object",
       fields: [
         defineField({
-          name: 'primary',
+          name: 'color_primary',
           title: 'Primary Color',
-          type: 'color',
-          options: {
-            disableAlpha: true,
-          },
+          type: 'string'
         }),
         defineField({
-          name: 'primary_text',
+          name: 'color_primary_text',
           title: 'Primary Text Color',
-          type: 'color',
-          options: {
-            disableAlpha: true,
-          },
+          type: 'string'
         }),
         defineField({
-          name: 'secondary',
+          name: 'color_secondary',
           title: 'Secondary Color',
-          type: 'color',
-          options: {
-            disableAlpha: true,
-          },
+          type: 'string'
         }),
         defineField({
-          name: 'secondary_text',
+          name: 'color_secondary_text',
           title: 'Secondary Text Color',
-          type: 'color',
-          options: {
-            disableAlpha: true,
-          },
+          type: 'string'
         }),
         defineField({
-          name: 'accent',
+          name: 'color_accent',
           title: 'Accent Color',
-          type: 'color',
-          options: {
-            disableAlpha: true,
-          },
+          type: 'string'
         }),
         defineField({
-          name: 'accent_text',
+          name: 'color_accent_text',
           title: 'Accent Text Color',
-          type: 'color',
-          options: {
-            disableAlpha: true,
-          },
+          type: 'string'
         }),
         defineField({
-          name: 'grayscale_dark',
+          name: 'color_grayscale_dark',
           title: 'dark',
           description: 'the closest to black that you would like',
-          type: 'color',
-          options: {
-            disableAlpha: true,
-          },
+          type: 'string'
         }),
         defineField({
-          name: 'grayscale_light',
+          name: 'color_grayscale_light',
           title: 'light',
           description: 'the closest to white that you would like',
-          type: 'color',
-          options: {
-            disableAlpha: true,
-          },
+          type: 'string'
         }),
       ]
     }),
@@ -312,7 +288,9 @@ export default defineType({
       name: 'social_media',
       title: 'Social Media Profiles',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'social_media_schema' }] }],
+      of: [
+        { type: 'reference', to: [{ type: 'social_media_schema' }] }
+      ],
     }),
     // analytics - Consider expanding
     defineField({
@@ -328,7 +306,6 @@ export default defineType({
         // Add more tracking options if needed
       ]
     })
-  ],
-
+  ]
 });
 
