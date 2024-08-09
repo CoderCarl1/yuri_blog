@@ -1,4 +1,4 @@
-import 'server-only';
+'server-only';
 
 import { experimental_taintUniqueValue } from 'react';
 
