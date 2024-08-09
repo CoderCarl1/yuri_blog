@@ -1,44 +1,30 @@
-import { client } from './client';
+import { client } from '@/sanity/lib/client';
+import { writeToken } from '@/sanity/lib/token';
+import { AttributeSet, SanityDocument } from 'next-sanity';
 
-// import { writeToken } from '@/sanity/lib/token';
+const clientWithWritePermission = client.withConfig({ token: writeToken });
 
-// export default async function patch<QueryResponse = any>
-// (sanityDocumentId: string = '', data: Record<string, any> = {}): Promise<QueryResponse> {
+export default async function patchSanityDocument<QueryResponse = SanityDocument>
+    (sanityDocumentId: string = '', data: AttributeSet = {}): Promise<QueryResponse> {
 
-//   if (!sanityDocumentId) throw new Error('The documentID must be provided');;
-//   if (!data || Object.keys(data).length === 0) throw new Error('Data must be provided to update the document');
+    if (!sanityDocumentId) throw new Error('The documentID must be provided');;
+    if (!data || Object.keys(data).length === 0) throw new Error('Data must be provided to update the document');
 
-//   try {
-//     const response = await client
-//                           .patch(sanityDocumentId)
-//                           .set(data)
-//                           .commit();
-              
-//     console.log('Patch response:', response);
-//     return response as QueryResponse;
+    try {
+        const response = await clientWithWritePermission
+            .patch(sanityDocumentId)
+            .set(data)
+            .commit();
 
-//   } catch (err) {
-//     console.error('Error patching document:', {
-//       error: err,
-//       documentId: sanityDocumentId,
-//     });
+        console.log('Patch response:', response);
+        return response as QueryResponse;
 
-//     throw new Error('Failed to patch document');
-//   }
-// }
+    } catch (err) {
+        console.error('Error patching sanity document:', {
+            error: err,
+            documentId: sanityDocumentId,
+        });
 
-export async function patchSanityDocument
-(
-  sanityDocumentId: string = '', 
-  data: Record<string, any> = {}
-): Promise<Response> {
-  const request = await fetch('/api/patch', {
-    method: "PATCH",
-    body: JSON.stringify({
-      documentId: sanityDocumentId,
-      data
-    })
-  })
-
-  return request;
+        throw new Error('Failed to patch document');
+    }
 }
