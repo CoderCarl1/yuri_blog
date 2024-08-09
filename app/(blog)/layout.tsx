@@ -5,7 +5,7 @@ import { VisualEditing } from 'next-sanity';
 import NavBar from '@/components/Navbar';
 import { ButtonLink } from '@/components/Link';
 import { draftMode } from 'next/headers';
-import { generateStyles, getSettings } from '@/functions/loaders/settings';
+import { getSettings } from '@/functions/loaders/settings';
 // import { sanityFetch } from '@/sanity/lib/fetch.server';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -25,7 +25,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const settings = await getSettings();
-  let styles = '';
+  // let styles = '';
 console.log("settings", settings)
   // if (settings.colors) {
   //   styles = generateStyles(settings.colors);
@@ -46,7 +46,7 @@ console.log("settings", settings)
         </NavBar>
         <main>{children}</main>
         {draftMode().isEnabled && <VisualEditing />}
-        <style>{`:root { ${styles} }`}</style>
+        {/* <style>{`:root { ${styles} }`}</style> */}
       </body>
     </html>
   );

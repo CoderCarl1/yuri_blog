@@ -27,16 +27,16 @@ export default function Post({ post, encodeDataAttribute }: TPost) {
       {image ? (
         <Image
           metaData={metaData}
-          dataSanity={encodeDataAttribute?.('coverImage')}
           image={image}
           alt={image?.alt}
           classNames="mb-4"
         />
       ) : null}
-      {/* {title ? <h1 className='font-serif text-4xl'>{title}</h1> : null} */}
-      <div className="prose prose-lg">
+      {title ? <h1 className='font-serif text-4xl'>{title}</h1> : null}
+      {body ? <div className="prose prose-lg">
         <PortableText value={body} />
-      </div>
+      </div> : null
+      }
     </>
   );
 }

@@ -11,7 +11,6 @@ interface ImageProps {
   height?: number;
   size?: string;
   classNames?: string;
-  dataSanity?: string;
   priority?: boolean;
   // present in portabletext images only
   value?: SanityImage | null;
@@ -31,7 +30,6 @@ export default async function Main({
   priority = false,
   value = null,
   metaData,
-  dataSanity,
   ...props
 }: ImageProps) {
   // Check if value is provided and extract the image data from it
@@ -68,7 +66,7 @@ export default async function Main({
 
     return (
       <Image
-      className="not-prose block min-h-[140px]"
+      className={cx("not-prose block min-h-[140px]", classNames)}
       alt={finalAlt}
       width={finalWidth}
       height={finalHeight}

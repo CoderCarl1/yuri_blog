@@ -6,6 +6,6 @@ interface DefaultImage extends Image {
   _type: 'image';
 }
 
-export const defaultTypes: Record<string, PortableTextTypeComponent<any>> = {
+export const defaultTypes: Record<string, PortableTextTypeComponent> = {
   image: ImageComponent as unknown as PortableTextTypeComponent<DefaultImage>,
 };

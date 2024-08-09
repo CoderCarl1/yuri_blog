@@ -1,22 +1,44 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { client } from '@/sanity/lib/client';
 import { writeToken } from '@/sanity/lib/token';
+import { AttributeSet } from 'next-sanity';
 
-const acceptedDocuments = {};
+interface PatchRequestBody {
+    documentId: string;
+    data: AttributeSet;
+}
 
 export async function PATCH(request: NextRequest) {
-    const {documentId, data} = await request.json();
-    console.log("request.body", documentId, data)
-    const patchResponse = await patchSanityDocument(documentId, data);
-    console.log("res", patchResponse)
-    return Response.json({ data: patchResponse });
+    try {
+        const body: PatchRequestBody = await request.json();
+        const { documentId, data } = body;
+
+        if (!documentId || !data) {
+            return NextResponse.json(
+                { error: 'Invalid input: documentId and data are required' },
+                { status: 400 }
+            );
+        }
+
+        const patchResponse = await patchSanityDocument(documentId, data);
+        return NextResponse.json({ data: patchResponse });
+
+    } catch (error) {
+        console.error('Error handling PATCH request:', error);
+
+        return NextResponse.json(
+            { error: 'An unexpected error occurred while processing your request' },
+            { status: 500 }
+        );
+    }
+
 }
 
 
 const clientWithWritePermission = client.withConfig({ token: writeToken });
 
-export default async function patchSanityDocument<QueryResponse = any>
-    (sanityDocumentId: string = '', data: Record<string, any> = {}): Promise<QueryResponse> {
+export default async function patchSanityDocument<QueryResponse>
+    (sanityDocumentId: string = '', data: AttributeSet = {}): Promise<QueryResponse> {
 
     if (!sanityDocumentId) throw new Error('The documentID must be provided');;
     if (!data || Object.keys(data).length === 0) throw new Error('Data must be provided to update the document');

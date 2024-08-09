@@ -1,5 +1,5 @@
 import { QueryParams } from 'next-sanity';
-import type { Metadata, ResolvingMetadata } from 'next';
+import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { POSTS_QUERY, POST_QUERY } from '@/sanity/lib/queries';
