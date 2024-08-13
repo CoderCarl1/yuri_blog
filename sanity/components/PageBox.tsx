@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Rule, SanityDocument } from 'sanity';
 import { getSettings } from '@/functions/loaders/settings';
-import { patchSanityDocument } from '../lib/post.client';
 import { useStateWithDebounce } from '@/functions/hooks/useDebounce';
 import { compareObjects } from '@/functions/comparisons';
 import Button from '@/components/Button';
+import { TfiReload } from "react-icons/tfi";
+import patchSanityDocument from '../lib/post.client';
 
 type sanityValidationRules = Rule[];
 
@@ -28,7 +29,11 @@ const Main: React.FC<MainProps> = ({ sanityStructure }) => {
   const [error, setError] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<sanityStructure | null>(null);
 
+  console.log("data", data && data)
+  console.log("selectedItem", selectedItem && selectedItem)
+
   useEffect(() => {
+    console.log("useEffect ran")
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -61,12 +66,12 @@ const Main: React.FC<MainProps> = ({ sanityStructure }) => {
   };
 
   async function updateData(data: Record<string, any>) {
-    const res = await patchSanityDocument('siteSettings', data);
+    const signal = new AbortSignal()
+    const res = await patchSanityDocument('siteSettings', data, signal);
     return (!!res);
   }
 
-console.log("data", data && data)
-console.log("selectedItem", selectedItem && selectedItem)
+
 
   return (
     <div className='[ pageBox ]'>
@@ -94,13 +99,13 @@ type BoxMapProps = {
 
 const BoxMap: React.FC<BoxMapProps> = ({ structureArray = [], clickHandler }) => {
   return (
-    <>
+    <div className='grid grid-cols-3 gap-4'>
       {structureArray.map(({ name }) => (
-        <button data-name={name} key={name} onClick={clickHandler}>
+        <Button data-name={name} key={name} onClick={clickHandler}>
           {name}
-        </button>
+        </Button>
       ))}
-    </>
+    </ div>
   );
 };
 
@@ -122,6 +127,7 @@ console.log("selectedStructure", selectedStructure)
 console.log("documentData", documentData)
 console.log({title})
 console.log({fields})
+
   function handleBack() {
     // Do this better for UX
     if (isSaved) {
@@ -133,7 +139,7 @@ console.log({fields})
     setValidationErrors({});
   }
 
-console.log("Object.keys(documentData)",title && documentData[title] && Object.keys(documentData[title]))
+
 
 function validateFields() {
   const errors: Record<string, string> = {};
@@ -152,17 +158,8 @@ function validateFields() {
 }
 
 async function handleSave() {
-  if (!validateFields()) {
-    return; // Exit if there are validation errors
-  }
+  if (!validateFields()) return; // Exit if there are validation errors
 
-//     const requiredFieldsAreSaved = Object.keys(documentData).every(field => {
-//       if (field.type.type.validation[0]._required) && documentData[title]){
-//   return true
-// }
-// return false
-// } 
-// )
 
     setIsSaving(true);
     await saveHandler({ reference: selectedStructure.name, structure: documentData });
@@ -182,7 +179,7 @@ async function handleSave() {
       <div className="[ pageBox__controls ]">
         <Button onClick={handleBack}>Back</Button>
         <Button onClick={handleSave} loading={isSaving}>Save</Button>
-        <Button onClick={reset}>Reset</Button>
+        <Button onClick={reset}>Reset <TfiReload color={"red"}/></Button>
       </div>
       {documentData &&
         <RenderDocument 

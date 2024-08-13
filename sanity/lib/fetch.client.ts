@@ -13,7 +13,7 @@ export async function apiFetch<QueryResponse>(
     headers: {
       'Content-Type': 'application/json',
       // Include any authentication headers if needed
-      Authorization: `Bearer ${getAuthToken()}`,
+      // Authorization: `Bearer ${getAuthToken()}`,
     },
     signal, // Optional abort signal
     ...options,

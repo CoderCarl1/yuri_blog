@@ -23,7 +23,7 @@
 
 @layer components {
   .btn {
-    @apply border border-transparent rounded-md p-4;
+    @apply border border-transparent rounded-md p-4 bg-grayscale-light;
   }
   .btn-primary {
     @apply bg-primary text-primary-text hover:bg-primary-hover hover:border-primary-active hover:text-primary-text focus:bg-primary-active focus:text-primary-text focus:outline-1 focus:outline-offset-4 focus:outline-primary-active active:bg-primary-active active:text-primary-text active:scale-[0.99];

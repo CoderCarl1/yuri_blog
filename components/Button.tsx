@@ -45,6 +45,7 @@ export default function Button({
       onClick={onClick}
       {...props}
     >
+      {/* TODO:  fix the potential CLS */}
       {loading ? <span className="spinner" /> : children}
     </button>
   );
