@@ -24,9 +24,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settings = await getSettings();
+
+  const {styles} = await getSettings();
+  
   // let styles = '';
-console.log("settings", settings)
+// console.log("settings", settings)
   // if (settings.colors) {
   //   styles = generateStyles(settings.colors);
   //   // console.log('styles', styles);
@@ -46,7 +48,7 @@ console.log("settings", settings)
         </NavBar>
         <main>{children}</main>
         {draftMode().isEnabled && <VisualEditing />}
-        {/* <style>{`:root { ${styles} }`}</style> */}
+        <style>{`:root { ${styles} }`}</style>
       </body>
     </html>
   );

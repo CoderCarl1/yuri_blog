@@ -3,15 +3,26 @@ import { Settings } from '@/types';
 import { SETTINGS_QUERY } from '@/sanity/lib/queries';
 import { SiteColors, SettingsMap, colorType } from '@/types/siteSettings.type';
 import { queryFetch, sanityDocumentFetch } from '@/sanity/lib/fetch.client';
+import COLOR from 'color';
 
 export const getSettings = async () => {
-  const result = await sanityDocumentFetch('siteSettings');
+  const result = await sanityDocumentFetch('siteSettings') as SettingsMap | undefined;
+  const settings = {
+    styles: '',
+    general: '',
+    siteSettings: '',
+    SiteSEO: '',
+    social_media: '',
+  }
+  if (result) {
+    settings.styles = generateStyles(result.colors)
 
+  }
   // const sortedResults = result.reduce((acc: SettingsMap, item) => {
   //   acc[item._id] = item;
   //   return acc;
   // }, {});
-  return result;
+  return settings;
 };
 
 // export const setUserPreferences = (settings: SettingsMap) => {
@@ -23,42 +34,40 @@ export const getSettings = async () => {
 //   return retval;
 // }
 
+interface hslColor {
+  color: number[];
+  model: string;
+  valpha: number
+}
 export const generateStyles = (colors: SiteColors) => {
-  const styleLines = Object.keys(colors).map((key) => {
+  return Object.keys(colors).map((key) => {
     const color = colors[key as keyof SiteColors] as colorType;
-    if (color && color.hsl) {
-      const { h, s, l } = color.hsl;
-      const hslValue = `${h} ${s * 100}% ${l * 100}%`;
-      const activeValue = generateStateColor(color.hsl, 'active');
-      const hoverValue = generateStateColor(color.hsl, 'hover');
-      const textValue = generateStateColor(color.hsl, 'text');
+    if (typeof color !== 'string' || !color.length) return;
 
-      key = key.replace('_', '-');
-      return `
-        --color-${key}: ${hslValue};
-        --color-${key}-active: ${activeValue};
-        --color-${key}-hover: ${hoverValue};
-        --color-${key}-text: ${textValue};
-      `;
-    }
-    return '';
-  });
+    const [h, s, l] = (COLOR.hsl() as unknown as hslColor).color;
 
-  return styleLines.join(' ');
+    const { active, hover, text, hsl } = generateStateColor({ h, s, l })
+    key = key.replace('_', '-');
+
+    return `
+      --${key}: ${hsl};
+      --${key}-active: ${active};
+      --${key}-hover: ${hover};
+      --${key}-text: ${text};
+    `;
+  }).join(' ');
+
 };
 
 function generateStateColor(
-  { h, s, l }: { h: number; s: number; l: number },
-  state: string,
+  { h, s, l }: { h: number; s: number; l: number }
 ) {
-  switch (state) {
-    case 'active':
-      return `${h} ${s * 100}% ${l * 100 - 10}%`;
-    case 'hover':
-      return `${h} ${s * 100}% ${l * 100 + 10}%`;
-    case 'text':
-      return `${h} ${s * 100}% ${l * 100 - 20}%`;
-    default:
-      return `${h} ${s * 100}% ${l * 100}%`;
+
+  s = s * 100;
+  return {
+    active: `${h} ${s}% ${l * 100 - 10}%`,
+    hover: `${h} ${s}% ${l * 100 + 10}%`,
+    text: `${h} ${s}% ${l * 100 - 20}%`,
+    hsl: `${h} ${s}% ${l * 100}%`
   }
 }

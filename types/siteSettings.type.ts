@@ -1,5 +1,5 @@
 import type { PortableTextBlock } from '@portabletext/types';
-import { SanityDocument } from 'sanity';
+import { Rule, SanityDocument } from 'sanity';
 
 // TODO: make the colorType more robust;
 export type colorType = string;
@@ -42,13 +42,17 @@ export type SettingsMap = {
 };
 export type Settings = [SiteColors, SiteSEO, SiteSettings, SiteSocials];
 
-// export interface ProjectPayload {
-//     client?: string;
-//     coverImage?: Image;
-//     description?: PortableTextBlock[];
-//     overview?: PortableTextBlock[];
-//     site?: string;
-//     slug: string;
-//     tags?: string[];
-//     title?: string;
-//   }
+export type sanityValidationRules = Rule[];
+
+export type sanityStructure = {
+  name: string;
+  fieldset: string;
+  group: string;
+  type: {
+    title: string;
+    validation: sanityValidationRules;
+  } & Record<string, any>;
+}
+export type PageBoxProps = {
+  sanityStructure: sanityStructure[];
+};

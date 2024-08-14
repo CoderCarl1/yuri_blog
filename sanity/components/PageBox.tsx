@@ -1,39 +1,21 @@
 import { useEffect, useState } from 'react';
-import { Rule, SanityDocument } from 'sanity';
 import { getSettings } from '@/functions/loaders/settings';
 import { useStateWithDebounce } from '@/functions/hooks/useDebounce';
 import { compareObjects } from '@/functions/comparisons';
 import Button from '@/components/Button';
 import { TfiReload } from "react-icons/tfi";
 import patchSanityDocument from '../lib/post.client';
+import { PageBoxProps, sanityStructure } from '@/types/siteSettings.type';
+import useSelectedItem from '@/functions/hooks/useSelectedSettings';
 
-type sanityValidationRules = Rule[];
-
-type sanityStructure = {
-  name: string;
-  fieldset: string;
-  group: string;
-  type: { 
-    title: string;
-    validation: sanityValidationRules;
-  } & Record<string, any>;
-}
-type MainProps = {
-  sanityStructure: sanityStructure[];
-};
-
-const Main: React.FC<MainProps> = ({ sanityStructure }) => {
+const Main: React.FC<PageBoxProps> = ({ sanityStructure }) => {
   console.log("+ structure", sanityStructure)
   const [loading, setLoading] = useState<boolean>(true);
-  const [data, setData] = useState<SanityDocument | undefined>();
+  const [data, setData] = useState<Record<string, any> | undefined>();
   const [error, setError] = useState<string | null>(null);
-  const [selectedItem, setSelectedItem] = useState<sanityStructure | null>(null);
-
-  console.log("data", data && data)
-  console.log("selectedItem", selectedItem && selectedItem)
-
+  const [selectedItem, setSelectedItem] = useSelectedItem(sanityStructure);
+  
   useEffect(() => {
-    console.log("useEffect ran")
     const fetchData = async () => {
       setLoading(true);
       try {
@@ -65,13 +47,12 @@ const Main: React.FC<MainProps> = ({ sanityStructure }) => {
     setSelectedItem(null);
   };
 
+
   async function updateData(data: Record<string, any>) {
     const signal = new AbortSignal()
     const res = await patchSanityDocument('siteSettings', data, signal);
     return (!!res);
   }
-
-
 
   return (
     <div className='[ pageBox ]'>
@@ -122,11 +103,11 @@ function Box({ selectedStructure, data, clickHandler, saveHandler }: BoxProps) {
   const [isSaved, setIsSaved] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
-  
-console.log("selectedStructure", selectedStructure)
-console.log("documentData", documentData)
-console.log({title})
-console.log({fields})
+
+  console.log("selectedStructure", selectedStructure)
+  console.log("documentData", documentData)
+  console.log({ title })
+  console.log({ fields })
 
   function handleBack() {
     // Do this better for UX
@@ -141,24 +122,24 @@ console.log({fields})
 
 
 
-function validateFields() {
-  const errors: Record<string, string> = {};
-  
-  fields.forEach((field: any) => {
-    const isRequired = field?.type?.validation?.some((rule: any) => rule._required);
-    const fieldValue = documentData[field.name];
+  function validateFields() {
+    const errors: Record<string, string> = {};
 
-    if (isRequired && !fieldValue) {
-      errors[field.name] = `${field.name} is required`;
-    }
-  });
+    fields.forEach((field: any) => {
+      const isRequired = field?.type?.validation?.some((rule: any) => rule._required);
+      const fieldValue = documentData[field.name];
 
-  setValidationErrors(errors);
-  return Object.keys(errors).length === 0; // Return true if no errors
-}
+      if (isRequired && !fieldValue) {
+        errors[field.name] = `${field.name} is required`;
+      }
+    });
 
-async function handleSave() {
-  if (!validateFields()) return; // Exit if there are validation errors
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0; // Return true if no errors
+  }
+
+  async function handleSave() {
+    if (!validateFields()) return; // Exit if there are validation errors
 
 
     setIsSaving(true);
@@ -179,16 +160,16 @@ async function handleSave() {
       <div className="[ pageBox__controls ]">
         <Button onClick={handleBack}>Back</Button>
         <Button onClick={handleSave} loading={isSaving}>Save</Button>
-        <Button onClick={reset}>Reset <TfiReload color={"red"}/></Button>
+        <Button onClick={reset}>Reset <TfiReload color={"red"} /></Button>
       </div>
       {documentData &&
-        <RenderDocument 
-        documentTitle={title} 
-        documentFields={fields} 
-        documentData={documentData} 
-        changeHandler={handleLocalChanges}
-        validationErrors={validationErrors}
-        
+        <RenderDocument
+          documentTitle={title}
+          documentFields={fields}
+          documentData={documentData}
+          changeHandler={handleLocalChanges}
+          validationErrors={validationErrors}
+
         />
       }
     </>
@@ -220,7 +201,9 @@ const RenderDocument: React.FC<RenderDocumentProps> = ({
   return (
     <div className='[ document-render ]'>
       <h2>{documentTitle}</h2>
-      
+      {
+        JSON.stringify(documentData, null, 2)
+      }
     </div>
   )
 

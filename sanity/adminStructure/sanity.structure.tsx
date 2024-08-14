@@ -1,5 +1,5 @@
 import { StructureBuilder, StructureResolverContext } from 'sanity/structure';
-import PageBox from '../components/PageBox';
+import Page from '../components/sanityRenderer/page';
 
 /**
  * Site Settings and its children
@@ -13,7 +13,7 @@ function SiteSettings(S: StructureBuilder) {
     .child(
       S.component()
         .component(() => (
-          <PageBox sanityStructure={siteSettingsStructure}/>
+          <Page sanityStructure={siteSettingsStructure}/>
         ))
         .title('Site Settings'),
     );
