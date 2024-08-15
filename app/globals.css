@@ -16,14 +16,18 @@
     --color-accent-text: 17 94% 38%;
     --color-accent-hover: 17 94% 68%;
     --color-accent-active: 17 94% 48%;
-    --grayscale-light: 60 9% 98%;
-    --grayscale-dark: 24 10% 10%;
+    --color-grayscale-light: 60 9% 98%;
+    --color-grayscale-dark: 24 10% 10%;
   }
 }
 
 @layer components {
   .btn {
-    @apply border border-transparent rounded-md p-4 bg-grayscale-light;
+    @apply border border-transparent rounded-md p-4 bg-grayscale-light cursor-pointer;
+  }
+
+  .btn.disabled {
+    @apply bg-grayscale-dark/15 hover:border-grayscale-dark/25 hover:bg-grayscale-dark/15 cursor-wait;
   }
   .btn-primary {
     @apply bg-primary text-primary-text hover:bg-primary-hover hover:border-primary-active hover:text-primary-text focus:bg-primary-active focus:text-primary-text focus:outline-1 focus:outline-offset-4 focus:outline-primary-active active:bg-primary-active active:text-primary-text active:scale-[0.99];

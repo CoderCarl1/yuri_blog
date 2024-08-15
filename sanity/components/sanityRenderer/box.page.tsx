@@ -2,7 +2,7 @@ import { sanityStructure } from "@/types/siteSettings.type";
 import Box from "./box";
 import BoxMap from "./box.map";
 import BoxError from "./box.error";
-import Loading from "../loading";
+import Loading from "../../../components/loading";
 
 type BoxPageProps = {
   sanityStructure: sanityStructure[];

@@ -1,7 +1,7 @@
 import { sanityStructure } from "@/types/siteSettings.type";
 import { SiteSettingsProvider, useSiteSettingsContext } from "./context";
 import BoxPage from "../sanityRenderer/box.page";
-import Loading from "../loading";
+import Loading from "../../../components/loading";
 
 type Props = {
   sanityStructure: sanityStructure[];

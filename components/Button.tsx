@@ -1,17 +1,24 @@
-import Loading from '@/sanity/components/loading';
+import Loading from './loading';
 import cx from 'classnames';
 import { TfiReload } from "react-icons/tfi";
 
-type ButtonVariant = 'primary' | 'secondary' | 'outline';
+const ButtonType =  ['button' , 'submit' , 'reset'] as const;
+type ButtonType = typeof ButtonType[number];
+
+const ButtonVariant = ['primary' , 'secondary' , 'outline'] as const;
+type ButtonVariant = typeof ButtonVariant[number];
+
+const ButtonSize =  ['small' , 'medium' , 'large'] as const;
+type ButtonSize = typeof ButtonSize[number];
 
 type ButtonProps = {
   children?: React.ReactNode;
-  type?: 'button' | 'submit' | 'reset';
+  type?: ButtonType;
   className?: string;
   disabled?: boolean;
   loading?: boolean;
   variant?: ButtonVariant; // Add variant support
-  size?: 'small' | 'medium' | 'large'; // Add size support
+  size?: ButtonSize; // Add size support
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 } & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'type'>;
 
@@ -38,7 +45,6 @@ export default function Button({
     medium: 'btn-md',
     large: 'btn-lg',
   };
-loading = true;
   return (
     <button
       type={type}
@@ -49,13 +55,13 @@ loading = true;
         className,
         {disabled: disabled}
       )}
-      disabled={disabled || loading} // Disable button when loading
+      disabled={disabled || loading}
       onClick={onClick}
       {...props}
     >
       {/* TODO:  fix the potential CLS */}
       {loading && <Loading />}
-      {type === 'reset' ? <TfiReload /> : null}
+      {(!loading && type === 'reset') ? <TfiReload /> : null}
       {(!loading && children) && children}
     </button>
   );
