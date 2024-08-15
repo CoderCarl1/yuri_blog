@@ -13,6 +13,7 @@ type BoxPageProps = {
   handleBack: () => void;
   updateData: (data: Record<string, any>) => Promise<boolean>;
   error: string | null;
+  reset?: () => void;
 }
 
 export default function BoxPage({
@@ -23,11 +24,16 @@ export default function BoxPage({
   handleSelect,
   handleBack,
   updateData,
-  error
+  error,
+  reset
 }: BoxPageProps) {
 
   const reload = () => {
-
+    if (reset){ 
+      reset();
+    } else {
+      window.location.reload();
+    }
   }
 
   if (error) {

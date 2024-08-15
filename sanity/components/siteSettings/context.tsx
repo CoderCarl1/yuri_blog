@@ -12,6 +12,7 @@ interface SiteSettingsContextProps {
   handleSelect: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   handleBack: () => void;
   updateData: (data: Record<string, any>) => Promise<boolean>;
+  reset: () => void;
 }
 
 const SiteSettingsContext = createContext<SiteSettingsContextProps | undefined>(undefined);
@@ -22,19 +23,19 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
   const [error, setError] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useSelectedItem(sanityStructure);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const settings = await getSettings();
-        setData(settings);
-      } catch (err) {
-        setError('Failed to fetch document');
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchData = async () => {
+    setLoading(true);
+    try {
+      const settings = await getSettings();
+      setData(settings);
+    } catch (err) {
+      setError('Failed to fetch document');
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, []);
 
@@ -58,9 +59,16 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
     const res = await patchSanityDocument('siteSettings', data, signal);
     return !!res;
   }
-
+  
+  const reset = () => {
+    setSelectedItem(null);
+    setError(null);
+    setData(undefined);
+    fetchData();
+  };
+  
   return (
-    <SiteSettingsContext.Provider value={{ loading, error, data, selectedItem, handleSelect, handleBack, updateData }}>
+    <SiteSettingsContext.Provider value={{reset, loading, error, data, selectedItem, handleSelect, handleBack, updateData }}>
       {children}
     </SiteSettingsContext.Provider>
   );
