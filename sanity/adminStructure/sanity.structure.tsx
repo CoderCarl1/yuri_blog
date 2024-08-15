@@ -1,11 +1,11 @@
 import { StructureBuilder, StructureResolverContext } from 'sanity/structure';
-import Page from '../components/sanityRenderer/page';
+import SiteSettings from '../components/siteSettings';
 
 /**
  * Site Settings and its children
  */
 
-function SiteSettings(S: StructureBuilder) {
+function SiteSettingsStructure(S: StructureBuilder) {
   const siteSettingsStructure = S.context.schema._registry.siteSettings.get().fields;
 
   return S.listItem()
@@ -13,7 +13,7 @@ function SiteSettings(S: StructureBuilder) {
     .child(
       S.component()
         .component(() => (
-          <Page sanityStructure={siteSettingsStructure}/>
+          <SiteSettings sanityStructure={siteSettingsStructure}/>
         ))
         .title('Site Settings'),
     );
@@ -97,7 +97,7 @@ export default function main(S: StructureBuilder, context: StructureResolverCont
       S.divider(),
       ...otherCategories(S),
       S.divider(),
-      SiteSettings(S),
+      SiteSettingsStructure(S),
     ]);
   console.log('S in main', a);
 

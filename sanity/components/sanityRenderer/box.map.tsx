@@ -6,7 +6,7 @@ type BoxMapProps = {
     clickHandler: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   };
   
-  export const BoxMap: React.FC<BoxMapProps> = ({ structureArray = [], clickHandler }) => {
+export default function BoxMap({ structureArray = [], clickHandler }: BoxMapProps) {
     return (
       <div className='grid grid-cols-3 gap-4'>
         {structureArray.map(({ name }) => (

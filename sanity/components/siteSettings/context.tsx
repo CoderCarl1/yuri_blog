@@ -4,17 +4,17 @@ import patchSanityDocument from "@/sanity/lib/post.client";
 import { sanityStructure, PageBoxProps } from "@/types/siteSettings.type";
 import useSelectedItem from "@/functions/hooks/useSelectedSettings";
 
-interface MainContextProps {
+interface SiteSettingsContextProps {
   loading: boolean;
   error: string | null;
   data: Record<string, any> | undefined;
   selectedItem: sanityStructure | null;
-  handleSelect: (name: string) => void;
+  handleSelect: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   handleBack: () => void;
   updateData: (data: Record<string, any>) => Promise<boolean>;
 }
 
-const SiteSettingsContext = createContext<MainContextProps | undefined>(undefined);
+const SiteSettingsContext = createContext<SiteSettingsContextProps | undefined>(undefined);
 
 export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps & { children: ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -38,7 +38,9 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
     fetchData();
   }, []);
 
-  const handleSelect = (name: string) => {
+  const handleSelect = (event: React.SyntheticEvent<HTMLButtonElement>) => {
+    const { name } = event.currentTarget.dataset;
+
     const structure = sanityStructure.find(struct => struct.name === name);
     if (structure) {
       setSelectedItem(structure);
@@ -64,10 +66,10 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
   );
 };
 
-export const useMainContext = () => {
+export const useSiteSettingsContext = () => {
   const context = useContext(SiteSettingsContext);
   if (!context) {
-    throw new Error("useMainContext must be used within a MainProvider");
+    throw new Error("SiteSettingsContext must be used within a MainProvider");
   }
   return context;
 };

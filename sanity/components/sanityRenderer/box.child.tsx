@@ -8,7 +8,7 @@ type RenderDocumentProps = {
     validationErrors: Record<string, any>;
   };
   
-  export const RenderDocument: React.FC<RenderDocumentProps> = ({
+  export const BoxChild: React.FC<RenderDocumentProps> = ({
     documentTitle,
     documentFields,
     documentData,

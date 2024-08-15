@@ -4,7 +4,7 @@ import { useStateWithDebounce } from "@/functions/hooks/useDebounce";
 import { sanityStructure } from "@/types/siteSettings.type";
 import { useEffect, useState } from "react";
 import { TfiReload } from "react-icons/tfi";
-import { RenderDocument } from "./renderDocument";
+import { BoxChild } from "./box.child";
 
 type BoxProps = {
     selectedStructure: sanityStructure;
@@ -79,7 +79,7 @@ export default function Box({ selectedStructure, data, clickHandler, saveHandler
                 <Button onClick={reset}>Reset <TfiReload color={"red"} /></Button>
             </div>
             {documentData &&
-                <RenderDocument
+                <BoxChild
                     documentTitle={title}
                     documentFields={fields}
                     documentData={documentData}
