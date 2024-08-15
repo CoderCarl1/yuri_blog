@@ -21,6 +21,7 @@ export default function SearchBar() {
 
   useEffect(() => {
     const controller = new AbortController();
+    const signal = controller.signal;
 
     async function getResults(str: string): Promise<void> {
       if (str === '') {
@@ -28,7 +29,7 @@ export default function SearchBar() {
       } else {
         const apiResults = await searchAPI(
           debouncedSearchString,
-          controller.signal,
+          signal,
         );
 
         if (apiResults) {

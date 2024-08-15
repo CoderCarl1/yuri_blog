@@ -55,11 +55,12 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
   };
 
   async function updateData(data: Record<string, any>) {
-    const signal = new AbortSignal();
+    const controller = new AbortController();
+    const signal = controller.signal;
     const res = await patchSanityDocument('siteSettings', data, signal);
     return !!res;
   }
-  
+
   const reset = () => {
     setSelectedItem(null);
     setError(null);

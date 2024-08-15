@@ -1,82 +1,25 @@
 import Button from "@/components/Button";
-import { compareObjects } from "@/functions/comparisons";
-import { useStateWithDebounce } from "@/functions/hooks/useDebounce";
-import { sanityStructure } from "@/types/siteSettings.type";
-import { useEffect, useState } from "react";
-import { TfiReload } from "react-icons/tfi";
 import { BoxChild } from "./box.child";
+import type { sanityStructure } from "@/types/siteSettings.type";
+import UseBox from "./UseBox";
 
 type BoxProps = {
     selectedStructure: sanityStructure;
     data: Record<string, any>;
-    clickHandler: () => void;
     saveHandler: (data: any) => Promise<boolean>;
+    clickHandler?: () => void;
 };
 
-export default function Box({ selectedStructure, data, clickHandler, saveHandler }: BoxProps) {
-    const [documentData, setDocumentData] = useStateWithDebounce<Record<string, any>>(data, 50);
-    const { title, fields } = selectedStructure.type;
-    const [isSaved, setIsSaved] = useState(false);
-    const [isSaving, setIsSaving] = useState(false);
-    const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+export default function Box(props: BoxProps) {
 
-    console.log("selectedStructure", selectedStructure)
-    console.log("documentData", documentData)
-    console.log({ title })
-    console.log({ fields })
-
-    function handleBack() {
-        // Do this better for UX
-        if (isSaved) {
-            clickHandler();
-        }
-    }
-    function reset() {
-        setDocumentData(data);
-        setValidationErrors({});
-    }
-
-
-
-    function validateFields() {
-        const errors: Record<string, string> = {};
-
-        fields.forEach((field: any) => {
-            const isRequired = field?.type?.validation?.some((rule: any) => rule._required);
-            const fieldValue = documentData[field.name];
-
-            if (isRequired && !fieldValue) {
-                errors[field.name] = `${field.name} is required`;
-            }
-        });
-
-        setValidationErrors(errors);
-        return Object.keys(errors).length === 0; // Return true if no errors
-    }
-
-    async function handleSave() {
-        if (!validateFields()) return; // Exit if there are validation errors
-
-
-        setIsSaving(true);
-        await saveHandler({ reference: selectedStructure.name, structure: documentData });
-        setIsSaving(false);
-    }
-
-    function handleLocalChanges(changes: Record<string, any>): void {
-        setDocumentData({ ...documentData, ...changes })
-    }
-
-    useEffect(() => {
-        setIsSaved(compareObjects(documentData, data));
-    }, [documentData, data])
+    const { documentData, title, fields, isSaved, isSaving, validationErrors, handleBack, reset, handleSave, handleLocalChanges} = UseBox(props);
 
     return (
         <>
             <div className="[ pageBox__controls ]">
                 <Button onClick={handleBack}>Back</Button>
-                <Button onClick={handleSave} loading={isSaving}>Save</Button>
-                <Button onClick={reset}>Reset <TfiReload color={"red"} /></Button>
+                <Button onClick={handleSave} disabled={isSaved} loading={isSaving}>Save</Button>
+                <Button onClick={reset} type="reset"/>
             </div>
             {documentData &&
                 <BoxChild

@@ -1,10 +1,11 @@
+import Loading from '@/sanity/components/loading';
 import cx from 'classnames';
-import React from 'react';
+import { TfiReload } from "react-icons/tfi";
 
 type ButtonVariant = 'primary' | 'secondary' | 'outline';
 
 type ButtonProps = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   type?: 'button' | 'submit' | 'reset';
   className?: string;
   disabled?: boolean;
@@ -25,6 +26,7 @@ export default function Button({
   onClick,
   ...props
 }: ButtonProps) {
+
   const variantClasses = {
     primary: 'btn-primary',
     secondary: 'btn-secondary',
@@ -36,17 +38,25 @@ export default function Button({
     medium: 'btn-md',
     large: 'btn-lg',
   };
-
+loading = true;
   return (
     <button
       type={type}
-      className={cx("btn", variantClasses[variant], sizeClasses[size], className)}
+      className={cx(
+        "btn", 
+        variantClasses[variant], 
+        sizeClasses[size], 
+        className,
+        {disabled: disabled}
+      )}
       disabled={disabled || loading} // Disable button when loading
       onClick={onClick}
       {...props}
     >
       {/* TODO:  fix the potential CLS */}
-      {loading ? <span className="spinner" /> : children}
+      {loading && <Loading />}
+      {type === 'reset' ? <TfiReload /> : null}
+      {(!loading && children) && children}
     </button>
   );
 }
