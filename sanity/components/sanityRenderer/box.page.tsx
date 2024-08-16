@@ -11,7 +11,7 @@ type BoxPageProps = {
   selectedItem: sanityStructure | null;
   handleSelect: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   handleBack: () => void;
-  updateData: (data: Record<string, any>) => Promise<boolean>;
+  updateData: (props: {reference: string; structure: Record<string, any>}) => Promise<boolean>;
   error: string | null;
   reset?: () => void;
 }

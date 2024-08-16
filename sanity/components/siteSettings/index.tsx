@@ -15,14 +15,14 @@ export default function Main({ sanityStructure }: Props) {
 }
 
 function SiteSettings({ sanityStructure }: Props) {
-  const { loading, data, selectedItem, handleSelect, handleBack, updateData, error } = useSiteSettingsContext();
+  const { loading, data, selectedItem, selectedData, handleSelect, handleBack, updateData, error } = useSiteSettingsContext();
 
   if (!sanityStructure) return <div><Loading /></div>
 
   return <BoxPage
     sanityStructure={sanityStructure}
     loading={loading}
-    data={data}
+    data={selectedData ?? data}
     selectedItem={selectedItem}
     handleSelect={handleSelect}
     handleBack={handleBack}

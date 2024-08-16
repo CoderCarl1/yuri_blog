@@ -11,9 +11,9 @@ type BoxProps = {
 };
 
 export default function Box(props: BoxProps) {
-
+    console.log("props", props)
     const { documentData, title, fields, isSaved, isSaving, validationErrors, handleBack, reset, handleSave, handleLocalChanges} = UseBox(props);
-
+console.log("documentData after useBox", documentData)
     return (
         <>
             <div className="[ pageBox__controls ]">

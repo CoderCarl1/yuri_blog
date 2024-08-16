@@ -18,8 +18,11 @@ export default function UseBox({ selectedStructure, data, saveHandler, clickHand
     const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
     function handleBack() {
+        console.log("handleBack invoked - current isSaved status", isSaved)
         // Do this better for UX
+        
         if (isSaved && clickHandler) {
+            console.log("passed truthy check")
             clickHandler();
         }
     }
@@ -45,6 +48,7 @@ export default function UseBox({ selectedStructure, data, saveHandler, clickHand
         if (!validateFields()) return;
 
         setIsSaving(true);
+        console.log("data being passed through to handleSave", { reference: selectedStructure.name, structure: documentData })
         await saveHandler({ reference: selectedStructure.name, structure: documentData });
         setIsSaving(false);
     }
@@ -53,8 +57,8 @@ export default function UseBox({ selectedStructure, data, saveHandler, clickHand
         setIsSaved(compareObjects(documentData, data));
     }, [documentData, data])
 
-    function handleLocalChanges(changes: Record<string, any>): void {
-        setDocumentData({ ...documentData, ...changes })
+    function handleLocalChanges(changes: Record<string, any>, documentKey: string): void {
+        setDocumentData({ ...documentData, [documentKey]: { ...documentData[documentKey] , ...changes}})
     }
 
     function reset() {

@@ -5,7 +5,42 @@ import { SiteColors, SettingsMap, colorType } from '@/types/siteSettings.type';
 import { queryFetch, sanityDocumentFetch } from '@/sanity/lib/fetch.client';
 import COLOR from 'color';
 
-export const getSettings = async () => {
+export async function getSettings() {
+  const result = await sanityDocumentFetch('siteSettings') as SettingsMap | undefined;
+  const settings = {
+    colors: {},
+    general: {},
+    siteSettings: {},
+    SiteSEO: {},
+    social_media: {},
+  }
+  if (result) {
+    console.log("%c get settings func initial RESULT \n","color: purple; background-color: cyan", result)
+    if(result.colors){
+      settings.colors = result.colors
+    }
+    if(result.SiteSEO){
+      settings.SiteSEO = result.SiteSEO
+    }
+    if(result.social_media){
+      settings.social_media = result.social_media
+    }
+    if(result.siteSettings){
+      settings.siteSettings = result.siteSettings
+    }
+    if(result.general){
+      settings.general = result.general
+    }
+  }
+  // const sortedResults = result.reduce((acc: SettingsMap, item) => {
+  //   acc[item._id] = item;
+  //   return acc;
+  // }, {});
+  console.log("%c SETTINGS BEING LOADED", "color: purple; background-color: cyan", settings)
+  return settings;
+};
+
+export async function getSiteSpecifics(){
   const result = await sanityDocumentFetch('siteSettings') as SettingsMap | undefined;
   const settings = {
     styles: '',
@@ -15,6 +50,7 @@ export const getSettings = async () => {
     social_media: '',
   }
   if (result) {
+    console.log("getSiteSpecifics func", result)
     settings.styles = generateStyles(result.colors)
 
   }
@@ -23,7 +59,7 @@ export const getSettings = async () => {
   //   return acc;
   // }, {});
   return settings;
-};
+}
 
 // export const setUserPreferences = (settings: SettingsMap) => {
 //   const retval: Record<[k: string]: string > = {};
