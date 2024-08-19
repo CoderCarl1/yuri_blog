@@ -1,8 +1,9 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { getSettings } from "@/functions/loaders/settings";
 import patchSanityDocument from "@/sanity/lib/post.client";
-import { sanityStructure, PageBoxProps } from "@/types/siteSettings.type";
+import type { sanityStructure, PageBoxProps, SiteSettings } from "@/types/siteSettings.type";
 import useSelectedItem from "@/functions/hooks/useSelectedSettings";
+import { SanityDocument } from "sanity";
 
 type updateDataProps = {
   reference: string;
@@ -34,7 +35,7 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
     setLoading(true);
     try {
       const settings = await getSettings();
-      console.log("%c inside site settings context", "color: white; background-color: black;", {settings})
+      console.log("%c 1. inside site settings context", "color: white; background-color: black;", {settings})
       setData(settings);
     } catch (err) {
       setError('Failed to fetch document');
@@ -59,22 +60,34 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
   };
 
   useEffect(() => {
-    if (!selectedItem|| !data ) return;
+    if (!selectedItem?.name || !data ) {
+      console.warn("++_+_+_+_++   NO SELECTED ITEM OR NOT DATA   ++_+_+_+_++")
+      return;
+    }
+    const key = selectedItem?.name;
+    const dataObj = {...data};
+    console.log("%c 4. use effect ran to update selected data", "color: white; background-color: cyan;", {selectedItem})
+
+    console.log("%c 4. data ", "color: white; background-color: cyan;", data?.data)
+    console.log("%c 4. data[selectedItem.name] ", "color: white; background-color: cyan;", data[selectedItem.name])
+    console.log("%c 4. dataObj[key] ", "color: white; background-color: cyan;", dataObj[key])
+
+
     setSelectedData(data[selectedItem.name])
-    // switch(selectedItem.name){
-    //   case "colors":
-    // }
-  }, [selectedItem])
+  }, [selectedItem, data])
 
   const handleBack = () => {
     setSelectedItem(null);
   };
 
-  async function updateData({reference, structure}: {reference: string; structure: Record<string, any>}) {
-    console.log("UPDATE DATA FUNC RUN INSIDE SITE SETTINGS CONTEXT ", {reference, structure})
+  async function updateData(structure: Record<string, any>) {
+    console.log("1. UPDATE DATA FUNC RUN INSIDE SITE SETTINGS CONTEXT ", {structure})
     const controller = new AbortController();
     const signal = controller.signal;
     const res = await patchSanityDocument(`siteSettings`, structure, signal);
+    console.log("2. sending response to Data")
+    setData(res.data);
+    console.log("%c 3. UPDATE DATA FUNC", "color: red; background-color: rgb(25,25,25);", res)
     return !!res;
   }
 

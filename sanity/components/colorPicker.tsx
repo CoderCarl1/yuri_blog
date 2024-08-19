@@ -15,6 +15,7 @@ export default function ColorPicker({currentValue = '0,0,0', colorRef, cb}: Colo
     const [color, setColor] = useState(currentValue)
 
     function handleChange(event:  React.SyntheticEvent<HTMLInputElement>){
+        console.log("ColorPicker", {colorRef} , { currentValue })
         if (!cb) return;
         setColor(event.currentTarget.value);
         cb({colorRef, value: event.currentTarget.value })

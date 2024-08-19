@@ -17,6 +17,15 @@ function SiteSettingsStructure(S: StructureBuilder) {
         ))
         .title('Site Settings'),
     );
+
+    /**
+     * for the default view
+     */
+    // return S.listItem()
+    // .title('siteSettings')
+    // .child(
+    //   S.editor().id('siteSettings').schemaType('siteSettings').documentId('siteSettings'),
+    // );
 }
 
 // Pages

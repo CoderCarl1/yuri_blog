@@ -12,7 +12,8 @@ export async function PATCH(request: NextRequest) {
     try {
         const body: PatchRequestBody = await request.json();
         const { documentId, data } = body;
-
+console.log("PATCH REQUEST ", {documentId})
+console.log("PATCH REQUEST ", {data})
         if (!documentId || !data) {
             return NextResponse.json(
                 { error: 'Invalid input: documentId and data are required' },

@@ -20,7 +20,7 @@ export default async function patchSanityDocument<QueryResponse = SanityDocument
         },
             signal
         )
-
+        console.log("response from post client", {response})
         return response as QueryResponse;
 
     } catch (err) {

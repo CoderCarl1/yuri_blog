@@ -2,6 +2,7 @@ import Button from "@/components/Button";
 import { BoxChild } from "./box.child";
 import type { sanityStructure } from "@/types/siteSettings.type";
 import UseBox from "./UseBox";
+import { useEffect } from "react";
 
 type BoxProps = {
     selectedStructure: sanityStructure;
@@ -11,9 +12,14 @@ type BoxProps = {
 };
 
 export default function Box(props: BoxProps) {
-    console.log("props", props)
+    // console.log("props", props)
     const { documentData, title, fields, isSaved, isSaving, validationErrors, handleBack, reset, handleSave, handleLocalChanges} = UseBox(props);
-console.log("documentData after useBox", documentData)
+// console.log("documentData after useBox", documentData)
+useEffect(() => {
+console.log("props", {props})
+console.log("documentData", {documentData})
+
+},[])
     return (
         <>
             <div className="[ pageBox__controls ]">

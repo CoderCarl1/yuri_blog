@@ -14,7 +14,7 @@ export async function getSettings() {
     SiteSEO: {},
     social_media: {},
   }
-  if (result) {
+  if (!result) return settings;
     console.log("%c get settings func initial RESULT \n","color: purple; background-color: cyan", result)
     if(result.colors){
       settings.colors = result.colors
@@ -31,13 +31,11 @@ export async function getSettings() {
     if(result.general){
       settings.general = result.general
     }
-  }
   // const sortedResults = result.reduce((acc: SettingsMap, item) => {
   //   acc[item._id] = item;
   //   return acc;
   // }, {});
-  console.log("%c SETTINGS BEING LOADED", "color: purple; background-color: cyan", settings)
-  return settings;
+  return Object.assign(settings, {_createdAt: result._createdAt, _updatedAt: result._updatedAt});
 };
 
 export async function getSiteSpecifics(){

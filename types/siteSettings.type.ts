@@ -38,8 +38,9 @@ export type SettingsMap = {
   siteSettings: SiteSettings;
   colors: SiteColors;
   SiteSEO: SiteSEO;
-  social_media: SiteSocials
-};
+  social_media: SiteSocials;
+} & Pick<SanityDocument, '_createdAt' | '_updatedAt'>;
+
 export type Settings = [SiteColors, SiteSEO, SiteSettings, SiteSocials];
 
 export type sanityValidationRules = Rule[];
