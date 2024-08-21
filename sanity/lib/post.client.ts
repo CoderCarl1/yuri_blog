@@ -32,3 +32,35 @@ export default async function patchSanityDocument<QueryResponse = SanityDocument
         throw new Error('Failed to patch document');
     }
 }
+
+export async function createSanityDocument<QueryResponse = SanityDocument>(
+    sanityDocumentId: string,
+    data: AttributeSet,
+    signal?: AbortSignal
+): Promise<QueryResponse> {
+
+    if (!sanityDocumentId) throw new Error('The documentID must be provided');
+    if (!data || Object.keys(data).length === 0) throw new Error('Data must be provided to create the document');
+
+    try {
+        const response = await apiFetch('/api/create', {
+            method: 'POST',
+            body: JSON.stringify({
+                _id: sanityDocumentId,
+                ...data
+            }),
+            signal
+        });
+
+        console.log("response from create client", {response});
+        return response as QueryResponse;
+
+    } catch (err) {
+        console.error('Error creating sanity document:', {
+            error: err,
+            documentId: sanityDocumentId,
+        });
+
+        throw new Error('Failed to create document');
+    }
+}

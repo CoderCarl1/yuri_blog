@@ -22,7 +22,7 @@ console.log("PATCH REQUEST ", {data})
         }
 
         const patchResponse = await patchSanityDocument(documentId, data);
-        return NextResponse.json({ data: patchResponse });
+        return NextResponse.json(patchResponse);
 
     } catch (error) {
         console.error('Error handling PATCH request:', error);

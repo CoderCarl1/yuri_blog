@@ -4,38 +4,29 @@ import { SETTINGS_QUERY } from '@/sanity/lib/queries';
 import { SiteColors, SettingsMap, colorType } from '@/types/siteSettings.type';
 import { queryFetch, sanityDocumentFetch } from '@/sanity/lib/fetch.client';
 import COLOR from 'color';
+import { createSanityDocument } from '@/sanity/lib/post.client';
 
 export async function getSettings() {
-  const result = await sanityDocumentFetch('siteSettings') as SettingsMap | undefined;
-  const settings = {
-    colors: {},
-    general: {},
-    siteSettings: {},
-    SiteSEO: {},
-    social_media: {},
+  let result = await sanityDocumentFetch('siteSettings') as SettingsMap | undefined;
+
+  if (!result) {
+    const data = Object.assign(Object.create(null),{
+      _type: 'siteSettings',
+      colors: {},
+      general: {},
+      siteSettings: {},
+      SiteSEO: {},
+      social_media: {},
+    });
+    result = await createSanityDocument('siteSettings', data)
   }
-  if (!result) return settings;
-    console.log("%c get settings func initial RESULT \n","color: purple; background-color: cyan", result)
-    if(result.colors){
-      settings.colors = result.colors
-    }
-    if(result.SiteSEO){
-      settings.SiteSEO = result.SiteSEO
-    }
-    if(result.social_media){
-      settings.social_media = result.social_media
-    }
-    if(result.siteSettings){
-      settings.siteSettings = result.siteSettings
-    }
-    if(result.general){
-      settings.general = result.general
-    }
-  // const sortedResults = result.reduce((acc: SettingsMap, item) => {
-  //   acc[item._id] = item;
-  //   return acc;
-  // }, {});
-  return Object.assign(settings, {_createdAt: result._createdAt, _updatedAt: result._updatedAt});
+
+  if (!result) return {};
+
+  const {_id, _rev, _type, ...sanitizedData} = result;
+  const settings: SettingsMap = Object.assign(Object.create(null), sanitizedData);
+  
+  return settings;
 };
 
 export async function getSiteSpecifics(){

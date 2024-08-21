@@ -44,22 +44,14 @@ export default function UseBox({ selectedStructure, data, saveHandler, clickHand
     }
 
     async function handleSave() {
-        console.log("handleSave ran")
         if (!validateFields()) return;
-
         setIsSaving(true);
-        console.warn("data being passed through to handleSave", { structure: documentData })
-        await saveHandler({ structure: documentData });
+        const { _createdAt, _updatedAt, ...record } = documentData
+        await saveHandler(record);
         setIsSaving(false);
     }
 
-    useEffect(() => {
-        console.log("%c ccomparing these values to determine if it is saved", "color: green;", compareObjects(documentData[title.toLowerCase()], data))
-        console.log( documentData[title.toLowerCase()])
-        console.log( "data" , data)
-        console.log("title", title)
-        setIsSaved(compareObjects(documentData[title.toLowerCase()], data));
-    }, [documentData, data])
+    useEffect(() => setIsSaved(compareObjects(documentData[title.toLowerCase()], data)), [documentData, data])
 
     function handleLocalChanges(changes: Record<string, any>, documentKey: string): void {
         setDocumentData({ ...documentData, [documentKey]: { ...documentData[documentKey] , ...changes}})

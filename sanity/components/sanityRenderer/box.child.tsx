@@ -41,7 +41,7 @@ type RenderDocumentProps = {
       if (matchedComponent) {
         const Component = componentMap[matchedComponent];
         const value = documentData[documentTitle.toLowerCase()][name] ?? "#000";
-
+        console.log("value", value)
         return <Component key={name} currentValue={value} fieldName={name} onChangeCB={handleChange} />;
       }
   

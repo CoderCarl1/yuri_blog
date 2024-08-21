@@ -35,9 +35,9 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
     setLoading(true);
     try {
       const settings = await getSettings();
-      console.log("%c 1. inside site settings context", "color: white; background-color: black;", {settings})
+      console.log("%c 1. inside site settings context", "color: white; background-color: black;", settings)
       setData(settings);
-    } catch (err) {
+    } catch (err){
       setError('Failed to fetch document');
     } finally {
       setLoading(false);
@@ -64,14 +64,8 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
       console.warn("++_+_+_+_++   NO SELECTED ITEM OR NOT DATA   ++_+_+_+_++")
       return;
     }
-    const key = selectedItem?.name;
-    const dataObj = {...data};
     console.log("%c 4. use effect ran to update selected data", "color: white; background-color: cyan;", {selectedItem})
-
-    console.log("%c 4. data ", "color: white; background-color: cyan;", data?.data)
     console.log("%c 4. data[selectedItem.name] ", "color: white; background-color: cyan;", data[selectedItem.name])
-    console.log("%c 4. dataObj[key] ", "color: white; background-color: cyan;", dataObj[key])
-
 
     setSelectedData(data[selectedItem.name])
   }, [selectedItem, data])
@@ -81,12 +75,14 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
   };
 
   async function updateData(structure: Record<string, any>) {
-    console.log("1. UPDATE DATA FUNC RUN INSIDE SITE SETTINGS CONTEXT ", {structure})
     const controller = new AbortController();
     const signal = controller.signal;
+    const cleanObject = Object.assign(Object.create(null), structure)
+    console.log("1. UPDATE DATA FUNC RUN INSIDE SITE SETTINGS CONTEXT ", cleanObject)
+    console.log("props we are passing throyugh to patch request", `siteSettings`, cleanObject, signal)
     const res = await patchSanityDocument(`siteSettings`, structure, signal);
     console.log("2. sending response to Data")
-    setData(res.data);
+    setData(res);
     console.log("%c 3. UPDATE DATA FUNC", "color: red; background-color: rgb(25,25,25);", res)
     return !!res;
   }

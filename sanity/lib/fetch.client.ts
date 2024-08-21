@@ -60,7 +60,6 @@ export async function searchAPI(
   }
 }
 
-
 export async function sanityDocumentFetch(
   id: string = '',
 ): Promise<SanityDocument | undefined> {
