@@ -38,7 +38,6 @@ export async function createSanityDocument<QueryResponse = SanityDocument>(
     data: AttributeSet,
     signal?: AbortSignal
 ): Promise<QueryResponse> {
-
     if (!sanityDocumentId) throw new Error('The documentID must be provided');
     if (!data || Object.keys(data).length === 0) throw new Error('Data must be provided to create the document');
 
@@ -46,13 +45,12 @@ export async function createSanityDocument<QueryResponse = SanityDocument>(
         const response = await apiFetch('/api/create', {
             method: 'POST',
             body: JSON.stringify({
-                _id: sanityDocumentId,
+                // _id: sanityDocumentId,
                 ...data
             }),
             signal
         });
 
-        console.log("response from create client", {response});
         return response as QueryResponse;
 
     } catch (err) {
@@ -64,3 +62,4 @@ export async function createSanityDocument<QueryResponse = SanityDocument>(
         throw new Error('Failed to create document');
     }
 }
+

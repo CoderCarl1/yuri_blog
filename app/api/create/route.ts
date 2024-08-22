@@ -3,21 +3,14 @@ import { IdentifiedSanityDocumentStub, SanityDocument } from 'next-sanity';
 import { client } from '@/sanity/lib/client';
 import { writeToken } from '@/sanity/lib/token';
 
-export async function PATCH(request: NextRequest) {
+const clientWithWritePermission = client.withConfig({ token: writeToken });
+
+
+export async function POST(request: NextRequest) {
     try {
-    console.log("CREATION REQUEST INIT")
+        const body: IdentifiedSanityDocumentStub = await request.json();
 
-        const body = await request.json();
-        console.log("CREATION REQUEST ", body)
-        const data: IdentifiedSanityDocumentStub = body.data;
-        // if (!data || !data._id) {
-        //     return NextResponse.json(
-        //         { error: 'Invalid input: documentId and data are required' },
-        //         { status: 400 }
-        //     );
-        // }
-
-        const response = await createSanityDocument(data);
+        const response = await createSanityDocument(body);
         return NextResponse.json({ response });
 
     } catch (error) {
@@ -31,23 +24,19 @@ export async function PATCH(request: NextRequest) {
 
 }
 
-const clientWithWritePermission = client.withConfig({ token: writeToken });
 
 async function createSanityDocument<QueryResponse = SanityDocument>
     (data: IdentifiedSanityDocumentStub): Promise<QueryResponse> {
-
-    if (!data._id) throw new Error('The documentID must be provided');;
     if (!data || Object.keys(data).length === 0) throw new Error('Data must be provided to update the document');
 
     try {
         const response = await clientWithWritePermission
-            .createIfNotExists({...data})
+            .create({...data})
 
-        console.log('creation response:', response);
         return response as QueryResponse;
 
     } catch (err) {
-        console.error('Error patching sanity document:', {
+        console.error('Error creating sanity document:', {
             error: err,
             documentId: data._id,
         });

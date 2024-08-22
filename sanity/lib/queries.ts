@@ -58,7 +58,6 @@ export const SEARCH_QUERY = groq`*[_type in ['post', 'author'] &&
           ),
      }[0...5]`;
 
-const timestamp = new Date().getTime();
 export const SETTINGS_QUERY = groq`*[_type in ["siteSettings"]]{
     colors,
     general,
@@ -66,4 +65,4 @@ export const SETTINGS_QUERY = groq`*[_type in ["siteSettings"]]{
     seo,
     social_media,
     analytics,
-}&t=${timestamp}`;
+}`;

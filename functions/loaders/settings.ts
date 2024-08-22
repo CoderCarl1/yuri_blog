@@ -1,31 +1,10 @@
-import { sanityFetch } from '@/sanity/lib/fetch.server';
-import { Settings } from '@/types';
 import { SETTINGS_QUERY } from '@/sanity/lib/queries';
 import { SiteColors, SettingsMap, colorType } from '@/types/siteSettings.type';
-import { queryFetch, sanityDocumentFetch } from '@/sanity/lib/fetch.client';
+import { sanityDocumentFetch, settingsFetch } from '@/sanity/lib/fetch.client';
 import COLOR from 'color';
-import { createSanityDocument } from '@/sanity/lib/post.client';
 
 export async function getSettings() {
-  let result = await sanityDocumentFetch('siteSettings') as SettingsMap | undefined;
-
-  if (!result) {
-    const data = Object.assign(Object.create(null),{
-      _type: 'siteSettings',
-      colors: {},
-      general: {},
-      siteSettings: {},
-      SiteSEO: {},
-      social_media: {},
-    });
-    result = await createSanityDocument('siteSettings', data)
-  }
-
-  if (!result) return {};
-
-  const {_id, _rev, _type, ...sanitizedData} = result;
-  const settings: SettingsMap = Object.assign(Object.create(null), sanitizedData);
-  
+  let settings = await settingsFetch()
   return settings;
 };
 

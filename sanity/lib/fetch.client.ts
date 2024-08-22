@@ -1,6 +1,8 @@
 import type { Post_SanityDocument } from '@/types';
 import { client } from './client';
 import { SanityDocument } from 'sanity';
+import { SETTINGS_QUERY } from './queries';
+import { SettingsMap } from '@/types/siteSettings.type';
 
 export async function apiFetch<QueryResponse>(
   url: string,
@@ -18,9 +20,7 @@ export async function apiFetch<QueryResponse>(
     signal, // Optional abort signal
     ...options,
   };
-
   const response = await fetch(url, defaultOptions);
-
   if (!response.ok) {
     throw new Error(`HTTP error: Status ${response.status}`);
   }
@@ -83,4 +83,38 @@ export async function queryFetch(
   } finally {
     return results;
   }
+}
+
+export async function settingsFetch(): Promise<SettingsMap> {
+  const result = await queryFetch(SETTINGS_QUERY) as SettingsMap[] | undefined;
+
+  /** Create new settings object only if needed */
+  // if (!result) {
+  //   console.log("no site settings found, creating new document")
+  //   const data = Object.assign(Object.create(null),{
+  //     _type: 'siteSettings',
+  //     colors: {},
+  //     general: {},
+  //     siteSettings: {},
+  //     SiteSEO: {},
+  //     social_media: {},
+  //   });
+  //   const controller = new AbortController();
+  //   const signal = controller.signal;
+  //   result = await createSanityDocument('siteSettings', data, signal)
+  // }
+
+  if (!result) return Object.assign(Object.create(null),{
+    _type: 'siteSettings',
+    colors: {},
+    general: {},
+    siteSettings: {},
+    SiteSEO: {},
+    social_media: {},
+  });
+
+  const {_id, _rev, _type, ...sanitizedData} = result[0];
+  const settings: SettingsMap = Object.assign(Object.create(null), sanitizedData);
+
+  return settings;
 }
