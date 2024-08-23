@@ -40,13 +40,14 @@ export async function createSanityDocument<QueryResponse = SanityDocument>(
 ): Promise<QueryResponse> {
     if (!sanityDocumentId) throw new Error('The documentID must be provided');
     if (!data || Object.keys(data).length === 0) throw new Error('Data must be provided to create the document');
+    const objectWithoutProto = Object.assign(Object.create(null), data);
 
     try {
         const response = await apiFetch('/api/create', {
             method: 'POST',
             body: JSON.stringify({
                 // _id: sanityDocumentId,
-                ...data
+                ...objectWithoutProto
             }),
             signal
         });

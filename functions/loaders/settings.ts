@@ -1,14 +1,10 @@
-import { SETTINGS_QUERY } from '@/sanity/lib/queries';
 import { SiteColors, SettingsMap, colorType } from '@/types/siteSettings.type';
 import { sanityDocumentFetch, settingsFetch } from '@/sanity/lib/fetch.client';
 import COLOR from 'color';
 
-export async function getSettings() {
-  let settings = await settingsFetch()
-  return settings;
-};
+export const getSettings = async () => await settingsFetch();
 
-export async function getSiteSpecifics(){
+export async function getSiteSettings(){
   const result = await sanityDocumentFetch('siteSettings') as SettingsMap | undefined;
   const settings = {
     styles: '',

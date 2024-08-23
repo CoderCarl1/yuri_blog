@@ -1,7 +1,7 @@
 import { compareObjects } from "@/functions/comparisons";
 import { useStateWithDebounce } from "@/functions/hooks/useDebounce";
 import type { sanityStructure } from "@/types/siteSettings.type";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type BoxProps = {
     selectedStructure: sanityStructure;
@@ -13,18 +13,20 @@ type BoxProps = {
 export default function UseBox({ selectedStructure, data, saveHandler, clickHandler }: BoxProps) {
     const [documentData, setDocumentData] = useStateWithDebounce<Record<string, any>>(data, 50);
     const { title, fields } = selectedStructure.type;
-    const [isSaved, setIsSaved] = useState(false);
-    const [isSaving, setIsSaving] = useState(false);
     const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
 
+    const [isSaving, setIsSaving] = useState(false);
+    
+    const isSaved = useMemo(() => {
+        return compareObjects(documentData[title.toLowerCase()], data[title.toLowerCase()]);
+      }, [documentData, data]);
+
+
     function handleBack() {
-        console.log("handleBack invoked - current isSaved status", isSaved)
-        // Do this better for UX
+        // TODO: add some sort of refresh here to handle this situation.
+        if (!isSaved || !clickHandler) return;
         
-        if (isSaved && clickHandler) {
-            console.log("passed truthy check")
-            clickHandler();
-        }
+        clickHandler();
     }
 
     function validateFields() {
@@ -50,8 +52,6 @@ export default function UseBox({ selectedStructure, data, saveHandler, clickHand
         await saveHandler(record);
         setIsSaving(false);
     }
-
-    useEffect(() => setIsSaved(compareObjects(documentData[title.toLowerCase()], data)), [documentData, data])
 
     function handleLocalChanges(changes: Record<string, any>, documentKey: string): void {
         setDocumentData({ ...documentData, [documentKey]: { ...documentData[documentKey] , ...changes}})

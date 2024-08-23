@@ -5,7 +5,7 @@ import { VisualEditing } from 'next-sanity';
 import NavBar from '@/components/Navbar';
 import { ButtonLink } from '@/components/Link';
 import { draftMode } from 'next/headers';
-import { getSettings } from '@/functions/loaders/settings';
+import { getSiteSettings } from '@/functions/loaders/settings';
 // import { sanityFetch } from '@/sanity/lib/fetch.server';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -25,7 +25,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
 
-  const {styles} = await getSettings();
+  const {styles} = await getSiteSettings();
   
   // let styles = '';
 // console.log("settings", settings)

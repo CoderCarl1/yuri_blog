@@ -16,7 +16,7 @@ function useSelectedItem(sanityStructure: sanityStructure[]) {
 
     useLayoutEffect(() => {
         const url = new URL(window.location.href);
-
+console.log("useSelectedItem useLayoutEffect ran ")
         if (selectedItem) {
             url.searchParams.set('settings', selectedItem.name);
         } else {

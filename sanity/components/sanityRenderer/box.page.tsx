@@ -11,7 +11,7 @@ type BoxPageProps = {
   selectedItem: sanityStructure | null;
   handleSelect: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   handleBack: () => void;
-  updateData: (props: {reference: string; structure: Record<string, any>}) => Promise<boolean>;
+  updateData: (props: { reference: string; structure: Record<string, any> }) => Promise<boolean>;
   error: string | null;
   reset?: () => void;
 }
@@ -29,7 +29,7 @@ export default function BoxPage({
 }: BoxPageProps) {
 
   const reload = () => {
-    if (reset){ 
+    if (reset) {
       reset();
     } else {
       window.location.reload();
@@ -50,21 +50,27 @@ export default function BoxPage({
         <Loading />
       </div>)
   }
-  return (
-    <div className='[ pageBox ]'>
-      {(selectedItem && data) ? (
+
+
+  if (selectedItem && data) {
+    return (
+      <div className='[ pageBox ]'>
         <Box
           selectedStructure={selectedItem}
           data={data}
           clickHandler={handleBack}
           saveHandler={updateData}
         />
-      ) : (
-        <BoxMap
-          structureArray={sanityStructure}
-          clickHandler={handleSelect}
-        />
-      )}
+      </div>
+    );
+  }
+
+  return (
+    <div className='[ pageBox ]'>
+      <BoxMap
+        structureArray={sanityStructure}
+        clickHandler={handleSelect}
+      />
     </div>
   );
 };

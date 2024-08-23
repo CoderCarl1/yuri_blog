@@ -23,10 +23,6 @@ type RenderDocumentProps = {
 
       changeHandler({ [fieldName]: value}, documentTitle.toLowerCase());
     };
-  
-    // console.log("documentFields", documentFields)
-    // console.log("documentData", documentData)
-
 
     const selectComponent = (child: { name: string; type: { jsonType: string; [key: string]: any } }) => {
       const { name, type } = child;
@@ -41,7 +37,6 @@ type RenderDocumentProps = {
       if (matchedComponent) {
         const Component = componentMap[matchedComponent];
         const value = documentData[documentTitle.toLowerCase()][name] ?? "#000";
-        console.log("value", value)
         return <Component key={name} currentValue={value} fieldName={name} onChangeCB={handleChange} />;
       }
   
@@ -52,8 +47,8 @@ type RenderDocumentProps = {
       <div className='[ page-box__child document-render ]'>
         <h2>{documentTitle}</h2>
         <div className="flex gap-4">
-          {/* {documentFields.map(child => selectComponent(child))} */}
-          {selectComponent(documentFields[0])}
+          {documentFields.map(child => selectComponent(child))}
+          {/* {selectComponent(documentFields[0])} */}
 
         </div>
       </div>

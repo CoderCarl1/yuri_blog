@@ -59,6 +59,8 @@ export const SEARCH_QUERY = groq`*[_type in ['post', 'author'] &&
      }[0...5]`;
 
 export const SETTINGS_QUERY = groq`*[_type in ["siteSettings"]]{
+    _id,
+    __updatedAt,
     colors,
     general,
     typography,

@@ -18,7 +18,7 @@ interface SiteSettingsContextProps {
   selectedData: Record<string, any> | undefined;
   handleSelect: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   handleBack: () => void;
-  updateData: (props: updateDataProps) => Promise<boolean>;
+  updateData: (props: updateDataProps) => void;
   reset: () => void;
 }
 
@@ -35,9 +35,8 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
     setLoading(true);
     try {
       const settings = await getSettings();
-      console.log("%c 1. inside site settings context", "color: white; background-color: black;", settings)
       setData(settings);
-    } catch (err){
+    } catch (err) {
       setError('Failed to fetch document');
     } finally {
       setLoading(false);
@@ -45,8 +44,17 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
   };
 
   useEffect(() => {
+    console.log("SiteSettingsProvider 1")
     fetchData();
   }, []);
+
+  useEffect(() => {
+    console.log("SiteSettingsProvider 2")
+
+    if (sanityStructure.length && sanityStructure.length === 1) {
+      setSelectedItem(sanityStructure[0]);
+    }
+  }, [])
 
   const handleSelect = (event: React.SyntheticEvent<HTMLButtonElement>) => {
     const { name } = event.currentTarget.dataset;
@@ -60,15 +68,14 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
   };
 
   useEffect(() => {
-    if (!selectedItem?.name || !data ) {
-      console.warn("++_+_+_+_++   NO SELECTED ITEM OR NOT DATA   ++_+_+_+_++")
+    console.log("SiteSettingsProvider 3")
+
+    if (!selectedItem?.name || !data  || !data._updatedAt) {
       return;
     }
-    console.log("%c 4. use effect ran to update selected data", "color: white; background-color: cyan;", {selectedItem})
-    console.log("%c 4. data[selectedItem.name] ", "color: white; background-color: cyan;", data[selectedItem.name])
 
     setSelectedData(data[selectedItem.name])
-  }, [selectedItem, data])
+  }, [selectedItem, data?._updatedAt])
 
   const handleBack = () => {
     setSelectedItem(null);
@@ -77,14 +84,9 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
   async function updateData(structure: Record<string, any>) {
     const controller = new AbortController();
     const signal = controller.signal;
-    const cleanObject = Object.assign(Object.create(null), structure)
-    console.log("1. UPDATE DATA FUNC RUN INSIDE SITE SETTINGS CONTEXT ", cleanObject)
-    console.log("props we are passing throyugh to patch request", `siteSettings`, cleanObject, signal)
-    const res = await patchSanityDocument(`siteSettings`, structure, signal);
-    console.log("2. sending response to Data")
+
+    const res = await patchSanityDocument(structure._id, structure, signal);
     setData(res);
-    console.log("%c 3. UPDATE DATA FUNC", "color: red; background-color: rgb(25,25,25);", res)
-    return !!res;
   }
 
   const reset = () => {
@@ -93,9 +95,9 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
     setData(undefined);
     fetchData();
   };
-  
+
   return (
-    <SiteSettingsContext.Provider value={{reset, loading, error, data, selectedItem, selectedData, handleSelect, handleBack, updateData }}>
+    <SiteSettingsContext.Provider value={{ reset, loading, error, data, selectedItem, selectedData, handleSelect, handleBack, updateData }}>
       {children}
     </SiteSettingsContext.Provider>
   );

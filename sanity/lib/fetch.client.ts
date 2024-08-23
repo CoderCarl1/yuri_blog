@@ -77,7 +77,6 @@ export async function queryFetch(
 
   try {
     results = await client.fetch(query);
-    console.log('queryFetch', results);
   } catch (err) {
     console.log(err);
   } finally {
@@ -87,7 +86,6 @@ export async function queryFetch(
 
 export async function settingsFetch(): Promise<SettingsMap> {
   const result = await queryFetch(SETTINGS_QUERY) as SettingsMap[] | undefined;
-
   /** Create new settings object only if needed */
   // if (!result) {
   //   console.log("no site settings found, creating new document")
@@ -105,7 +103,6 @@ export async function settingsFetch(): Promise<SettingsMap> {
   // }
 
   if (!result) return Object.assign(Object.create(null),{
-    _type: 'siteSettings',
     colors: {},
     general: {},
     siteSettings: {},
@@ -113,7 +110,7 @@ export async function settingsFetch(): Promise<SettingsMap> {
     social_media: {},
   });
 
-  const {_id, _rev, _type, ...sanitizedData} = result[0];
+  const {_rev, _type, ...sanitizedData} = result[0];
   const settings: SettingsMap = Object.assign(Object.create(null), sanitizedData);
 
   return settings;
