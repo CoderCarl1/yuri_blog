@@ -6,14 +6,14 @@ import UseBox from "./UseBox";
 type BoxProps = {
     selectedStructure: sanityStructure;
     data: Record<string, any>;
-    saveHandler: (data: any) => Promise<boolean>;
+    saveHandler: (data: any) => void;
     clickHandler?: () => void;
 };
 
 export default function Box(props: BoxProps) {
     const { documentData, title, fields, isSaved, isSaving, validationErrors, handleBack, reset, handleSave, handleLocalChanges } = UseBox(props);
-console.log("inside box documentData ", documentData)
-console.log("inside box fields", fields)
+// console.log("inside box documentData ", documentData)
+// console.log("inside box fields", fields)
     return (
         <>
             <div className="[ pageBox__controls ]">

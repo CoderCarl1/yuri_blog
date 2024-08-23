@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 type BoxProps = {
     selectedStructure: sanityStructure;
     data: Record<string, any>;
-    saveHandler: (data: any) => Promise<boolean>;
+    saveHandler: (data: any) => void;
     clickHandler?: () => void;
 };
 

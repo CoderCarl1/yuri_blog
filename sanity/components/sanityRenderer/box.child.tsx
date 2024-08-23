@@ -1,9 +1,18 @@
 import ColorInput from "./components/input.color";
 
 
+type documentFieldChild = { 
+  name: string;
+  type: { 
+    jsonType: string;
+    name: string;
+    title: string;
+    validation: [];
+    [key: string]: any }
+   }
 type RenderDocumentProps = {
     documentTitle: string;
-    documentFields: Record<string, any>;
+    documentFields: documentFieldChild[];
     documentData: Record<string, any>;
     changeHandler: (changes: Record<string, any>, documentTitle: string) => void;
     validationErrors: Record<string, any>;
@@ -18,13 +27,11 @@ type RenderDocumentProps = {
   }) => {
   
     const handleChange = ({fieldName, value}: {fieldName: string; value: string}) => {
-      // console.warn("+++++  handle change inside of box child ", {documentTitle}, {fieldName, value})
       if (!changeHandler) return;
-
       changeHandler({ [fieldName]: value}, documentTitle.toLowerCase());
     };
-
-    const selectComponent = (child: { name: string; type: { jsonType: string; [key: string]: any } }) => {
+    console.log("documentFields", documentFields)
+    const selectComponent = (child: documentFieldChild) => {
       const { name, type } = child;
 
       const componentMap: Record<string, React.FC<any>> = {
@@ -48,8 +55,6 @@ type RenderDocumentProps = {
         <h2>{documentTitle}</h2>
         <div className="flex gap-4">
           {documentFields.map(child => selectComponent(child))}
-          {/* {selectComponent(documentFields[0])} */}
-
         </div>
       </div>
     )

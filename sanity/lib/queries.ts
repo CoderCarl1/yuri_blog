@@ -65,6 +65,6 @@ export const SETTINGS_QUERY = groq`*[_type in ["siteSettings"]]{
     general,
     typography,
     seo,
-    social_media,
+    social_media -> ,
     analytics,
 }`;

@@ -11,7 +11,7 @@ type BoxPageProps = {
   selectedItem: sanityStructure | null;
   handleSelect: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   handleBack: () => void;
-  updateData: (props: { reference: string; structure: Record<string, any> }) => Promise<boolean>;
+  updateData: (props: { reference: string; structure: Record<string, any> }) => void;
   error: string | null;
   reset?: () => void;
 }
@@ -27,7 +27,7 @@ export default function BoxPage({
   error,
   reset
 }: BoxPageProps) {
-
+console.log("data", data)
   const reload = () => {
     if (reset) {
       reset();
