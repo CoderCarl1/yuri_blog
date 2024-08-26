@@ -222,7 +222,8 @@ export default defineType({
     // SEO Specific
     defineField({
       name: 'seo',
-      title: 'Search Engine Optimization(SEO)',
+      title: 'SEO',
+      description: 'Search Engine Optimization',
       type: 'object',
       fields: [
         defineField({

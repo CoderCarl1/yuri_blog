@@ -32,14 +32,50 @@ export type SiteSocials = SanityDocument & {
   instagram?: string;
 }
 
+
+export type SiteAnalytics = SanityDocument & {
+  googleAnalyticsId?: string;
+}
+
+type FontObject = {
+  font_file?: string;
+  font_url?: string;
+}
+
+export type SiteTypography = SanityDocument & {
+  font_main?: FontObject;
+  headingFont?: FontObject;
+}
+
+type submenuItem = {
+  title: string;
+  url?: string;
+}
+
+type SiteNavigationItem = {
+  title: string;
+  link_type: 'single' | 'submenu';
+  url?: string;
+  submenu: submenuItem;
+}
+export type SiteGeneral = SanityDocument & {
+  title: string;
+  description: string;
+  favicon: SanityImage;
+  navigation: SiteNavigationItem[];
+}
+
 export type SettingsMap = {
   // Required index signature
-  [key: string]: SiteSettings | SiteColors | SiteSEO | undefined;
-  siteSettings: SiteSettings;
+  seo: SiteSEO;
+  analytics: SiteAnalytics;
   colors: SiteColors;
-  SiteSEO: SiteSEO;
+  general: SiteGeneral;
+  siteSettings: SiteSettings;
   social_media: SiteSocials;
-} & Pick<SanityDocument, '_createdAt' | '_updatedAt'>;
+  typography: SiteTypography;
+  [key: string]: SiteSEO  | SiteAnalytics | SiteColors | SiteGeneral |SiteSettings | SiteSocials | SiteTypography | undefined;
+} & Pick<SanityDocument, '_createdAt' | '_updatedAt' | '_type'>;
 
 export type Settings = [SiteColors, SiteSEO, SiteSettings, SiteSocials];
 

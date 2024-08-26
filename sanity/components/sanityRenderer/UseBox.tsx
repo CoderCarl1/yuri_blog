@@ -18,7 +18,7 @@ export default function UseBox({ selectedStructure, data, saveHandler, clickHand
     const [isSaving, setIsSaving] = useState(false);
     
     const isSaved = useMemo(() => {
-        return compareObjects(documentData[title.toLowerCase()], data[title.toLowerCase()]);
+        return compareObjects(documentData[title.toLowerCase()], data);
       }, [documentData, data]);
 
 
@@ -49,12 +49,12 @@ export default function UseBox({ selectedStructure, data, saveHandler, clickHand
         if (!validateFields()) return;
         setIsSaving(true);
         const { _createdAt, _updatedAt, ...record } = documentData
-        await saveHandler(record);
+        saveHandler(record);
         setIsSaving(false);
     }
 
     function handleLocalChanges(changes: Record<string, any>, documentKey: string): void {
-        setDocumentData({ ...documentData, [documentKey]: { ...documentData[documentKey] , ...changes}})
+        setDocumentData({ ...documentData, [documentKey]: Object.assign(Object.create(null), documentData[documentKey] , changes)})
     }
 
     function reset() {

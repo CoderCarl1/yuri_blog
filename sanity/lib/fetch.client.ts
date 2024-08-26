@@ -64,7 +64,7 @@ export async function sanityDocumentFetch(
   id: string = '',
 ): Promise<SanityDocument | undefined> {
   try {
-   return await client.getDocument(id);
+    return await client.getDocument(id);
   } catch (err) {
     console.log(err);
   }
@@ -84,34 +84,46 @@ export async function queryFetch(
   }
 }
 
+
+/** Create new settings object only if needed */
+// if (!result) {
+//   console.log("no site settings found, creating new document")
+//   const controller = new AbortController();
+//   const signal = controller.signal;
+//   result = await createSanityDocument('siteSettings', data, signal)
+// }
+
 export async function settingsFetch(): Promise<SettingsMap> {
+  let data = {
+    _type: 'siteSettings',
+    seo: Object.create(null),
+    analytics: Object.create(null),
+    colors: Object.create(null),
+    general: Object.create(null),
+    siteSettings: Object.create(null),
+    social_media: Object.create(null),
+    typography: Object.create(null),
+  };
+
   const result = await queryFetch(SETTINGS_QUERY) as SettingsMap[] | undefined;
-  /** Create new settings object only if needed */
-  // if (!result) {
-  //   console.log("no site settings found, creating new document")
-  //   const data = Object.assign(Object.create(null),{
-  //     _type: 'siteSettings',
-  //     colors: {},
-  //     general: {},
-  //     siteSettings: {},
-  //     SiteSEO: {},
-  //     social_media: {},
-  //   });
-  //   const controller = new AbortController();
-  //   const signal = controller.signal;
-  //   result = await createSanityDocument('siteSettings', data, signal)
-  // }
 
-  if (!result) return Object.assign(Object.create(null),{
-    colors: {},
-    general: {},
-    siteSettings: {},
-    SiteSEO: {},
-    social_media: {},
-  });
+  if (result && result.length) {
+    data = Object.assign(Object.create(null), _deepMerge(data, result[0]))
+  }
 
-  const {_rev, _type, ...sanitizedData} = result[0];
-  const settings: SettingsMap = Object.assign(Object.create(null), sanitizedData);
+  return data as SettingsMap;
 
-  return settings;
+  function _deepMerge(target: any, source: any): any {
+    for (const key in source) {
+      if (source[key] !== null && source[key] !== undefined) {
+        if (typeof source[key] === 'object' && !Array.isArray(source[key])) {
+          target[key] = _deepMerge(target[key] || {}, source[key]);
+        } else {
+          target[key] = source[key];
+        }
+      }
+    }
+    return target;
+  }
 }
+

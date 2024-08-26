@@ -1,9 +1,8 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { getSettings } from "@/functions/loaders/settings";
 import patchSanityDocument from "@/sanity/lib/post.client";
-import type { sanityStructure, PageBoxProps, SiteSettings } from "@/types/siteSettings.type";
+import type { sanityStructure, PageBoxProps } from "@/types/siteSettings.type";
 import useSelectedItem from "@/functions/hooks/useSelectedSettings";
-import { SanityDocument } from "sanity";
 
 type updateDataProps = {
   reference: string;
@@ -44,13 +43,10 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
   };
 
   useEffect(() => {
-    console.log("SiteSettingsProvider 1")
     fetchData();
   }, []);
 
   useEffect(() => {
-    console.log("SiteSettingsProvider 2")
-
     if (sanityStructure.length && sanityStructure.length === 1) {
       setSelectedItem(sanityStructure[0]);
     }
@@ -68,9 +64,8 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
   };
 
   useEffect(() => {
-    console.log("SiteSettingsProvider 3")
-
     if (!selectedItem?.name || !data  || !data._updatedAt) {
+      setSelectedData(data);
       return;
     }
 
@@ -106,7 +101,7 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
 export const useSiteSettingsContext = () => {
   const context = useContext(SiteSettingsContext);
   if (!context) {
-    throw new Error("SiteSettingsContext must be used within a MainProvider");
+    throw new Error("SiteSettingsContext must be used within a SiteSettingsProvider");
   }
   return context;
 };
