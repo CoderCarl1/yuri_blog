@@ -2,7 +2,7 @@ import { FaCog } from "react-icons/fa";
 import { defineArrayMember, defineField, defineType } from 'sanity';
 
 export default defineType({
-  name: 'siteSettings',
+  name: 'site_settings',
   title: 'Site Settings',
   type: 'document',
   icon: FaCog,
@@ -290,7 +290,7 @@ export default defineType({
       title: 'Social Media Profiles',
       type: 'array',
       of: [
-        { type: 'reference', to: [{ type: 'social_media_schema' }] }
+        { type: 'reference', to: [{ type: 'schema_social_media' }] }
       ],
     }),
     // analytics - Consider expanding

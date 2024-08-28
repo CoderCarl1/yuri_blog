@@ -2,8 +2,8 @@ import { defineField, defineType } from 'sanity';
 
 
 export default defineType({
-  name: 'social_media_schema',
-  title: 'Social Media Schema',
+  name: 'schema_social_media',
+  title: 'Social Media',
   type: 'document',
   fields: [
     defineField({

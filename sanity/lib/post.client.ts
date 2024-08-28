@@ -1,5 +1,6 @@
 import { AttributeSet, SanityDocument } from 'next-sanity';
 import { apiFetch } from './fetch.client';
+import { isSanityDocument } from 'sanity';
 
 export default async function patchSanityDocument<QueryResponse = SanityDocument>(
     sanityDocumentId: string = '',
@@ -20,7 +21,11 @@ export default async function patchSanityDocument<QueryResponse = SanityDocument
         },
             signal
         )
-        console.log("response from post client", {response})
+        if (isSanityDocument(response)){
+            const {_id, _rev, _type, _createdAt, ...dataToReturn} = response;
+
+            return Object.assign(Object.create(null), dataToReturn) as QueryResponse;
+        }
         return response as QueryResponse;
 
     } catch (err) {

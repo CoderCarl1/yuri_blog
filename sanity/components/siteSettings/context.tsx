@@ -3,6 +3,7 @@ import { getSettings } from "@/functions/loaders/settings";
 import patchSanityDocument from "@/sanity/lib/post.client";
 import type { sanityStructure, PageBoxProps } from "@/types/siteSettings.type";
 import useSelectedItem from "@/functions/hooks/useSelectedSettings";
+import { SanityDocument } from "sanity";
 
 type updateDataProps = {
   reference: string;
@@ -17,7 +18,7 @@ interface SiteSettingsContextProps {
   selectedData: Record<string, any> | undefined;
   handleSelect: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   handleBack: () => void;
-  updateData: (props: updateDataProps) => void;
+  updateData: (props: updateDataProps) => Promise<SanityDocument>;
   reset: () => void;
 }
 
@@ -29,6 +30,7 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
   const [error, setError] = useState<string | null>(null);
   const [selectedData, setSelectedData] = useState<Record<string, any> | undefined>();
   const [selectedItem, setSelectedItem] = useSelectedItem(sanityStructure);
+// console.log("sanityStructure", sanityStructure)
 
   const fetchData = async () => {
     setLoading(true);
@@ -64,10 +66,11 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
   };
 
   useEffect(() => {
-    if (!selectedItem?.name || !data  || !data._updatedAt) {
+    if (!selectedItem?.name || !data ) {
       setSelectedData(data);
       return;
     }
+    console.log("%c sanityStructure", "color: red; font-weight: bold;", sanityStructure)
 
     setSelectedData(data[selectedItem.name])
   }, [selectedItem, data?._updatedAt])
@@ -76,12 +79,13 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
     setSelectedItem(null);
   };
 
-  async function updateData(structure: Record<string, any>) {
+  async function updateData(structure: Record<string, any>): Promise<SanityDocument> {
     const controller = new AbortController();
     const signal = controller.signal;
 
     const res = await patchSanityDocument(structure._id, structure, signal);
     setData(res);
+    return res;
   }
 
   const reset = () => {

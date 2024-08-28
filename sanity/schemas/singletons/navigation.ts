@@ -1,7 +1,7 @@
 import { defineField, defineType } from 'sanity';
 
 export default defineType({
-  name: 'navigation',
+  name: 'schema_navigation',
   title: 'Navigation',
   type: 'document',
   fields: [

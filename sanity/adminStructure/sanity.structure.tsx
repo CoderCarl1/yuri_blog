@@ -1,12 +1,20 @@
 import { StructureBuilder, StructureResolverContext } from 'sanity/structure';
 import SiteSettings from '../components/siteSettings';
+import { SchemaType } from 'sanity';
+import { sanityStructure } from '@/types/siteSettings.type';
 
 /**
  * Site Settings and its children
  */
 
 function SiteSettingsStructure(S: StructureBuilder) {
-  const siteSettingsStructure = S.context.schema._registry.siteSettings.get().fields;
+  const seoFields: sanityStructure[] = S.context.schema._registry.schema_social_media.get().fields;
+  const siteSettingsStructure: sanityStructure[] = S.context.schema._registry.site_settings.get().fields;
+  const SEOReference = siteSettingsStructure.find(struct => struct.name === "social_media");
+  if (SEOReference){
+    SEOReference.type.fields = seoFields;
+    SEOReference.type.title = "Social Media"
+  }
 
   return S.listItem()
     .title('Site Settings')
@@ -22,9 +30,9 @@ function SiteSettingsStructure(S: StructureBuilder) {
      * for the default view
      */
     // return S.listItem()
-    // .title('siteSettings')
+    // .title('site_settings')
     // .child(
-    //   S.editor().id('siteSettings').schemaType('siteSettings').documentId('siteSettings'),
+    //   S.editor().id('site_settings').schemaType('site_settings').documentId('site_settings'),
     // );
 }
 
@@ -95,7 +103,7 @@ function otherCategories(S: StructureBuilder) {
 }
 
 export default function main(S: StructureBuilder, context: StructureResolverContext) {
-  console.log("context", context.schema._registry.siteSettings.get())
+  console.log("context", context.schema._registry.site_settings.get())
   const a = S.list()
     .title('Blog')
     .items([

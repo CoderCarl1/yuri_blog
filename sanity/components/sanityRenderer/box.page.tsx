@@ -1,8 +1,9 @@
-import { sanityStructure } from "@/types/siteSettings.type";
+import type { sanityStructure } from "@/types/siteSettings.type";
 import Box from "./box";
 import BoxMap from "./box.map";
 import BoxError from "./box.error";
 import Loading from "../../../components/loading";
+import type { SanityDocument } from "sanity";
 
 type BoxPageProps = {
   sanityStructure: sanityStructure[];
@@ -11,7 +12,7 @@ type BoxPageProps = {
   selectedItem: sanityStructure | null;
   handleSelect: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   handleBack: () => void;
-  updateData: (props: { reference: string; structure: Record<string, any> }) => void;
+  updateData: (props: { reference: string; structure: Record<string, any> }) => Promise<SanityDocument>;
   error: string | null;
   reset?: () => void;
 }
@@ -27,7 +28,7 @@ export default function BoxPage({
   error,
   reset
 }: BoxPageProps) {
-console.log("data", data)
+
   const reload = () => {
     if (reset) {
       reset();
@@ -53,6 +54,7 @@ console.log("data", data)
 
 
   if (selectedItem && data) {
+    console.log("selected item is ", selectedItem)
     return (
       <div className='[ pageBox ]'>
         <Box
