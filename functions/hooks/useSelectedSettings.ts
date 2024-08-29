@@ -15,8 +15,8 @@ function useSelectedItem(sanityStructure: sanityStructure[]) {
     };
 
     useLayoutEffect(() => {
+        console.log("useLayoutEffect ran")
         const url = new URL(window.location.href);
-console.log("useSelectedItem useLayoutEffect ran ")
         if (selectedItem) {
             url.searchParams.set('settings', selectedItem.name);
         } else {
@@ -24,6 +24,12 @@ console.log("useSelectedItem useLayoutEffect ran ")
         }
 
         window.history.pushState({}, '', url.toString());
+
+        return () => {
+            const cleanUrl = new URL(window.location.href);
+            cleanUrl.searchParams.delete('settings');
+            window.history.pushState({}, '', cleanUrl.toString());
+        };
     }, [selectedItem]);
 
     return [selectedItem, setSelectedItem] as const;
