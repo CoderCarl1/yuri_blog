@@ -16,7 +16,9 @@ type BoxProps = {
 export default function UseBox({ selectedStructure, data, saveHandler, clickHandler }: BoxProps) {
     const [documentData, setDocumentData] = useStateWithDebounce<Record<string, any>>(data, 50);
     console.log("selectedStructure.type", selectedStructure.type)
-    const {fields, title} = selectedStructure.type;
+    const {fields, title, jsonType} = selectedStructure.type;
+    const isArray = useMemo(() => jsonType === "array", [jsonType] )
+
     /**
      * 
      * TODO:  reference the  selectedStructure.type.name which is either 'object' or 'array'
@@ -77,15 +79,44 @@ export default function UseBox({ selectedStructure, data, saveHandler, clickHand
         setValidationErrors({});
     }
 
-    function Component({ name = '' }: documentFieldChild) {
+    function Component({ name = '', ...props }: documentFieldChild) {
         try {
+          // console.log("props", props)
           const value = {...documentData[title.toLowerCase()]}.hasOwnProperty(name)
             ? documentData[title.toLowerCase()][name]
             : '';
+            // console.log("documentData", documentData)
+            // console.log("value", value)
+
           const componentType = name.split('_')[0];
           function _handleChange({ fieldName, value }: { fieldName: string; value: string }) {
             handleLocalChanges({ [fieldName]: value }, title.toLowerCase());
           };
+
+          function _addNewEntry(fieldName: string) {
+            const updatedArray = [...(value || []), {}]; // Add an empty object or default value
+            handleLocalChanges({ [fieldName]: updatedArray }, title.toLowerCase());
+          }
+
+          if (isArray){
+            console.log("It is an Array")
+            console.log("value", value)
+
+            return (
+              <div key={name}>
+              <h3>{name}</h3>
+              {Array.isArray(value) &&
+                value.map((entry, index) => (
+                  <div key={index}>
+                    {/* Render a component for each entry in the array */}
+                    {/* You can create a recursive component to handle nested structures */}
+                    {/* <Component key={index} name={name} type={type} /> */}
+                  </div>
+                ))}
+              <button onClick={() => _addNewEntry(name)}>Add New {name}</button>
+            </div>
+            )
+          }
 
           switch (componentType) {
             case 'color':

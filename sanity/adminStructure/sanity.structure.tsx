@@ -2,22 +2,26 @@ import { StructureBuilder, StructureResolverContext } from 'sanity/structure';
 import SiteSettings from '../components/siteSettings';
 import { SchemaType } from 'sanity';
 import { sanityStructure } from '@/types/siteSettings.type';
+import { FaCog } from "react-icons/fa";
 
 /**
  * Site Settings and its children
  */
 
 function SiteSettingsStructure(S: StructureBuilder) {
-  const seoFields: sanityStructure[] = S.context.schema._registry.schema_social_media.get().fields;
+  const socialMediaFields: sanityStructure[] = S.context.schema._registry.schema_social_media.get().fields;
   const siteSettingsStructure: sanityStructure[] = S.context.schema._registry.site_settings.get().fields;
-  const SEOReference = siteSettingsStructure.find(struct => struct.name === "social_media");
-  if (SEOReference){
-    SEOReference.type.fields = seoFields;
-    SEOReference.type.title = "Social Media"
+  const SocialMediaReference = siteSettingsStructure.find(struct => struct.name === "social_media");
+  if (SocialMediaReference && socialMediaFields.length){
+    SocialMediaReference.type.fields = socialMediaFields;
+    SocialMediaReference.type.title = "Social Media"
   }
+
+  console.log("S.context.schema._registry.site_settings.get()", S.context.schema._registry.site_settings.get())
 
   return S.listItem()
     .title('Site Settings')
+    .icon(FaCog)
     .child(
       S.component()
         .component(() => (
@@ -30,9 +34,10 @@ function SiteSettingsStructure(S: StructureBuilder) {
      * for the default view
      */
     // return S.listItem()
-    // .title('site_settings')
+    // .title('Site Settings')
+    // .icon(FaCog)
     // .child(
-    //   S.editor().id('site_settings').schemaType('site_settings').documentId('site_settings'),
+    //   S.editor().schemaType('siteSettings').documentId('site_settings'),
     // );
 }
 
@@ -90,10 +95,10 @@ function Posts_ByCategories(S: StructureBuilder) {
 
 const documentsToExclude = [
   'post',
-  'siteSettings',
+  'site_settings',
   /** 'translation.metadata',*/ 'media.tag',
   'homepage',
-  'social_media_schema'
+  'schema_social_media'
 ];
 
 function otherCategories(S: StructureBuilder) {
@@ -103,8 +108,7 @@ function otherCategories(S: StructureBuilder) {
 }
 
 export default function main(S: StructureBuilder, context: StructureResolverContext) {
-  console.log("context", context.schema._registry.site_settings.get())
-  const a = S.list()
+  return S.list()
     .title('Blog')
     .items([
       HomePage(S),
@@ -116,7 +120,4 @@ export default function main(S: StructureBuilder, context: StructureResolverCont
       S.divider(),
       SiteSettingsStructure(S),
     ]);
-  console.log('S in main', a);
-
-  return a;
 }

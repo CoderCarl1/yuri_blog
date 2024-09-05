@@ -2,7 +2,7 @@ import { PiHouseBold } from 'react-icons/pi';
 import { defineArrayMember, defineField, defineType } from 'sanity';
 
 export default defineType({
-  name: 'schema_homepage',
+  name: 'homepage',
   title: 'Home Page',
   type: 'document',
   icon: PiHouseBold,
