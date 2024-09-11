@@ -6,6 +6,7 @@ function useSelectedItem(sanityStructure: sanityStructure[]) {
     const [selectedItem, setSelectedItem] = useState<sanityStructure | null>(() => getSelectedItemFromParams());
 
     function getSelectedItemFromParams() {
+        console.log("getSelectedItemFromParams running")
         const params = new URLSearchParams(window.location.search);
         const settingsParam = params.get('settings');
         if (settingsParam) {
@@ -15,11 +16,12 @@ function useSelectedItem(sanityStructure: sanityStructure[]) {
     };
 
     useLayoutEffect(() => {
-        console.log("useLayoutEffect ran")
         const url = new URL(window.location.href);
         if (selectedItem) {
+            console.log("selectedItem found", selectedItem)
             url.searchParams.set('settings', selectedItem.name);
         } else {
+            console.log("deleting settings param from url")
             url.searchParams.delete('settings');
         }
 

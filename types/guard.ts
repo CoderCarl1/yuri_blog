@@ -9,6 +9,29 @@ export function isObject(obj: any): obj is Object {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function isClientImage(image: any): image is ClientSanityImage {
+  return (
+    isObject(image) &&
+    typeof image.assetId === 'string' &&
+    typeof image.extension === 'string' &&
+    isObject(image.metadata) &&
+    typeof image.metadata._type === 'string' &&
+    typeof image.mimeType === 'string' &&
+    typeof image.originalFilename === 'string' &&
+    typeof image.path === 'string' &&
+    typeof image.sha1hash === 'string' &&
+    typeof image.size === 'number' &&
+    typeof image.uploadId === 'string' &&
+    typeof image.url === 'string' &&
+    typeof image._createdAt === 'string' &&
+    typeof image._id === 'string' &&
+    typeof image._rev === 'string' &&
+    typeof image._type === 'string' &&
+    typeof image._updatedAt === 'string'
+  );
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function isImage(image: any): image is Image {
   return (
     isObject(image) &&

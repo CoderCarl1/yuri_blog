@@ -16,21 +16,21 @@ export default defineType({
       type: 'object',
       fields: [
         defineField({
-          name: 'title',
+          name: 'text_title',
           description: 'This field is the title of your personal website.',
           title: 'Title',
           type: 'string',
           validation: (rule) => rule.required(),
         }),
         defineField({
-          name: 'description',
+          name: 'textArea_description',
           description: 'what the website is about.',
           title: 'description',
           type: 'string',
           validation: (rule) => rule.required(),
         }),
         defineField({
-          name: 'favicon',
+          name: 'image_favicon',
           title: 'Favicon',
           type: 'image',
           description: 'The image used for the tab (512px * 512px)',

@@ -36,6 +36,11 @@
   .link {
     @apply underline underline-offset-2 text-primary-text hover:text-primary-hover active:text-primary-active focus:text-primary-active;
   }
+
+  input,
+  textArea {
+    border: 1px solid;
+  }
 }
 
 .sr-only {

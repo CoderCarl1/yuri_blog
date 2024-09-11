@@ -3,6 +3,8 @@ import { BoxChild } from "./box.child";
 import type { sanityStructure } from "@/types/siteSettings.type";
 import UseBox from "./UseBox";
 import type { SanityDocument } from "sanity";
+import { useEffect } from "react";
+// import { Stack, Card, Flex, Text } from '@sanity/ui'
 
 type BoxProps = {
     selectedStructure: sanityStructure;
@@ -12,10 +14,12 @@ type BoxProps = {
 };
 
 export default function Box(props: BoxProps) {
-    const { Component, documentData, title, fields, isSaved, isSaving, validationErrors, handleBack, reset, handleSave, handleLocalChanges } = UseBox(props);
+    const { componentSelector, documentData, title, fields, isSaved, isSaving, validationErrors, handleBack, reset, handleSave } = UseBox(props);
 // console.log("inside box documentData ", documentData)
 // console.log("inside box fields", fields)
-
+useEffect(() => {
+    console.log("Box loading")
+  }, [])
     return (
         <>
             <div className="[ pageBox__controls ]">
@@ -30,7 +34,7 @@ export default function Box(props: BoxProps) {
                     // documentData={documentData}
                     // changeHandler={handleLocalChanges}
                     // validationErrors={validationErrors}
-                    Component={Component}
+                    componentSelector={componentSelector}
                 />
             }
         </>

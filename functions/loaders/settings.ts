@@ -2,27 +2,29 @@ import { SiteColors, SettingsMap, colorType } from '@/types/siteSettings.type';
 import { sanityDocumentFetch, settingsFetch } from '@/sanity/lib/fetch.client';
 import COLOR from 'color';
 
-export const getSettings = async () => await settingsFetch();
+export const getSettings = () => settingsFetch().then(data => data);
+// export const getImages = imagesFetch();
 
 export async function getSiteSettings(){
-  const result = await sanityDocumentFetch('siteSettings') as SettingsMap | undefined;
-  const settings = {
-    styles: '',
-    general: '',
-    siteSettings: '',
-    SiteSEO: '',
-    social_media: '',
-  }
-  if (result) {
-    console.log("getSiteSpecifics func", result)
-    settings.styles = generateStyles(result.colors)
+  // const result = await sanityDocumentFetch('site_settings') as SettingsMap | undefined;
+  // const settings = {
+  //   styles: '',
+  //   general: '',
+  //   siteSettings: '',
+  //   SiteSEO: '',
+  //   social_media: '',
+  // }
+  // if (result) {
+  //   console.log("getSiteSpecifics func", result)
+  //   settings.styles = generateStyles(result.colors)
 
-  }
-  // const sortedResults = result.reduce((acc: SettingsMap, item) => {
-  //   acc[item._id] = item;
-  //   return acc;
-  // }, {});
-  return settings;
+  // }
+  // // const sortedResults = result.reduce((acc: SettingsMap, item) => {
+  // //   acc[item._id] = item;
+  // //   return acc;
+  // // }, {});
+  // return settings;
+  return {styles: ''}
 }
 
 // export const setUserPreferences = (settings: SettingsMap) => {

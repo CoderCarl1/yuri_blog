@@ -4,6 +4,7 @@ import BoxMap from "./box.map";
 import BoxError from "./box.error";
 import Loading from "../../../components/loading";
 import type { SanityDocument } from "sanity";
+import { useEffect } from "react";
 
 type BoxPageProps = {
   sanityStructure: sanityStructure[];
@@ -28,7 +29,9 @@ export default function BoxPage({
   error,
   reset
 }: BoxPageProps) {
-
+useEffect(() => {
+  console.log("BoxPage loading")
+}, [])
   const reload = () => {
     if (reset) {
       reset();
@@ -55,6 +58,7 @@ export default function BoxPage({
 
   if (selectedItem && data) {
     console.log("selected item is ", selectedItem)
+    console.log("data", data)
     return (
       <div className='[ pageBox ]'>
         <Box

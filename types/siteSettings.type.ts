@@ -75,7 +75,7 @@ export type SettingsMap = {
   social_media: SiteSocials;
   typography: SiteTypography;
   [key: string]: SiteSEO  | SiteAnalytics | SiteColors | SiteGeneral |SiteSettings | SiteSocials | SiteTypography | undefined;
-} & Pick<SanityDocument, '_createdAt' | '_updatedAt' | '_type'>;
+} & Pick<SanityDocument, '_createdAt' | '_updatedAt' | '_type' | '_id'>;
 
 export type Settings = [SiteColors, SiteSEO, SiteSettings, SiteSocials];
 

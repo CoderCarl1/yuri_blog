@@ -1,8 +1,9 @@
 import type { Post_SanityDocument } from '@/types';
 import { client } from './client';
 import { SanityDocument } from 'sanity';
-import { SETTINGS_QUERY } from './queries';
+import { IMAGES_QUERY, SETTINGS_QUERY } from './queries';
 import { SettingsMap } from '@/types/siteSettings.type';
+import { Console } from 'console';
 
 export async function apiFetch<QueryResponse>(
   url: string,
@@ -64,26 +65,31 @@ export async function sanityDocumentFetch(
   id: string = '',
 ): Promise<SanityDocument | undefined> {
   try {
+  console.log("%c +_+_+_+_+_ sanityDocumentFetch invoked", "color: white; background: red;")
+
     return await client.getDocument(id);
   } catch (err) {
     console.log(err);
   }
 }
 
-export async function queryFetch(
-  query: string = '',
-): Promise<SanityDocument | undefined> {
-  let results;
-
-  try {
-    results = await client.fetch(query);
-  } catch (err) {
-    console.log(err);
-  } finally {
-    return results;
-  }
+export function queryFetch(query: string = ''): Promise<SanityDocument | undefined> {
+  console.log("%c +_+_+_+_+_ queryFetch invoked", "color: white; background: red;")
+  return client.fetch(query)
+    .then((results) => results)
+    .catch((err) => {
+      console.error('Failed to fetch data:', err);
+      return undefined;
+    });
 }
 
+export function images_fetch(): Promise<SanityDocument| undefined>{
+  console.log("%c +_+_+_+_+_ images_fetch invoked", "color: white; background: red;")
+  return queryFetch(IMAGES_QUERY)
+  .then((result) => {
+    return result;  
+  })
+}
 
 /** Create new settings object only if needed */
 // if (!result) {
@@ -95,7 +101,7 @@ export async function queryFetch(
 
 export async function settingsFetch(): Promise<SettingsMap> {
   let data = {
-    _type: 'siteSettings',
+    _type: 'site_settings',
     seo: Object.create(null),
     analytics: Object.create(null),
     colors: Object.create(null),
@@ -106,9 +112,17 @@ export async function settingsFetch(): Promise<SettingsMap> {
   };
 
   const result = await queryFetch(SETTINGS_QUERY) as SettingsMap[] | undefined;
-
+console.log("result", result)
   if (result && result.length) {
-    data = Object.assign(Object.create(null), _deepMerge(data, result[0]))
+    // console.log("deep merge happening")
+    // console.log("checking if one of the results has an id of site_settings")
+    // const siteSettingsObj = result.filter(settingsObj => settingsObj._id === 'site_settings')
+    // console.log("filtered", siteSettingsObj)
+    // if (siteSettingsObj.length){
+    //   data = Object.assign(Object.create(null), _deepMerge(data, siteSettingsObj[0]))
+    // } else {
+      data = Object.assign(Object.create(null), _deepMerge(data, result[0]))
+    // }
   }
 
   return data as SettingsMap;
@@ -126,4 +140,5 @@ export async function settingsFetch(): Promise<SettingsMap> {
     return target;
   }
 }
+
 

@@ -37,6 +37,7 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
     try {
       const settings = await getSettings();
       setData(settings);
+      console.log("%c LOADED SETTINGS DATA \n", "color: white; background:black;", settings)
     } catch (err) {
       setError('Failed to fetch document');
     } finally {
@@ -82,8 +83,9 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
   async function updateData(structure: Record<string, any>): Promise<SanityDocument> {
     const controller = new AbortController();
     const signal = controller.signal;
-
-    const res = await patchSanityDocument(structure._id, structure, signal);
+    const id = structure._id ? structure._id : "site_settings";
+    const res = await patchSanityDocument(id, structure, signal);
+    console.log("updateData running")
     setData(res);
     return res;
   }

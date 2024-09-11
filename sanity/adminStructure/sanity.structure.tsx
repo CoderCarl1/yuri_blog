@@ -37,7 +37,7 @@ function SiteSettingsStructure(S: StructureBuilder) {
     // .title('Site Settings')
     // .icon(FaCog)
     // .child(
-    //   S.editor().schemaType('siteSettings').documentId('site_settings'),
+    //   S.editor().id('site_settings').schemaType('site_settings').documentId('site_settings'),
     // );
 }
 
