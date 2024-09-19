@@ -1,7 +1,5 @@
 import { StructureBuilder, StructureResolverContext } from 'sanity/structure';
 import SiteSettings from '../components/siteSettings';
-import { SchemaType } from 'sanity';
-import { sanityStructure } from '@/types/siteSettings.type';
 import { FaCog } from "react-icons/fa";
 
 /**
@@ -9,25 +7,23 @@ import { FaCog } from "react-icons/fa";
  */
 
 function SiteSettingsStructure(S: StructureBuilder) {
-  const socialMediaFields: sanityStructure[] = S.context.schema._registry.schema_social_media.get().fields;
-  const siteSettingsStructure: sanityStructure[] = S.context.schema._registry.site_settings.get().fields;
-  const SocialMediaReference = siteSettingsStructure.find(struct => struct.name === "social_media");
-  if (SocialMediaReference && socialMediaFields.length){
-    SocialMediaReference.type.fields = socialMediaFields;
-    SocialMediaReference.type.title = "Social Media"
-  }
-
-  console.log("S.context.schema._registry.site_settings.get()", S.context.schema._registry.site_settings.get())
-
+  // const socialMediaFields: sanityStructure[] = S.context.schema._registry.schema_social_media.get().fields;
+  // const siteSettingsStructure: sanityStructure[] = S.context.schema._registry.site_settings.get().fields;
+  // const SocialMediaReference = siteSettingsStructure.find(struct => struct.name === "social_media");
+  // if (SocialMediaReference && socialMediaFields.length){
+  //   SocialMediaReference.type.fields = socialMediaFields;
+  //   SocialMediaReference.type.title = "Social Media"
+  // }
+  // console.log("S.context.schema._registry.site_settings.get()", S.context.schema._registry.site_settings.get())
+  // console.log("siteSettingsStructure", siteSettingsStructure)
   return S.listItem()
     .title('Site Settings')
     .icon(FaCog)
     .child(
-      S.component()
-        .component(() => (
-          <SiteSettings sanityStructure={siteSettingsStructure}/>
-        ))
-        .title('Site Settings'),
+      S.document()
+        .schemaType('site_settings')
+        .documentId('site_settings')
+        .views([S.view.component(SiteSettings).title('Site Settings')])
     );
 
     /**
@@ -37,7 +33,7 @@ function SiteSettingsStructure(S: StructureBuilder) {
     // .title('Site Settings')
     // .icon(FaCog)
     // .child(
-    //   S.editor().id('site_settings').schemaType('site_settings').documentId('site_settings'),
+    //   S.editor().id('site_settings').schemaType('site_settings').documentId('site_settings')
     // );
 }
 
@@ -96,7 +92,8 @@ function Posts_ByCategories(S: StructureBuilder) {
 const documentsToExclude = [
   'post',
   'site_settings',
-  /** 'translation.metadata',*/ 'media.tag',
+  /** 'translation.metadata',*/ 
+  'media.tag',
   'homepage',
   'schema_social_media'
 ];

@@ -2,7 +2,7 @@ import { SiteColors, SettingsMap, colorType } from '@/types/siteSettings.type';
 import { sanityDocumentFetch, settingsFetch } from '@/sanity/lib/fetch.client';
 import COLOR from 'color';
 
-export const getSettings = () => settingsFetch().then(data => data);
+export const getSettings = () => settingsFetch();
 // export const getImages = imagesFetch();
 
 export async function getSiteSettings(){

@@ -66,6 +66,7 @@ export default function UseBox({ selectedStructure, data, saveHandler, clickHand
     const dataToSave = Object.assign(Object.create(null), rest)
     return saveHandler(dataToSave)
     .then(() => {
+      // TODO: handle cases when saving is not OK
       setIsSaving(false);
     });
   }

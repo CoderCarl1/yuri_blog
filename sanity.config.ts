@@ -36,7 +36,7 @@ export default defineConfig({
     },
     actions: (prev, { schemaType }) => {
       if (
-        ['siteSettings', 'colors', 'homepage', 'navigation'].includes(
+        ['site_settings', 'homepage'].includes(
           schemaType,
         )
       ) {

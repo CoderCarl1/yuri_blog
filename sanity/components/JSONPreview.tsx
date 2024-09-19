@@ -1,4 +1,4 @@
-import { type componentParamsType } from '../adminStructure/sanity.types';
+import { type componentParamsType } from '@/types';
 
 export default function JsonPreview({ document }: componentParamsType) {
   const { displayed } = document;

@@ -27,34 +27,7 @@ export default function CustomImageInput({ fieldPath }: CustomImageInputProps) {
   return (
     <div>
       <h3>Upload or Select an Image</h3>
-      <ImageInput
-        value={currentValue}
-        onChange={handleChange}
-        readOnly={false}
-        // validation={validation}
-        path={fieldPath}
-        focusPath={[]}
-        groups={[]}
-        members={[]}
-        id={''}
-        schemaType={undefined}
-        level={0}
-        presence={[]}
-        validation={[]}
-        changed={false}
-        onFieldCollapse={}
-         onFieldExpand={}
-         onFieldSetCollapse={}
-          onFieldSetExpand={}
-          onFieldGroupSelect={}
-           onPathFocus={} onFieldOpen={}
-         onFieldClose={}
-         renderInput={}
-         renderField={}
-         renderItem={}
-         renderPreview={ }
-         elementProps={}
-         renderDefault={ }      />
+    
     </div>
   );
 }

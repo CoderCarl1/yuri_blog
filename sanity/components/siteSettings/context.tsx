@@ -1,9 +1,9 @@
 import { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { getSettings } from "@/functions/loaders/settings";
 import patchSanityDocument from "@/sanity/lib/post.client";
-import type { sanityStructure, PageBoxProps } from "@/types/siteSettings.type";
 import useSelectedItem from "@/functions/hooks/useSelectedSettings";
-import { SanityDocument } from "sanity";
+import { FieldDefinition, SanityDocument } from "sanity";
+import { componentDocumentType, sanityStructure } from "@/types/sanity.type";
 
 type updateDataProps = {
   reference: string;
@@ -15,38 +15,59 @@ interface SiteSettingsContextProps {
   error: string | null;
   data: Record<string, any> | undefined;
   selectedItem: sanityStructure | null;
-  selectedData: Record<string, any> | undefined;
+  // selectedData: Record<string, any> | undefined;
   handleSelect: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   handleBack: () => void;
   updateData: (props: updateDataProps) => Promise<SanityDocument>;
   reset: () => void;
+  sanityStructure: FieldDefinition[];
 }
 
 const SiteSettingsContext = createContext<SiteSettingsContextProps | undefined>(undefined);
 
-export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps & { children: ReactNode }) => {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [data, setData] = useState<Record<string, any> | undefined>();
+type ProviderProps =  {
+  sanityDocument: componentDocumentType;
+  sanityStructure: FieldDefinition[];
+  children:  ReactNode;
+};
+
+
+export const SiteSettingsProvider = ({ sanityDocument, sanityStructure, children }: ProviderProps) => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const { displayed, draft, published } = sanityDocument;
+  const content = draft || displayed
+  const [data, setData] = useState<Record<string, any> | undefined>(content);
   const [error, setError] = useState<string | null>(null);
   const [selectedData, setSelectedData] = useState<Record<string, any> | undefined>();
   const [selectedItem, setSelectedItem] = useSelectedItem(sanityStructure);
 // console.log("sanityStructure", sanityStructure)
+//   if (isPreviewMode) {
+//     // In preview mode, prefer the draft version
+//     content = draft || displayed;
+//   } else {
+//     // In normal mode, use published
+//     content = published || displayed;
+//   }
+// // Example: Show draft if it exists, otherwise fallback to displayed
+//   const content = draft || displayed || published;
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const settings = await getSettings();
-      setData(settings);
-      console.log("%c LOADED SETTINGS DATA \n", "color: white; background:black;", settings)
-    } catch (err) {
-      setError('Failed to fetch document');
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const fetchData = async () => {
+  //   setLoading(true);
+  //   try {
+  //     const settings = await getSettings();
+  //     setData(settings);
+  //     console.log("%c LOADED SETTINGS DATA \n", "color: white; background:black;", settings)
+  //   } catch (err) {
+  //     setError('Failed to fetch document');
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   useEffect(() => {
-    fetchData();
+    // fetchData();
+    const cleanObj = sanityDocument
+    // setData()
   }, []);
 
   useEffect(() => {
@@ -68,7 +89,7 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
 
   useEffect(() => {
     if (!selectedItem?.name || !data ) {
-      setSelectedData(data);
+      setSelectedData(content);
       return;
     }
     console.log("%c sanityStructure", "color: red; font-weight: bold;", sanityStructure)
@@ -80,13 +101,15 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
     setSelectedItem(null);
   };
 
-  async function updateData(structure: Record<string, any>): Promise<SanityDocument> {
+  async function updateData(documentData: Record<string, any>): Promise<SanityDocument> {
+    console.log("saving data of ", documentData)
     const controller = new AbortController();
     const signal = controller.signal;
-    const id = structure._id ? structure._id : "site_settings";
-    const res = await patchSanityDocument(id, structure, signal);
-    console.log("updateData running")
-    setData(res);
+    const id = documentData._id ? documentData._id : "site_settings";
+    const res = await patchSanityDocument(id, documentData, signal);
+    const { _rev, ...rest } = res
+    const dataToSave = Object.assign(Object.create(null), rest)
+    setData(dataToSave);
     return res;
   }
 
@@ -94,11 +117,11 @@ export const SiteSettingsProvider = ({ sanityStructure, children }: PageBoxProps
     setSelectedItem(null);
     setError(null);
     setData(undefined);
-    fetchData();
+    // fetchData();
   };
 
   return (
-    <SiteSettingsContext.Provider value={{ reset, loading, error, data, selectedItem, selectedData, handleSelect, handleBack, updateData }}>
+    <SiteSettingsContext.Provider value={{ sanityStructure, reset, loading, error, data, selectedItem, /** selectedData,*/ handleSelect, handleBack, updateData }}>
       {children}
     </SiteSettingsContext.Provider>
   );

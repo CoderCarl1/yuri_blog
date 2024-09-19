@@ -1,5 +1,5 @@
 import type { PortableTextBlock } from '@portabletext/types';
-import { Rule, SanityDocument } from 'sanity';
+import { SanityDocument } from 'sanity';
 
 // TODO: make the colorType more robust;
 export type colorType = string;
@@ -78,18 +78,3 @@ export type SettingsMap = {
 } & Pick<SanityDocument, '_createdAt' | '_updatedAt' | '_type' | '_id'>;
 
 export type Settings = [SiteColors, SiteSEO, SiteSettings, SiteSocials];
-
-export type sanityValidationRules = Rule[];
-
-export type sanityStructure = {
-  name: string;
-  fieldset: string;
-  group: string;
-  type: {
-    title: string;
-    validation: sanityValidationRules;
-  } & Record<string, any>;
-}
-export type PageBoxProps = {
-  sanityStructure: sanityStructure[];
-};
