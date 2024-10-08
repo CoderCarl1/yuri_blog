@@ -1,10 +1,10 @@
-import type { sanityStructure } from "@/types/siteSettings.type";
-import Box from "./box";
-import BoxMap from "./box.map";
-import BoxError from "./box.error";
-import Loading from "../../../components/loading";
-import type { SanityDocument } from "sanity";
-import { useEffect } from "react";
+import type { sanityStructure } from '@/types/sanity.type';
+import Box from './box';
+import BoxMap from './box.map';
+import BoxError from './box.error';
+import Loading from '../../../components/loading';
+import type { SanityDocument } from 'sanity';
+import { useEffect } from 'react';
 
 type BoxPageProps = {
   sanityStructure: sanityStructure[];
@@ -13,10 +13,13 @@ type BoxPageProps = {
   selectedItem: sanityStructure | null;
   handleSelect: (event: React.SyntheticEvent<HTMLButtonElement>) => void;
   handleBack: () => void;
-  updateData: (props: { reference: string; structure: Record<string, any> }) => Promise<SanityDocument>;
+  updateData: (props: {
+    reference: string;
+    structure: Record<string, any>;
+  }) => Promise<SanityDocument>;
   error: string | null;
   reset?: () => void;
-}
+};
 
 export default function BoxPage({
   sanityStructure,
@@ -27,44 +30,42 @@ export default function BoxPage({
   handleBack,
   updateData,
   error,
-  reset
+  reset,
 }: BoxPageProps) {
-useEffect(() => {
-  console.log("BoxPage loading")
-}, [])
+  console.log('%c data received \n', 'color: blue;font-size: 2rem;', data);
   const reload = () => {
     if (reset) {
       reset();
     } else {
       window.location.reload();
     }
-  }
+  };
 
   if (error) {
     return (
-      <div className='[ pageBox ]'>
+      <div className="[ pageBox ]">
         <BoxError errorMessage={error} onClickFunc={reload} />
       </div>
-    )
+    );
   }
 
-  if (loading) {
+  if (loading || !sanityStructure.length) {
     return (
-      <div className='[ pageBox ]'>
+      <div className="[ pageBox ]">
         <Loading />
-      </div>)
+      </div>
+    );
   }
-
 
   if (selectedItem && data) {
-    console.log("selected item is ", selectedItem)
-    console.log("data", data)
+    console.log('selected item is ', selectedItem);
+    console.log('data', data);
     return (
-      <div className='[ pageBox ]'>
+      <div className="[ pageBox ]">
         <Box
           selectedStructure={selectedItem}
           data={data}
-          clickHandler={handleBack}
+          clickBackHandler={handleBack}
           saveHandler={updateData}
         />
       </div>
@@ -72,11 +73,8 @@ useEffect(() => {
   }
 
   return (
-    <div className='[ pageBox ]'>
-      <BoxMap
-        structureArray={sanityStructure}
-        clickHandler={handleSelect}
-      />
+    <div className="[ pageBox ]">
+      <BoxMap structureArray={sanityStructure} clickHandler={handleSelect} />
     </div>
   );
-};
+}

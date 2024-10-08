@@ -1,15 +1,15 @@
 import Loading from './loading';
 import cx from 'classnames';
-import { TfiReload } from "react-icons/tfi";
+import { TfiReload } from 'react-icons/tfi';
 
-const ButtonType =  ['button' , 'submit' , 'reset'] as const;
-type ButtonType = typeof ButtonType[number];
+const ButtonType = ['button', 'submit', 'reset'] as const;
+type ButtonType = (typeof ButtonType)[number];
 
-const ButtonVariant = ['primary' , 'secondary' , 'outline'] as const;
-type ButtonVariant = typeof ButtonVariant[number];
+const ButtonVariant = ['primary', 'secondary', 'outline'] as const;
+type ButtonVariant = (typeof ButtonVariant)[number];
 
-const ButtonSize =  ['small' , 'medium' , 'large'] as const;
-type ButtonSize = typeof ButtonSize[number];
+const ButtonSize = ['small', 'medium', 'large'] as const;
+type ButtonSize = (typeof ButtonSize)[number];
 
 type ButtonProps = {
   children?: React.ReactNode;
@@ -33,7 +33,6 @@ export default function Button({
   onClick,
   ...props
 }: ButtonProps) {
-
   const variantClasses = {
     primary: 'btn-primary',
     secondary: 'btn-secondary',
@@ -49,11 +48,11 @@ export default function Button({
     <button
       type={type}
       className={cx(
-        "btn", 
-        variantClasses[variant], 
-        sizeClasses[size], 
+        'btn',
+        variantClasses[variant],
+        sizeClasses[size],
         className,
-        {disabled: disabled}
+        { disabled: disabled },
       )}
       disabled={disabled || loading}
       onClick={onClick}
@@ -61,8 +60,8 @@ export default function Button({
     >
       {/* TODO:  fix the potential CLS */}
       {loading && <Loading />}
-      {(!loading && type === 'reset') ? <TfiReload /> : null}
-      {(!loading && children) && children}
+      {!loading && type === 'reset' ? <TfiReload /> : null}
+      {!loading && children && children}
     </button>
   );
 }

@@ -1,6 +1,6 @@
 import { StructureBuilder, StructureResolverContext } from 'sanity/structure';
 import SiteSettings from '../components/siteSettings';
-import { FaCog } from "react-icons/fa";
+import { FaCog } from 'react-icons/fa';
 
 /**
  * Site Settings and its children
@@ -23,18 +23,18 @@ function SiteSettingsStructure(S: StructureBuilder) {
       S.document()
         .schemaType('site_settings')
         .documentId('site_settings')
-        .views([S.view.component(SiteSettings).title('Site Settings')])
+        .views([S.view.component(SiteSettings).title('Site Settings')]),
     );
 
-    /**
-     * for the default view
-     */
-    // return S.listItem()
-    // .title('Site Settings')
-    // .icon(FaCog)
-    // .child(
-    //   S.editor().id('site_settings').schemaType('site_settings').documentId('site_settings')
-    // );
+  /**
+   * for the default view
+   */
+  // return S.listItem()
+  // .title('Site Settings')
+  // .icon(FaCog)
+  // .child(
+  //   S.editor().id('site_settings').schemaType('site_settings').documentId('site_settings')
+  // );
 }
 
 // Pages
@@ -92,10 +92,10 @@ function Posts_ByCategories(S: StructureBuilder) {
 const documentsToExclude = [
   'post',
   'site_settings',
-  /** 'translation.metadata',*/ 
+  /** 'translation.metadata',*/
   'media.tag',
   'homepage',
-  'schema_social_media'
+  'schema_social_media',
 ];
 
 function otherCategories(S: StructureBuilder) {
@@ -104,7 +104,10 @@ function otherCategories(S: StructureBuilder) {
   );
 }
 
-export default function main(S: StructureBuilder, context: StructureResolverContext) {
+export default function main(
+  S: StructureBuilder,
+  context: StructureResolverContext,
+) {
   return S.list()
     .title('Blog')
     .items([

@@ -35,11 +35,7 @@ export default defineConfig({
       return prev;
     },
     actions: (prev, { schemaType }) => {
-      if (
-        ['site_settings', 'homepage'].includes(
-          schemaType,
-        )
-      ) {
+      if (['site_settings', 'homepage'].includes(schemaType)) {
         return prev.filter(
           ({ action }) =>
             !['unpublish', 'delete', 'duplicate'].includes(action || ''),
@@ -68,6 +64,9 @@ export default defineConfig({
       },
     }),
   ],
+  studio: {
+    components: {},
+  },
   // form: {
   //   image: {
   //     assetSources: () => [media],

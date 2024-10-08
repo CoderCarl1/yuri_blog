@@ -24,11 +24,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const { styles } = await getSiteSettings();
 
-  const {styles} = await getSiteSettings();
-  
   // let styles = '';
-// console.log("settings", settings)
+  // console.log("settings", settings)
   // if (settings.colors) {
   //   styles = generateStyles(settings.colors);
   //   // console.log('styles', styles);

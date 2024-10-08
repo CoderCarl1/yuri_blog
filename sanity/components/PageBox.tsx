@@ -14,7 +14,7 @@
 //   const [data, setData] = useState<Record<string, any> | undefined>();
 //   const [error, setError] = useState<string | null>(null);
 //   const [selectedItem, setSelectedItem] = useSelectedItem(sanityStructure);
-  
+
 //   useEffect(() => {
 //     const fetchData = async () => {
 //       setLoading(true);
@@ -47,7 +47,6 @@
 //     setSelectedItem(null);
 //   };
 
-
 //   async function updateData(data: Record<string, any>) {
 //     const controller = new AbortController();
 //     const signal = controller.signal;
@@ -73,8 +72,6 @@
 //     </div>
 //   );
 // };
-
-
 
 // type RenderDocumentProps = {
 //   documentTitle: string;

@@ -91,10 +91,10 @@ export function isAuthor(
   );
 }
 
-
 export function isSanityDocument(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  doc: any): doc is SanityDocument {
+  doc: any,
+): doc is SanityDocument {
   return (
     isObject(doc) &&
     typeof doc._id === 'string' &&
@@ -122,9 +122,10 @@ export function isSiteColors(data: any): data is Partial<SiteColors> {
     typeof data === 'object' &&
     data !== null &&
     Object.keys(data).every(
-      (key) => allowedKeys.includes(key as keyof SiteColors)
-        && typeof data[key] === 'string'
-        && isColor(data[key])
+      (key) =>
+        allowedKeys.includes(key as keyof SiteColors) &&
+        typeof data[key] === 'string' &&
+        isColor(data[key]),
     )
   );
 }
@@ -135,10 +136,14 @@ function isColor(value: string): boolean {
   const hexPattern = /^#([0-9A-Fa-f]{6}|[0-9A-Fa-f]{8})$/;
 
   // Regular expression for RGB/RGBA colors
-  const rgbPattern = /^rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})(?:\s*,\s*(0|0?\.\d+|1))?\s*\)$/;
+  const rgbPattern =
+    /^rgba?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})(?:\s*,\s*(0|0?\.\d+|1))?\s*\)$/;
 
   // Regular expression for HSL/HSLA colors
-  const hslPattern = /^hsla?\(\s*(\d{1,3})\s*,\s*(\d{1,3}%)\s*,\s*(\d{1,3}%)\s*(?:,\s*(0|0?\.\d+|1))?\s*\)$/;
+  const hslPattern =
+    /^hsla?\(\s*(\d{1,3})\s*,\s*(\d{1,3}%)\s*,\s*(\d{1,3}%)\s*(?:,\s*(0|0?\.\d+|1))?\s*\)$/;
 
-  return hexPattern.test(value) || rgbPattern.test(value) || hslPattern.test(value);
+  return (
+    hexPattern.test(value) || rgbPattern.test(value) || hslPattern.test(value)
+  );
 }

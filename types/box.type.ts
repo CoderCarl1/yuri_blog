@@ -1,10 +1,10 @@
 export type documentFieldChild = {
+  name: string;
+  type: {
+    jsonType: string;
     name: string;
-    type: {
-      jsonType: string;
-      name: string;
-      title: string;
-      validation: [];
-      [key: string]: any
-    }
-  }
+    title: string;
+    validation: [];
+    [key: string]: any;
+  };
+};

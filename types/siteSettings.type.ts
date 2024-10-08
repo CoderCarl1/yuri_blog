@@ -22,48 +22,47 @@ export type SiteSettings = SanityDocument & {
 };
 
 export type SiteSEO = SanityDocument & {
-  overview?:  PortableTextBlock[];
+  overview?: PortableTextBlock[];
   ogImage?: SanityImage;
-}
+};
 
 export type SiteSocials = SanityDocument & {
   facebook?: string;
   twitter?: string;
   instagram?: string;
-}
-
+};
 
 export type SiteAnalytics = SanityDocument & {
   googleAnalyticsId?: string;
-}
+};
 
 type FontObject = {
   font_file?: string;
   font_url?: string;
-}
+};
 
 export type SiteTypography = SanityDocument & {
   font_main?: FontObject;
   headingFont?: FontObject;
-}
+};
 
 type submenuItem = {
   title: string;
   url?: string;
-}
+};
 
 type SiteNavigationItem = {
   title: string;
   link_type: 'single' | 'submenu';
   url?: string;
   submenu: submenuItem;
-}
+};
 export type SiteGeneral = SanityDocument & {
   title: string;
   description: string;
   favicon: SanityImage;
   navigation: SiteNavigationItem[];
-}
+};
 
 export type SettingsMap = {
   // Required index signature
@@ -74,7 +73,15 @@ export type SettingsMap = {
   siteSettings: SiteSettings;
   social_media: SiteSocials;
   typography: SiteTypography;
-  [key: string]: SiteSEO  | SiteAnalytics | SiteColors | SiteGeneral |SiteSettings | SiteSocials | SiteTypography | undefined;
+  [key: string]:
+    | SiteSEO
+    | SiteAnalytics
+    | SiteColors
+    | SiteGeneral
+    | SiteSettings
+    | SiteSocials
+    | SiteTypography
+    | undefined;
 } & Pick<SanityDocument, '_createdAt' | '_updatedAt' | '_type' | '_id'>;
 
 export type Settings = [SiteColors, SiteSEO, SiteSettings, SiteSocials];

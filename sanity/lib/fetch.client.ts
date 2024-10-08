@@ -8,7 +8,7 @@ import { Console } from 'console';
 export async function apiFetch<QueryResponse>(
   url: string,
   options: RequestInit = {},
-  signal?: AbortSignal
+  signal?: AbortSignal,
 ): Promise<QueryResponse> {
   // Default options are marked with *
   const defaultOptions: RequestInit = {
@@ -44,7 +44,6 @@ function ensureAuthenticated(): void {
   }
 }
 
-
 export async function searchAPI(
   str: string,
   signal?: AbortSignal,
@@ -65,7 +64,10 @@ export async function sanityDocumentFetch(
   id: string = '',
 ): Promise<SanityDocument | undefined> {
   try {
-  console.log("%c +_+_+_+_+_ sanityDocumentFetch invoked", "color: white; background: red;")
+    console.log(
+      '%c +_+_+_+_+_ sanityDocumentFetch invoked',
+      'color: white; background: red;',
+    );
 
     return await client.getDocument(id);
   } catch (err) {
@@ -73,9 +75,15 @@ export async function sanityDocumentFetch(
   }
 }
 
-export function queryFetch(query: string = ''): Promise<SanityDocument | undefined> {
-  console.log("%c +_+_+_+_+_ queryFetch invoked", "color: white; background: red;")
-  return client.fetch(query)
+export function queryFetch(
+  query: string = '',
+): Promise<SanityDocument | undefined> {
+  console.log(
+    '%c +_+_+_+_+_ queryFetch invoked',
+    'color: white; background: red;',
+  );
+  return client
+    .fetch(query)
     .then((results) => results)
     .catch((err) => {
       console.error('Failed to fetch data:', err);
@@ -83,12 +91,14 @@ export function queryFetch(query: string = ''): Promise<SanityDocument | undefin
     });
 }
 
-export function images_fetch(): Promise<SanityDocument| undefined>{
-  console.log("%c +_+_+_+_+_ images_fetch invoked", "color: white; background: red;")
-  return queryFetch(IMAGES_QUERY)
-  .then((result) => {
-    return result;  
-  })
+export function images_fetch(): Promise<SanityDocument | undefined> {
+  console.log(
+    '%c +_+_+_+_+_ images_fetch invoked',
+    'color: white; background: red;',
+  );
+  return queryFetch(IMAGES_QUERY).then((result) => {
+    return result;
+  });
 }
 
 /** Create new settings object only if needed */
@@ -111,8 +121,10 @@ export async function settingsFetch(): Promise<SettingsMap> {
     typography: Object.create(null),
   };
 
-  const result = await queryFetch(SETTINGS_QUERY) as SettingsMap[] | undefined;
-console.log("result", result)
+  const result = (await queryFetch(SETTINGS_QUERY)) as
+    | SettingsMap[]
+    | undefined;
+  console.log('result', result);
   if (result && result.length) {
     // console.log("deep merge happening")
     // console.log("checking if one of the results has an id of site_settings")
@@ -121,7 +133,7 @@ console.log("result", result)
     // if (siteSettingsObj.length){
     //   data = Object.assign(Object.create(null), _deepMerge(data, siteSettingsObj[0]))
     // } else {
-      data = Object.assign(Object.create(null), _deepMerge(data, result[0]))
+    data = Object.assign(Object.create(null), _deepMerge(data, result[0]));
     // }
   }
 
@@ -140,5 +152,3 @@ console.log("result", result)
     return target;
   }
 }
-
-

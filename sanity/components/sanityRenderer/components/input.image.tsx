@@ -1,6 +1,16 @@
 // CustomImageInput.tsx
 import { ReactNode, ReactElement } from 'react';
-import { useFormState, useFormValue, set, unset, FieldProps, InputProps, ObjectItemProps, Path, RenderPreviewCallbackProps } from 'sanity';
+import {
+  useFormState,
+  useFormValue,
+  set,
+  unset,
+  FieldProps,
+  InputProps,
+  ObjectItemProps,
+  Path,
+  RenderPreviewCallbackProps,
+} from 'sanity';
 import { ImageInput } from 'sanity'; // Use the built-in ImageInput component from Sanity
 
 type CustomImageInputProps = {
@@ -27,7 +37,6 @@ export default function CustomImageInput({ fieldPath }: CustomImageInputProps) {
   return (
     <div>
       <h3>Upload or Select an Image</h3>
-    
     </div>
   );
 }

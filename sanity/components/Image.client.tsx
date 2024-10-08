@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import cx from 'classnames';
-import { client } from '../lib/client'
-import imageUrlBuilder from '@sanity/image-url'
+import { client } from '../lib/client';
+import imageUrlBuilder from '@sanity/image-url';
 import { isClientImage } from '@/types/guard';
 
 // Get a pre-configured url-builder from your sanity client
@@ -42,7 +42,7 @@ export default async function Main({
   metaData,
   ...props
 }: ImageProps) {
-  console.log("4 image recieved was ", image)
+  // console.log("4 image recieved was ", image)
   /**
    TODO: make variants
     - banner
@@ -52,16 +52,14 @@ export default async function Main({
     - small
     || banner, large, normal, thumbnail
   */
+
   if (isClientImage(image)) {
-    // return <div>iS IMAGE</div>
     const finalWidth = width || DEFAULT_WIDTH;
     const finalHeight = height || DEFAULT_HEIGHT;
-    // const imageUrl = urlFor(image).width(200).url();
-    // if (!imageUrl) return null;
 
     return (
       <Image
-        className={cx("not-prose block min-h-[140px]", classNames)}
+        className={cx('not-prose block min-h-[140px]', classNames)}
         alt={alt}
         width={finalWidth}
         height={finalHeight}
@@ -73,9 +71,8 @@ export default async function Main({
         loading={priority ? 'eager' : 'lazy'}
         {...props}
       />
-    )
+    );
   }
-  console.log("5 was not an image")
-  return <div>IMAGE PLACEHOLDER </div>
 
+  return <div>IMAGE PLACEHOLDER </div>;
 }

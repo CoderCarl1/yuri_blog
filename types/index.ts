@@ -16,5 +16,5 @@ export type {
   SearchResults_SanityDocument,
   Settings,
   sanityStructure,
-  PageBoxProps
+  PageBoxProps,
 };

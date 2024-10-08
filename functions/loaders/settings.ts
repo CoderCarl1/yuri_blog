@@ -5,7 +5,7 @@ import COLOR from 'color';
 export const getSettings = () => settingsFetch();
 // export const getImages = imagesFetch();
 
-export async function getSiteSettings(){
+export async function getSiteSettings() {
   // const result = await sanityDocumentFetch('site_settings') as SettingsMap | undefined;
   // const settings = {
   //   styles: '',
@@ -24,7 +24,7 @@ export async function getSiteSettings(){
   // //   return acc;
   // // }, {});
   // return settings;
-  return {styles: ''}
+  return { styles: '' };
 }
 
 // export const setUserPreferences = (settings: SettingsMap) => {
@@ -39,37 +39,35 @@ export async function getSiteSettings(){
 interface hslColor {
   color: number[];
   model: string;
-  valpha: number
+  valpha: number;
 }
 export const generateStyles = (colors: SiteColors) => {
-  return Object.keys(colors).map((key) => {
-    const color = colors[key as keyof SiteColors] as colorType;
-    if (typeof color !== 'string' || !color.length) return;
+  return Object.keys(colors)
+    .map((key) => {
+      const color = colors[key as keyof SiteColors] as colorType;
+      if (typeof color !== 'string' || !color.length) return;
 
-    const [h, s, l] = (COLOR.hsl() as unknown as hslColor).color;
+      const [h, s, l] = (COLOR.hsl() as unknown as hslColor).color;
 
-    const { active, hover, text, hsl } = generateStateColor({ h, s, l })
-    key = key.replace('_', '-');
+      const { active, hover, text, hsl } = generateStateColor({ h, s, l });
+      key = key.replace('_', '-');
 
-    return `
+      return `
       --${key}: ${hsl};
       --${key}-active: ${active};
       --${key}-hover: ${hover};
       --${key}-text: ${text};
     `;
-  }).join(' ');
-
+    })
+    .join(' ');
 };
 
-function generateStateColor(
-  { h, s, l }: { h: number; s: number; l: number }
-) {
-
+function generateStateColor({ h, s, l }: { h: number; s: number; l: number }) {
   s = s * 100;
   return {
     active: `${h} ${s}% ${l * 100 - 10}%`,
     hover: `${h} ${s}% ${l * 100 + 10}%`,
     text: `${h} ${s}% ${l * 100 - 20}%`,
-    hsl: `${h} ${s}% ${l * 100}%`
-  }
+    hsl: `${h} ${s}% ${l * 100}%`,
+  };
 }

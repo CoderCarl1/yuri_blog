@@ -27,10 +27,7 @@ export default function SearchBar() {
       if (str === '') {
         setSearchResults([]);
       } else {
-        const apiResults = await searchAPI(
-          debouncedSearchString,
-          signal,
-        );
+        const apiResults = await searchAPI(debouncedSearchString, signal);
 
         if (apiResults) {
           setSearchResults(apiResults);

@@ -1,6 +1,3 @@
+type InputVariant = '';
 
-type InputVariant = ""
-
-export default function Input(){
-
-}
+export default function Input() {}

@@ -64,9 +64,9 @@ export default async function Main({
     ));
   if (!imageUrl) return null;
 
-    return (
-      <Image
-      className={cx("not-prose block min-h-[140px]", classNames)}
+  return (
+    <Image
+      className={cx('not-prose block min-h-[140px]', classNames)}
       alt={finalAlt}
       width={finalWidth}
       height={finalHeight}
@@ -78,7 +78,7 @@ export default async function Main({
       loading={priority ? 'eager' : 'lazy'}
       {...props}
     />
-    )
+  );
 
   // return (
   //   <div
@@ -92,8 +92,8 @@ export default async function Main({
   //     }}
   //     data-sanity={dataSanity}
   //   >
-  //     {/* If we want to add text over the image we can use 
-  //       background: metadata.palette.dominant.background 
+  //     {/* If we want to add text over the image we can use
+  //       background: metadata.palette.dominant.background
   //       &
   //       color: metadata.palette.dominant.foreground
   //     */}

@@ -21,7 +21,7 @@ export const schema: { types: SchemaTypeDefinition[] } = {
     //singletons,
     siteSettings,
     home,
-    
+
     //misc
     socials,
     blockContent,

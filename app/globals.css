@@ -27,10 +27,14 @@
   }
 
   .btn.disabled {
-    @apply bg-grayscale-dark/15 hover:border-grayscale-dark/25 hover:bg-grayscale-dark/15 cursor-wait;
+    @apply bg-grayscale-dark/15 hover:border-grayscale-dark/25 hover:bg-grayscale-dark/15;
   }
   .btn-primary {
     @apply bg-primary text-primary-text hover:bg-primary-hover hover:border-primary-active hover:text-primary-text focus:bg-primary-active focus:text-primary-text focus:outline-1 focus:outline-offset-4 focus:outline-primary-active active:bg-primary-active active:text-primary-text active:scale-[0.99];
+  }
+
+  .loading {
+    @apply cursor-wait;
   }
 
   .link {

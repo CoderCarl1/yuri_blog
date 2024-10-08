@@ -1,4 +1,4 @@
-import { FaCog } from "react-icons/fa";
+import { FaCog } from 'react-icons/fa';
 import { defineArrayMember, defineField, defineType } from 'sanity';
 
 export default defineType({
@@ -95,7 +95,8 @@ export default defineType({
                           name: 'title',
                           title: 'Title',
                           type: 'string',
-                          description: 'The text displayed for this submenu item',
+                          description:
+                            'The text displayed for this submenu item',
                           validation: (rule) => rule.required(),
                         }),
                         defineField({
@@ -117,62 +118,62 @@ export default defineType({
                       return true;
                     }),
                 }),
-              ]
-            })
-          ]
-        })
-      ]
+              ],
+            }),
+          ],
+        }),
+      ],
     }),
     // siteColors
     // TODO: custom pallets to chose from
     defineField({
-      name: "colors",
+      name: 'colors',
       title: 'Colors',
-      type: "object",
+      type: 'object',
       fields: [
         defineField({
           name: 'color_primary',
           title: 'Primary Color',
-          type: 'string'
+          type: 'string',
         }),
         defineField({
           name: 'color_primary_text',
           title: 'Primary Text Color',
-          type: 'string'
+          type: 'string',
         }),
         defineField({
           name: 'color_secondary',
           title: 'Secondary Color',
-          type: 'string'
+          type: 'string',
         }),
         defineField({
           name: 'color_secondary_text',
           title: 'Secondary Text Color',
-          type: 'string'
+          type: 'string',
         }),
         defineField({
           name: 'color_accent',
           title: 'Accent Color',
-          type: 'string'
+          type: 'string',
         }),
         defineField({
           name: 'color_accent_text',
           title: 'Accent Text Color',
-          type: 'string'
+          type: 'string',
         }),
         defineField({
           name: 'color_grayscale_dark',
           title: 'dark',
           description: 'the closest to black that you would like',
-          type: 'string'
+          type: 'string',
         }),
         defineField({
           name: 'color_grayscale_light',
           title: 'light',
           description: 'the closest to white that you would like',
-          type: 'string'
+          type: 'string',
         }),
-      ]
+      ],
     }),
     //Typography
     // TODO: default fonts
@@ -196,8 +197,8 @@ export default defineType({
               name: 'font_url',
               title: 'Fonts URL',
               type: 'url',
-            })
-          ]
+            }),
+          ],
         }),
         defineField({
           name: 'headingFont',
@@ -214,10 +215,10 @@ export default defineType({
               name: 'font_url',
               title: 'Fonts URL',
               type: 'url',
-            })
-          ]
+            }),
+          ],
         }),
-      ]
+      ],
     }),
     // SEO Specific
     defineField({
@@ -237,8 +238,8 @@ export default defineType({
         }),
         defineField({
           name: 'keywords',
-          title: "Keywords to describe your site",
-          type: 'string'
+          title: 'Keywords to describe your site',
+          type: 'string',
         }),
         defineField({
           name: 'overview',
@@ -282,16 +283,14 @@ export default defineType({
           ],
           validation: (rule) => rule.max(155).required(),
         }),
-      ]
+      ],
     }),
     // Socials
     defineField({
       name: 'social_media',
       title: 'Social Media Profiles',
       type: 'array',
-      of: [
-        { type: 'reference', to: [{ type: 'schema_social_media' }] }
-      ],
+      of: [{ type: 'reference', to: [{ type: 'schema_social_media' }] }],
     }),
     // analytics - Consider expanding
     defineField({
@@ -305,8 +304,7 @@ export default defineType({
           type: 'string',
         }),
         // Add more tracking options if needed
-      ]
-    })
-  ]
+      ],
+    }),
+  ],
 });
-

@@ -1,5 +1,5 @@
-import { sanityStructure } from "./sanity.type";
+import { sanityStructure } from './sanity.type';
 
 export type PageBoxProps = {
-    sanityStructure: sanityStructure[];
-  };
+  sanityStructure: sanityStructure[];
+};

@@ -5,9 +5,10 @@ declare global {
     alt?: string | undefined;
   };
 
-  export type ClientSanityImage = Asset & ImageMetadata & {
-    alt?: string | undefined;
-  }
+  export type ClientSanityImage = Asset &
+    ImageMetadata & {
+      alt?: string | undefined;
+    };
   export type SanityImageMetadata = ImageMetadata;
   //   export type Post_SanityDocument<
   //     T extends Record<string, any> = Record<string, any>,

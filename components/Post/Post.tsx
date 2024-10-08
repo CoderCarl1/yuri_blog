@@ -1,4 +1,4 @@
-import type { EncodeDataAttributeCallback } from '@sanity/react-loader';
+// import type { EncodeDataAttributeCallback } from '@sanity/react-loader';
 import Image from '../Image';
 import PortableText from '../portableText/index';
 import { notFound } from 'next/navigation';
@@ -7,10 +7,10 @@ import type { Post_SanityDocument } from '@/types';
 
 type TPost = {
   post: Post_SanityDocument;
-  encodeDataAttribute?: EncodeDataAttributeCallback;
+  // encodeDataAttribute?: EncodeDataAttributeCallback;
 };
 
-export default function Post({ post, encodeDataAttribute }: TPost) {
+export default function Post({ post /**, encodeDataAttribute*/ }: TPost) {
   // TODO: post not found if body not present. Add email to owner about this.
   if (!isPost(post)) {
     return notFound();
@@ -32,11 +32,12 @@ export default function Post({ post, encodeDataAttribute }: TPost) {
           classNames="mb-4"
         />
       ) : null}
-      {title ? <h1 className='font-serif text-4xl'>{title}</h1> : null}
-      {body ? <div className="prose prose-lg">
-        <PortableText value={body} />
-      </div> : null
-      }
+      {title ? <h1 className="font-serif text-4xl">{title}</h1> : null}
+      {body ? (
+        <div className="prose prose-lg">
+          <PortableText value={body} />
+        </div>
+      ) : null}
     </>
   );
 }
